@@ -24,7 +24,7 @@
 
 ### Rune
 * INF100/INF101/INF102
-* Linux, ssh
+* Linux, ssh, Ubuntu server, EHCP
 
 ### Andreas
 * INF100/INF101/INF102
