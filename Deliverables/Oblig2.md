@@ -2,9 +2,6 @@
 * Gruppeleder: Rune
 * Kundekontakt: Andreas
 
-## Kompetanse
-* Alle har hatt INF100, INF101, INF102
-
 ### Dovydas
 * INF100/INF101/INF102
 * Digital drawing
@@ -15,8 +12,9 @@
 
 ### Petter
 * INF100/INF101/INF102
-* Musikk
+* Music
 * Linux
+* Git
 
 ### Omar
 * INF100/INF101/INF102
