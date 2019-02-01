@@ -3,13 +3,11 @@
 
 package inf112.skeleton.app;
 import java.io.*;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 public class fileRead {
     public static void main(String[] args) throws IOException {
-        String fileName = "cardData.txt";
+        String fileName = "Deliverables/cardData.txt";
         ArrayList<String> linesInFile = new ArrayList<String>();
         FileReader fileReader = new FileReader(fileName);
 
@@ -17,6 +15,7 @@ public class fileRead {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 linesInFile.add(line);
+                System.out.println(line);
             }
         }
     }
