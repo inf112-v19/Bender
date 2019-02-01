@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class fileRead {
     public static void main(String[] args) throws IOException {
-        String fileName = "cardData.txt.txt";
+        String fileName = "cardData.txt";
         ArrayList<String> linesInFile = new ArrayList<String>();
         FileReader fileReader = new FileReader(fileName);
 
