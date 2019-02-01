@@ -15,7 +15,7 @@ public class fileRead {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 linesInFile.add(line);
-                System.out.println(line);
+                System.out.println(line);       // only for test purpose, REMOVE in production
             }
         }
     }
