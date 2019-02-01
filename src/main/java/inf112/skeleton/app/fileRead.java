@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class fileRead {
     public static void main(String[] args) throws IOException {
-        String fileName = "src/main/java/inf112/skeleton/app/cardData.txt";
+        String fileName = "src/main/java/inf112/skeleton/app/cards/cardData.txt";
         ArrayList<String> linesInFile = new ArrayList<String>();
         FileReader fileReader = new FileReader(fileName);
 
