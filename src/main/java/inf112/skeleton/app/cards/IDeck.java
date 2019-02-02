@@ -2,7 +2,7 @@ package inf112.skeleton.app.cards;
 
 import inf112.skeleton.app.interfaces.IPlayer;
 
-public interface IDeck<T extends ICard> {
+public interface IDeck<T> {
 
     void shuffle();
 

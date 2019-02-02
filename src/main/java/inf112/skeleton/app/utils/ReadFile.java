@@ -1,11 +1,11 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class readFile {     // call with readFile lesFil = new readFile(); readFile.fileRead();
+public class ReadFile {     // call with ReadFile lesFil = new ReadFile(); ReadFile.FileRead();
 
     public ArrayList<String> fileRead(String fileName) throws IOException {
         ArrayList<String> linesInFile = new ArrayList<String>();

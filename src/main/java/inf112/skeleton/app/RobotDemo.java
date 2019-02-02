@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class RobotDemo extends ApplicationAdapter {
+
     SpriteBatch batch;
     Texture tile;
     Texture cardBackground;

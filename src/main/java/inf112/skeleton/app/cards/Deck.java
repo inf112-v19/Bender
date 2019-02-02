@@ -5,7 +5,7 @@ import inf112.skeleton.app.interfaces.IPlayer;
 import java.util.Collections;
 import java.util.Stack;
 
-public class Deck<T extends ICard> implements IDeck<T> {
+public class Deck<T> implements IDeck<T> {
 
     private Stack<T> cards;
 
