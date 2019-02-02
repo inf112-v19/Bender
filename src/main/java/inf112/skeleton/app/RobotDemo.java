@@ -21,11 +21,9 @@ public class RobotDemo extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        // The texture files are local, hence the directory of files should be pasted manually, (easily done by right-clicking image and copying its path
-        // TODO: make the directory fill automatically
-        card = new Texture(Gdx.files.internal("insert card.png path here"));
-        cardBackground = new Texture(Gdx.files.internal("insert card_background.png path here"));
-        tile = new Texture(Gdx.files.internal("insert dungeon_tile.png path here"));
+        card = new Texture(Gdx.files.internal("res/card.png"));
+        cardBackground = new Texture(Gdx.files.internal("res/card_background.png"));
+        tile = new Texture(Gdx.files.internal("res/dungeon_tile.png"));
     }
 
     @Override
