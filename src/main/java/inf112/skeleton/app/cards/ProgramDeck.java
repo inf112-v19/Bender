@@ -1,7 +1,5 @@
 package inf112.skeleton.app.cards;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +25,7 @@ public class ProgramDeck extends Deck<IProgramCard> {
     }
 
     private static int priority() {
-        throw new NotImplementedException();
+        // TODO: implement
+        return 0;
     }
 }

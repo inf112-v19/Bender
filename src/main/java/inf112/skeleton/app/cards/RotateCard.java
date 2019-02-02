@@ -1,7 +1,5 @@
 package inf112.skeleton.app.cards;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class RotateCard extends ProgramCard {
 
     enum Direction { RIGHT, LEFT, UTURN }
@@ -14,6 +12,6 @@ public class RotateCard extends ProgramCard {
     }
 
     public void execute() {
-        throw new NotImplementedException();
+        // TODO: implement
     }
 }
