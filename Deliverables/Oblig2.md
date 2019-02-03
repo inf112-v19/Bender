@@ -92,7 +92,3 @@
 * Communication between the meetings happen on slack and trello.
 * Code, docs and mandatory exercises should be commited to the git repository.
 * Other files like charts, word documents, etc .. should be stored on google drive.
-
-# Deloppgave 3
-* Gruppetimer
-* Kommunikasjon via slack
