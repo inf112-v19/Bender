@@ -4,34 +4,59 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.RobotDemo;
 
 public class MenuState extends State {
     private Texture background;
     private Texture playButtonTexture;
+    private Texture playButtonTexturePressed;
     private Drawable playButtonImage;
-    private InputListener input;
     private ImageButton playButton;
+
+    private boolean touched;
+    private Stage stage;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-
+        touched = false;
+        playButtonTexturePressed = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\New Game Button Pressed.png"));
         background = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\main_menu.png"));
         playButtonTexture = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\New Game Button.png"));
 
-        playButtonImage = new TextureRegionDrawable(new TextureRegion(playButtonTexture));
-        playButton = new ImageButton(playButtonImage);
-        playButton.setSize(150,100);
-        playButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(playButtonTexture));
+        stage = new Stage(new ScreenViewport());
+        makeButton();
     }
+
+    private void makeButton() {
+        Gdx.input.setInputProcessor(stage);
+
+        playButton = new ImageButton(playButtonImage);
+        playButton.setSize(150, 100);
+        playButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(playButtonTexture));
+        playButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(playButtonTexturePressed));
+        playButton.setPosition((RobotDemo.WIDTH / 2) - (playButtonTexture.getWidth() / 2), (RobotDemo.HEIGHT / 2) - (playButtonTexture.getHeight() / 2));
+        playButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                touched = true;
+                return true;
+            }
+        });
+        stage.addActor(playButton);
+    }
+
 
     @Override
     public void handleInput() {
-        if (Gdx.input.justTouched()) {
+        if (touched) {
             gsm.set(new PlayState(gsm));
             dispose();
         }
@@ -44,10 +69,14 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-        sb.begin();
-        sb.draw(background, 0, 0, RobotDemo.WIDTH, RobotDemo.HEIGHT);
-        sb.draw(playButtonTexture, (RobotDemo.WIDTH / 2) - (playButtonTexture.getWidth() / 2), (RobotDemo.HEIGHT / 2) - (playButtonTexture.getHeight() / 2));
-        sb.end();
+        stage.act();
+
+        //Renders the background
+        stage.getBatch().begin();
+        stage.getBatch().draw(background, 0, 0, RobotDemo.WIDTH, RobotDemo.HEIGHT);
+        stage.getBatch().end();
+
+        stage.draw();
 
     }
 
