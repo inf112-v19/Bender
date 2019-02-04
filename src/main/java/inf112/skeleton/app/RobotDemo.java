@@ -5,9 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.States.GameStateManager;
+import inf112.skeleton.app.States.MenuState;
 
 public class RobotDemo extends ApplicationAdapter {
-    SpriteBatch batch;
+    SpriteBatch batch; // should only be one
+    private GameStateManager gsm = new GameStateManager();
+
     Texture tile;
     Texture cardBackground;
     Texture card;
@@ -18,30 +22,24 @@ public class RobotDemo extends ApplicationAdapter {
     public static final int CARD_HEIGHT = 150;
     public static final String TITLE = "RoboRally";
 
+
     @Override
     public void create() {
         batch = new SpriteBatch();
+        gsm = new GameStateManager();
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        gsm.push(new MenuState(gsm));
         // The texture files are local, hence the directory of files should be pasted manually, (easily done by right-clicking image and copying its path
         // TODO: make the directory fill automatically
-        card = new Texture(Gdx.files.internal("insert card.png path here"));
-        cardBackground = new Texture(Gdx.files.internal("insert card_background.png path here"));
-        tile = new Texture(Gdx.files.internal("insert dungeon_tile.png path here"));
+        card = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\Card.png"));
+        cardBackground = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\card_background.PNG"));
+        tile = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\dungeon_tile.png"));
     }
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(cardBackground, 0, 0);
-        //loop to generate tiles, a single tile is 32x32 pixels
-        for (int i = 0; i < WIDTH; i += 32)
-            for (int j = CARD_HEIGHT; j < HEIGHT; j += 32)
-                batch.draw(tile, i, j);
-
-        // loop to generate cards, TODO: limit cards to 5
-        for (int x = 0; x < WIDTH; x += CARD_WIDTH + CARD_WIDTH / 4)
-            batch.draw(card, x, 18);
-        batch.end();
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // wipes the screen clear
+        gsm.update(Gdx.graphics.getDeltaTime()); //Difference between the render times
+        gsm.render(batch);
     }
 }
