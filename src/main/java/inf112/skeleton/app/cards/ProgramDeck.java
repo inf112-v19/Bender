@@ -10,6 +10,7 @@ public class ProgramDeck extends Deck<IProgramCard> {
     }
 
     private static Iterable<IProgramCard> standardProgramDeck() {
+        int priorityValue = 0;
         List<IProgramCard> cards = new ArrayList<>();
 
         for (int i = 0; i < 18; i++) cards.add(new MoveCard(490 + (i * 10), MoveCard.Direction.FORWARDS, 1));

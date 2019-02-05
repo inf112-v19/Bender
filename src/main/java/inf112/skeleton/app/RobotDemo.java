@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.States.GameStateManager;
+import inf112.skeleton.app.States.MenuState;
 
 public class RobotDemo extends ApplicationAdapter {
 
@@ -18,29 +20,20 @@ public class RobotDemo extends ApplicationAdapter {
     public static final int CARD_WIDTH = 84;
     public static final int CARD_HEIGHT = 150;
     public static final String TITLE = "RoboRally";
+    private GameStateManager gsm = new GameStateManager();
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        card = new Texture(Gdx.files.internal("res/card.png"));
-        cardBackground = new Texture(Gdx.files.internal("res/card_background.png"));
-        tile = new Texture(Gdx.files.internal("res/dungeon_tile.png"));
+        gsm = new GameStateManager();
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        gsm.push(new MenuState(gsm));
     }
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(cardBackground, 0, 0);
-        //loop to generate tiles, a single tile is 32x32 pixels
-        for (int i = 0; i < WIDTH; i += 32)
-            for (int j = CARD_HEIGHT; j < HEIGHT; j += 32)
-                batch.draw(tile, i, j);
-
-        // loop to generate cards, TODO: limit cards to 5
-        for (int x = 0; x < WIDTH; x += CARD_WIDTH + CARD_WIDTH / 4)
-            batch.draw(card, x, 18);
-        batch.end();
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // wipes the screen clear
+        gsm.update(Gdx.graphics.getDeltaTime()); //Difference between the render times
+        gsm.render(batch);
     }
 }
