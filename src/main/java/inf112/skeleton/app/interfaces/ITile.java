@@ -10,6 +10,8 @@ public interface ITile {
 
     ITile getNeighbor(Dir dir);     // Method for getting the nearest neighbor
 
+    boolean canMove(Dir dir);       // Method for checking if robot can mode in a direction
+
     IRobot getRobot();              // Method for getting the current robot on the tile
     void setRobot(IRobot robot);    // Method for setting the current robot on the tile
 
