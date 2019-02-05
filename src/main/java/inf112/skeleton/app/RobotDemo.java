@@ -15,22 +15,7 @@ public class RobotDemo extends ApplicationAdapter {
 
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
-    public static final int CARD_WIDTH = 84;
-    public static final int CARD_HEIGHT = 150;
-    public static final String TITLE = "RoboRally";
-
-    @Override
-    public void create() {
-        batch = new SpriteBatch();
-        card = new Texture(Gdx.files.internal("res/card.png"));
-        cardBackground = new Texture(Gdx.files.internal("res/card_background.png"));
-        tile = new Texture(Gdx.files.internal("res/dungeon_tile.png"));
-    }
-
-    @Override
-    public void render() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    public static finR_BUFFER_BIT);
         batch.begin();
         batch.draw(cardBackground, 0, 0);
         //loop to generate tiles, a single tile is 32x32 pixels
