@@ -1,7 +1,5 @@
 package inf112.skeleton.app.cards;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class MoveCard extends ProgramCard {
 
     enum Direction { FORWARDS, BACKWARDS }
@@ -16,6 +14,6 @@ public class MoveCard extends ProgramCard {
     }
 
     public void execute() {
-        throw new NotImplementedException();
+        // TODO: implement
     }
 }

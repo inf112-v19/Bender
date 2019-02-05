@@ -1,12 +1,11 @@
 package inf112.skeleton.app.cards;
 
 import inf112.skeleton.app.interfaces.IPlayer;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Collections;
 import java.util.Stack;
 
-public class Deck<T extends ICard> implements IDeck<T> {
+public class Deck<T> implements IDeck<T> {
 
     private Stack<T> cards;
 
@@ -39,6 +38,6 @@ public class Deck<T extends ICard> implements IDeck<T> {
 
     @Override
     public void deal(Iterable<IPlayer> players) {
-        throw new NotImplementedException();
+        // TODO: implement
     }
 }

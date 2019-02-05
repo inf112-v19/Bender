@@ -9,9 +9,8 @@ import inf112.skeleton.app.States.GameStateManager;
 import inf112.skeleton.app.States.MenuState;
 
 public class RobotDemo extends ApplicationAdapter {
-    SpriteBatch batch;
-    private GameStateManager gsm = new GameStateManager();
 
+    SpriteBatch batch;
     Texture tile;
     Texture cardBackground;
     Texture card;
@@ -21,7 +20,7 @@ public class RobotDemo extends ApplicationAdapter {
     public static final int CARD_WIDTH = 84;
     public static final int CARD_HEIGHT = 150;
     public static final String TITLE = "RoboRally";
-
+    private GameStateManager gsm = new GameStateManager();
 
     @Override
     public void create() {

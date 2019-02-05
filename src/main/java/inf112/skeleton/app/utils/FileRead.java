@@ -1,13 +1,13 @@
 // ** PROJECT BENDER / ROBOrally 2019
 // ** Created 1.feb 2019 Rune Thelen
 
-package inf112.skeleton.app;
+package inf112.skeleton.app.utils;
 import java.io.*;
 import java.util.ArrayList;
 
-public class fileRead {
+public class FileRead {
     public static void main(String[] args) throws IOException {
-        String fileName = "src/main/java/inf112/skeleton/app/cards/cardData.txt";
+        String fileName = "res/cardData.txt";
         ArrayList<String> linesInFile = new ArrayList<String>();
         FileReader fileReader = new FileReader(fileName);
 
