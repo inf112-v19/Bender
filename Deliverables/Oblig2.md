@@ -26,6 +26,7 @@
 
 ### Andreas
 * INF100/INF101/INF102
+* Linux
 
 ## Tekniske verktøy
 * Maven
