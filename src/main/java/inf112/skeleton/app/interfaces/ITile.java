@@ -17,5 +17,4 @@ public interface ITile {
 
     TileColor getColor();           // Method for getting the tile color
     void setColor(TileColor color); // Method for setting the tile color
-
 }
