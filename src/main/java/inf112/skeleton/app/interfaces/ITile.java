@@ -10,8 +10,8 @@ public interface ITile {
 
     ITile getNeighbor(Dir dir);     // Method for getting the nearest neighbor
 
-    IRobot getRobot();            // Method for getting the current robot on the tile
-    void setRobot(IRobot player); // Method for setting the current robot on the tile
+    IRobot getRobot();              // Method for getting the current robot on the tile
+    void setRobot(IRobot robot);    // Method for setting the current robot on the tile
 
     TileColor getColor();           // Method for getting the tile color
     void setColor(TileColor color); // Method for setting the tile color
