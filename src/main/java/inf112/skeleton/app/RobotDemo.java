@@ -9,7 +9,7 @@ import inf112.skeleton.app.States.GameStateManager;
 import inf112.skeleton.app.States.MenuState;
 
 public class RobotDemo extends ApplicationAdapter {
-    SpriteBatch batch; // should only be one
+    SpriteBatch batch;
     private GameStateManager gsm = new GameStateManager();
 
     Texture tile;
@@ -29,11 +29,6 @@ public class RobotDemo extends ApplicationAdapter {
         gsm = new GameStateManager();
         Gdx.gl.glClearColor(1, 1, 1, 1);
         gsm.push(new MenuState(gsm));
-        // The texture files are local, hence the directory of files should be pasted manually, (easily done by right-clicking image and copying its path
-        // TODO: make the directory fill automatically
-        card = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\Card.png"));
-        cardBackground = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\card_background.PNG"));
-        tile = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\dungeon_tile.png"));
     }
 
     @Override

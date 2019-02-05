@@ -2,17 +2,18 @@ package inf112.skeleton.app.States;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.RobotDemo;
+import sun.font.TrueTypeFont;
 
 public class MenuState extends State {
     private Texture background;
@@ -20,6 +21,8 @@ public class MenuState extends State {
     private Texture playButtonTexturePressed;
     private Drawable playButtonImage;
     private ImageButton playButton;
+    private BitmapFont font;
+    private final String FONT_CHARACTERS = "ROBORALLY";
 
     private boolean touched;
     private Stage stage;
@@ -27,9 +30,10 @@ public class MenuState extends State {
     public MenuState(GameStateManager gsm) {
         super(gsm);
         touched = false;
-        playButtonTexturePressed = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\New Game Button Pressed.png"));
-        background = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\main_menu.png"));
-        playButtonTexture = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\New Game Button.png"));
+
+        playButtonTexturePressed = new Texture(Gdx.files.internal("src\\main\\java\\inf112\\skeleton\\app\\Textures\\New Game Button Pressed.png"));
+        background = new Texture(Gdx.files.internal("src\\main\\java\\inf112\\skeleton\\app\\Textures\\main_menu.png"));
+        playButtonTexture = new Texture(Gdx.files.internal("src\\main\\java\\inf112\\skeleton\\app\\Textures\\New Game Button.png"));
 
         stage = new Stage(new ScreenViewport());
         makeButton();

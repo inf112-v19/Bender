@@ -13,9 +13,9 @@ public class PlayState extends State {
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        card = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\Card.png"));
-        cardBackground = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\card_background.PNG"));
-        tile = new Texture(Gdx.files.internal("C:\\Users\\Asus\\INF112\\Bender\\src\\main\\java\\inf112\\skeleton\\app\\Textures\\dungeon_tile.png"));
+        card = new Texture(Gdx.files.internal("src\\main\\java\\inf112\\skeleton\\app\\Textures\\Card.png"));
+        cardBackground = new Texture(Gdx.files.internal("src\\main\\java\\inf112\\skeleton\\app\\Textures\\card_background.PNG"));
+        tile = new Texture(Gdx.files.internal("src\\main\\java\\inf112\\skeleton\\app\\Textures\\dungeon_tile.png"));
     }
 
     @Override
@@ -32,7 +32,6 @@ public class PlayState extends State {
         this.renderTiles(sb);
         this.renderCards(sb);
         sb.end();
-
     }
 
     public void renderTiles(SpriteBatch sb) {
@@ -40,11 +39,10 @@ public class PlayState extends State {
         for (int i = 0; i < RobotDemo.WIDTH; i += 32)
             for (int j = RobotDemo.CARD_HEIGHT; j < RobotDemo.HEIGHT; j += 32)
                 sb.draw(tile, i, j);
-
     }
 
     public void renderCards(SpriteBatch sb) {
-        for (int x = 0; x < RobotDemo.WIDTH / 4; x += RobotDemo.CARD_WIDTH + RobotDemo.CARD_WIDTH / 4)
+        for (int x = 0; x < RobotDemo.WIDTH / 3; x += RobotDemo.CARD_WIDTH + RobotDemo.CARD_WIDTH / 4)
             sb.draw(card, x, 18);
     }
 
