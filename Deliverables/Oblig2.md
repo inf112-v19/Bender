@@ -1,67 +1,44 @@
-# Deloppgave 1
-* Gruppeleder: Rune
-* Kundekontakt: Andreas
+# Task 1 
+* Team leader: Rune
+* Customer contact: Andreas
+* **Competence:**
+    * Everyone has knowledge of java
+    * Everyone has taken INF100, INF101 and INF102
+    * **Dovydas**: digital drawing
+    * **Omar**: Networking, music
+    * **Petter**: Music, linux, git
+    * **Rune**: Linux, SSH, ubuntu server, ehcp
+* **Technical tools**:
+    * Java
+    * Maven
+    * Github
+    * JUnit
+    * IntelliJ
 
-### Dovydas
-* INF100/INF101/INF102
-* Digital drawing
+# Task 2
+## Overall goal of the application
+* A playable RoboRally games with all original rules implemented
+* Multiplayer over LAN
 
-### Omar
-* INF100/INF101/INF102
-* Networks
-
-### Petter
-* INF100/INF101/INF102
-* Music
-* Linux
-* Git
-
-### Omar
-* INF100/INF101/INF102
-* Musikk
-
-### Rune
-* INF100/INF101/INF102
-* Linux, ssh, Ubuntu server, EHCP
-
-### Andreas
-* INF100/INF101/INF102
-
-## Tekniske verktøy
-* Maven
-* IntelliJ
-* JUnit
-
-# Deloppgave 2
-## Overordnet mål
-* LAN (Multiplayer)
-* Fungerende spill med alle orginale regeler 
-* Top-Down
-
-## Høynivåkrav (gjennomgått i forelesning)
+## High level requirements
 * Board
-    * List of Tiles (med interface)
-        * Tile, vegger, referanse til robot, forskjellige typer
-        * Flytting av roboter fra tile til tile
-    * Flag
-    * (x, y) istendefor Location object 
-    * Player
-    * En Tile har en referanse til en Robot
-    * Robot
-        * Health
-        * Ability to shoot and get hit
-* Player
-    * Cards
-        * Skudd kort
-    * Feature cards
+* Tiles
+    * Different kinds of tiles: empty, rotate, black hole, assembly line
+* Flags
+* Players
+* Robots
+    * Lasers (ability to shoot and get hit)
+    * Health
+* Cards
+    * Programming cards
+    * Option cards
 
-## Først iterasjon
-* Alle ser en tutorial på LibGDX
-* Lage cards opplegg (Petter)
-* Grid og tiles (Andreas)
-* Lage et lite grid med libgdx (Dovydas)
-* Robot interface og object (damage og sånt) (Rune)
-* Multiplayer / nettverk (Omar)
+## First iteration
+* Everyone looks at LibGDX (tutorial or similar)
+* Make a representation of the programming cards
+* Start making the board, tile and robot representations
+* Make a grid-demo in LibGDX
+* Look into how multiplayer can be achieved (over internet/LAN)
 
 # Task 3 - Project methodology
 ## Kanbanish
@@ -92,3 +69,8 @@
 * Communication between the meetings happen on slack and trello.
 * Code, docs and mandatory exercises should be commited to the git repository.
 * Other files like charts, word documents, etc .. should be stored on google drive.
+
+# Retrospective
+* We decided to switch from trello to github (project board). It was hard to keep track of multiple channels of information (easier with one less).
+* We decided to use pull requests for easier code review (instead of pushing directly to master)
+* We decided to add a github plugin to slack for notifications about changes in the repository.
