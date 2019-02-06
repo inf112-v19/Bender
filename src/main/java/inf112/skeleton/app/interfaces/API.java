@@ -8,7 +8,7 @@ package inf112.skeleton.app.interfaces;
  *
  * Implementation of this class should handle errors and try
  * to resolve them automatically. It should also call
- * #IAction.handler() method with status of the errors.
+ * #IAction.handleX() method with status of the errors.
  *
  * Client actions should be implemented as methods in this
  * class. The methods should only return void.
@@ -20,8 +20,9 @@ package inf112.skeleton.app.interfaces;
  */
 public abstract class API {
     /**
-     * Handler for events raised by the server. For example the return value of #getBoard() should call the handler
-     * when it's retrieved.
+     * Handler for events raised by the server. For example
+     * when #getBoard() is called, the class should call the
+     * related handler when the board is retrieved.
      */
     private IAction handler;
 
