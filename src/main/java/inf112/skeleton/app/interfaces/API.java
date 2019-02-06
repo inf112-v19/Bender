@@ -1,0 +1,33 @@
+package inf112.skeleton.app.interfaces;
+
+/**
+ * Class for two way communication between server and client.
+ *
+ * Client should instantiate an implementation of this class
+ * and give it an implementation of the #IAction interface.
+ *
+ * Implementation of this class should handle errors and try
+ * to resolve them automatically. It should also call
+ * #IAction.handler() method with status of the errors.
+ *
+ * Client actions should be implemented as methods in this
+ * class. The methods should only return void.
+ *
+ * The implementation of this class should handle
+ * communication with a server. you implement client handling
+ * of the server responses in the #IAction.handler() method.
+ * That way.
+ */
+public abstract class API {
+    /**
+     * Handler for events raised by the server. For example the return value of #getBoard() should call the handler
+     * when it's retrieved.
+     */
+    private IAction handler;
+
+    public API(IAction handler) {
+        this.handler = handler;
+    }
+
+    public abstract void getBoard();
+}
