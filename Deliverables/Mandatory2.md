@@ -14,6 +14,8 @@
     * Github
     * JUnit
     * IntelliJ
+    * LibGDX
+    * java-websocket
 
 # Task 2
 ## Overall goal of the application
@@ -29,6 +31,7 @@
 * Robots
     * Lasers (ability to shoot and get hit)
     * Health
+    * Repair
 * Cards
     * Programming cards
     * Option cards
