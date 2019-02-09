@@ -10,8 +10,4 @@ public class RotateCard extends ProgramCard {
         super(priority);
         this.dir = dir;
     }
-
-    public void execute() {
-        // TODO: implement
-    }
 }
