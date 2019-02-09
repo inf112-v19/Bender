@@ -1,7 +1,5 @@
 package inf112.skeleton.app.core.cards;
 
-import inf112.skeleton.app.interfaces.IPlayer;
-
 public interface IDeck<T> {
 
     void shuffle();
@@ -9,17 +7,17 @@ public interface IDeck<T> {
     int numberOfCards();
 
     /**
-     * @return
-     *      a card from the top of the deck
-     *      null if the deck is empty
+     * @return a card from the top of the deck
+     * null if the deck is empty
      */
     T draw();
 
     boolean empty();
 
     /**
-     * Deal cards to players
-     * @param players
+     * Insert a card at the bottom of the deck
+     *
+     * @param card
      */
-    void deal(Iterable<IPlayer> players);
+    void insert(T card);
 }

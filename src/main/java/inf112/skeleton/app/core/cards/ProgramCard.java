@@ -12,6 +12,4 @@ public abstract class ProgramCard implements IProgramCard {
     public int priority() {
         return this.priority;
     }
-
-    public abstract void execute();
 }
