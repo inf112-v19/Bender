@@ -3,41 +3,42 @@ package inf112.skeleton.app.cards;
 import inf112.skeleton.app.interfaces.IPlayer;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class Deck<T> implements IDeck<T> {
 
-    private Stack<T> cards;
+    private LinkedList<T> cards;
 
     public Deck(Iterable<T> cards) {
-        cards = new Stack<>();
-        for (T card : cards) ((Stack<T>) cards).push(card);
+        this.cards = new LinkedList<>();
+        for (T card : cards) this.cards.addFirst(card);
         this.shuffle();
     }
 
     @Override
     public void shuffle() {
-        Collections.shuffle(cards);
+        Collections.shuffle(this.cards);
     }
 
     @Override
     public int numberOfCards() {
-        return cards.size();
+        return this.cards.size();
     }
 
     @Override
     public T draw() {
-        if (cards.empty()) return null;
-        return cards.pop();
+        if (this.cards.isEmpty()) return null;
+        return this.cards.pollFirst();
     }
 
     @Override
     public boolean empty() {
-        return cards.empty();
+        return this.cards.isEmpty();
     }
 
     @Override
-    public void deal(Iterable<IPlayer> players) {
-        // TODO: implement
+    public void insert(T card) {
+        cards.addLast(card);
     }
 }
