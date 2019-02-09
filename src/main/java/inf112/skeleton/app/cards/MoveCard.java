@@ -12,8 +12,4 @@ public class MoveCard extends ProgramCard {
         this.dir = dir;
         this.ammount = ammount;
     }
-
-    public void execute() {
-        // TODO: implement
-    }
 }
