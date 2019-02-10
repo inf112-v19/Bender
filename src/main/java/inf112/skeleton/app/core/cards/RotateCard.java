@@ -1,4 +1,4 @@
-package inf112.skeleton.app.cards;
+package inf112.skeleton.app.core.cards;
 
 public class RotateCard extends ProgramCard {
 
