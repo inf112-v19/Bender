@@ -2,7 +2,7 @@ package inf112.skeleton.app.core.cards;
 
 public class MoveCard extends ProgramCard {
 
-    enum Direction { FORWARDS, BACKWARDS }
+    public enum Direction { FORWARDS, BACKWARDS }
 
     private final int ammount;
     private final Direction dir;
