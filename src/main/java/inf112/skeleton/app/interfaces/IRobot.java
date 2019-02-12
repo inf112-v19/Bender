@@ -1,10 +1,9 @@
 package inf112.skeleton.app.interfaces;
-// RT initial setup jan 29/30 - 2019
+// RT initial setup jan 29/30 - 2019 - cont feb 12
 public interface IRobot {
 
-    public void move();         // int = -1,1,2,3 (steps)
-    public void turn();         // int = 90, 270, 180 degrees
-    public void getDirection(); // get current direction of robot as int (0, 90, 280, 270)
+    public void getDirection(); // give current direction of robot as ENUM dir();
+    public void setDirection(); // set direction after action from board (turn from card or tile)
     public void giveCards();    // give chosen object(with card ID) of 5 cards to robot, to put in RobotMemory
 
     public int takeEnergy();    // receive damage (int) and update energy, return new energy (int)
@@ -14,6 +13,5 @@ public interface IRobot {
     public void shootLazer();   // int = force -> fire lazer in current direction (from getDirection();)
 
     public void powerDown();    // power down for backup
-    public void died();         // mark robot as dead when energy reach 0
 
 }
