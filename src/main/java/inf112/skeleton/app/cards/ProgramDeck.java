@@ -27,8 +27,8 @@ public class ProgramDeck extends Deck<IProgramCard> {
     }
 
     private static int priority() {
-            priorityValue +=10;
-            return priorityValue;
-        
+//            priorityValue +=10;
+//            return priorityValue;
+        return 0;
     }
 }
