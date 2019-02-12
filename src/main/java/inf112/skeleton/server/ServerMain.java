@@ -1,7 +1,9 @@
 package inf112.skeleton.server;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.util.Scanner;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -28,16 +30,22 @@ public class ServerMain extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         System.out.println("received message from "	+ conn.getRemoteSocketAddress() + ": " + message);
+//        if (message.equals("GETBOARD")){
+//            // TODO: generate a board and send to the client.
+//        } else {
+            conn.send("ERROR {\"message\":\"This command has not yet been implemented\"}");
+//        }
     }
 
     @Override
-    public void onMessage( WebSocket conn, ByteBuffer message ) {
+    public void onMessage(WebSocket conn, ByteBuffer message) {
         System.out.println("received ByteBuffer from "	+ conn.getRemoteSocketAddress());
     }
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
         System.err.println("an error occured on connection " + conn.getRemoteSocketAddress()  + ":" + ex);
+        // TODO: Figure out and handle errors
     }
 
     @Override
@@ -46,11 +54,20 @@ public class ServerMain extends WebSocketServer {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String host = "localhost";
         int port = 8887;
 
+        // TODO: Initialize a roborally game room
+
         WebSocketServer server = new ServerMain(new InetSocketAddress(host, port));
-        server.run();
+        server.start();
+        Scanner sc = new Scanner(System.in);
+        while(sc.hasNext()) {
+            String next = sc.next();
+            if (next.equals("stop")) break;
+            server.broadcast(next);
+        }
+        server.stop();
     }
 }

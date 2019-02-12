@@ -18,6 +18,16 @@ package inf112.skeleton.app.interfaces;
  * communication with a server. you implement client handling
  * of the server responses in the #IAction.handleX() methods.
  */
-public interface API {
-    void getBoard();
-}
+public abstract class API {
+    /**
+     * Handler for events raised by the server. For example
+     * when #getBoard() is called, the method should call the
+     * related handler when the board is retrieved.
+     */
+    private IAction handler;
+
+    public API(IAction handler) {
+        this.handler = handler;
+    }
+
+    public abstract void getBoard();
