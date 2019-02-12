@@ -10,7 +10,7 @@ import java.util.HashSet;
 public class CardTests {
 
     @Test
-    public void sizeTest() {
+    public void sizeWhenRemovingCardsTest() {
         IDeck<IProgramCard> deck = new ProgramDeck();
         int size = deck.numberOfCards();
         for (int i = 0; i < size; i++) {
@@ -23,7 +23,7 @@ public class CardTests {
     }
 
     @Test
-    public void insertTest() {
+    public void sizeWhenInsertingCardsTest() {
         IDeck<IProgramCard> deck = new ProgramDeck();
         int size = deck.numberOfCards();
         deck.insert(new MoveCard(0, MoveCard.Direction.FORWARDS, 2));
@@ -32,7 +32,7 @@ public class CardTests {
 
 
     @Test
-    public void priorityTest() {
+    public void uniquePrioritiesInProgramDeckTest() {
         IDeck<IProgramCard> deck = new ProgramDeck();
         HashSet<Integer> set = new HashSet<>();
         while (deck.empty()) {
