@@ -19,13 +19,13 @@ public class ServerTest {
     public void setUp() throws URISyntaxException {
         server = new ServerMain(new InetSocketAddress("localhost", 8887));
         server.start();
-        client = new RemoteServerHandler(new URI("ws://localhost:8887"), null);
+        client = new RemoteServerHandler(null);
     }
 
     @Test
     public void clientConnectToServer() {
         try {
-            client.connectBlocking();
+            client.connect();
         } catch (InterruptedException e) {
             fail();
         }
@@ -33,7 +33,7 @@ public class ServerTest {
 
     @After
     public void tearDown() throws InterruptedException, IOException {
-        client.closeBlocking();
+        client.close();
         server.stop();
     }
 }

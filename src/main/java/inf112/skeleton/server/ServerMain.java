@@ -55,7 +55,7 @@ public class ServerMain extends WebSocketServer {
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        String host = "localhost";
+        String host = "0.0.0.0";
         int port = 8887;
 
         // TODO: Initialize a roborally game room
