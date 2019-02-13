@@ -1,5 +1,6 @@
-package inf112.skeleton.app.core;
+package inf112.skeleton.app.core.board;
 
+import inf112.skeleton.app.core.Position;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.enums.Direction;
 import inf112.skeleton.app.interfaces.IRobot;
