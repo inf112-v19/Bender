@@ -1,5 +1,5 @@
 package inf112.skeleton.app.enums;
 
 public enum Dir {
-    NORTH, SOUTH, EAST, WEST
+    NORTH, SOUTH, EAST, WEST, NONE
 }

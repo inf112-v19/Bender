@@ -1,7 +1,5 @@
 package inf112.skeleton.app.interfaces;
 
-import inf112.skeleton.app.interfaces.ITile;
-
 public interface IBoard {
     ITile getTile(int x, int y);    // Method for getting a tile in pos (x,y)
 
