@@ -20,14 +20,14 @@ public class Tile {
      *
      * @return The check result
      */
-    boolean canMove(Dir dir) {
+    public boolean canMove(Dir dir) {
         return false;
     }
 
-    IRobot getRobot() {
+    public IRobot getRobot() {
         return this.robot;
     }
-    void setRobot(IRobot robot) {
+    public void setRobot(IRobot robot) {
         this.robot = robot;
     }
 
@@ -35,7 +35,7 @@ public class Tile {
      * Method for checking if tile has flag
      *
      * @return Result of check*/
-    boolean hasFlag() {
+    public boolean hasFlag() {
         return !(this.flag == null);
     }
 
@@ -43,7 +43,7 @@ public class Tile {
      * Method for getting the the current flag
      *
      * @return The flag*/
-    Flag getFlag() {
+    public Flag getFlag() {
         if(this.hasFlag())
             return this.flag;
 
