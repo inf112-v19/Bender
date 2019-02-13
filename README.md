@@ -6,3 +6,24 @@
 
 [![Open Issues](https://img.shields.io/github/issues-raw/inf112-v19/Bender.svg?maxAge=2592000&colorB=critical)]() 
 [![GClosed Issues](https://img.shields.io/github/issues-closed-raw/inf112-v19/Bender.svg?maxAge=2592000)]()
+
+# Documentation
+## The board loader
+* The board loader can be used to parse text-files into two-dimensional arrays of tiles.
+* The file format:
+    * The file should start with two integers, *width* and *height*.
+    * The next *height* lines should contain *width* integers seperated by spaces.
+    * Example
+```
+10 10
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 2 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 1 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 2 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 1 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+```
