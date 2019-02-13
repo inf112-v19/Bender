@@ -3,7 +3,7 @@ package inf112.skeleton.app.core;
 import inf112.skeleton.app.enums.Direction;
 import inf112.skeleton.app.interfaces.IRobot;
 
-abstract class Robot implements IRobot {
+class Robot implements IRobot {
 
     private int robotEnergy = 100;
     private Direction robotDirection;

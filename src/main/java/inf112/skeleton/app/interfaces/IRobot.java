@@ -6,9 +6,7 @@ import inf112.skeleton.app.enums.Direction;
 public interface IRobot {
 
     public Direction getDirection(); // give current direction of robot as ENUM dir();
-    public void setDirection(Direction); // set direction after action from board (turn from card or tile)
-
-    void setDirection(Direction setDirection);
+    public void setDirection(Direction direction); // set direction after action from board (turn from card or tile)
 
     public int takeEnergy(int energy);    // receive damage (int) and update energy, return new energy (int)
     public int giveEnergy(int energy);    // boost energy (int) from action or card, return new energy (int)
