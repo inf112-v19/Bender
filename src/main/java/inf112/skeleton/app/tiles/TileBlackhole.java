@@ -4,9 +4,7 @@ import inf112.skeleton.app.interfaces.IRobot;
 
 public class TileBlackhole extends Tile {
 
-    public TileBlackhole(IRobot robot, Flag flag) {
-        super(robot, flag);
-    }
+    public TileBlackhole(IRobot robot, Flag flag) { super(robot, flag); }
 
     /**
      * Method for swallowing the robot into the black hole
