@@ -42,7 +42,8 @@ public class Tile {
     /**
      * Method for getting the the current flag
      *
-     * @return The flag*/
+     * @return The flag
+     */
     public Flag getFlag() {
         if(this.hasFlag())
             return this.flag;
@@ -60,9 +61,9 @@ public class Tile {
     public void moveRobot(Dir dir) throws Error {
         if(!this.canMove(dir)) return;
 
-        int dirInt = -1;
+        int dirInt;
         switch (dir) {
-            case NONE: break;
+            case NONE: return;
             case NORTH:
                 dirInt = 0;
                 break;
