@@ -2,15 +2,15 @@ package inf112.skeleton.app.interfaces;
 
 import inf112.skeleton.app.enums.TileType;
 import inf112.skeleton.app.enums.TileColor;
-import inf112.skeleton.app.enums.Dir;
+import inf112.skeleton.app.enums.Direction;
 
 public interface ITile {
     TileType getType();             // Method for getting the tile type
     void setType(TileType tile);    // Method for setting the tile type
 
-    ITile getNeighbor(Dir dir);     // Method for getting the nearest neighbor
+    ITile getNeighbor(Direction dir);     // Method for getting the nearest neighbor
 
-    boolean canMove(Dir dir);       // Method for checking if robot can mode in a direction
+    boolean canMove(Direction dir);       // Method for checking if robot can mode in a direction
 
     IRobot getRobot();              // Method for getting the current robot on the tile
     void setRobot(IRobot robot);    // Method for setting the current robot on the tile

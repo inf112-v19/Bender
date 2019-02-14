@@ -1,6 +1,7 @@
 package inf112.skeleton.app.interfaces;
 
-import inf112.skeleton.app.cards.IProgramCard;
+import inf112.skeleton.app.core.cards.IProgramCard;
+import inf112.skeleton.app.core.IBoard;
 
 /**
  * Handler for server responses. #API implementation

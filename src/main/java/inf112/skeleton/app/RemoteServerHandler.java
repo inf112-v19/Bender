@@ -1,9 +1,9 @@
 package inf112.skeleton.app;
 
-import inf112.skeleton.app.cards.IProgramCard;
+import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.interfaces.API;
 import inf112.skeleton.app.interfaces.IAction;
-import inf112.skeleton.app.interfaces.IBoard;
+import inf112.skeleton.app.core.IBoard;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
