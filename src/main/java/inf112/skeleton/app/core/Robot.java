@@ -20,7 +20,7 @@ class Robot implements IRobot {
 
     @Override
     public int takeEnergy(int drawEnergy) {
-        robotEnergy += drawEnergy;
+        robotEnergy -= drawEnergy;
         return robotEnergy;
     }
 
