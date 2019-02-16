@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import inf112.skeleton.app.RobotDemo;
 
 import java.util.ArrayDeque;
@@ -22,8 +21,6 @@ public class RoundState extends State {
     private CustomImageButton confirm;
     private CustomImageButton reset;
 
-
-    //TODO: make button a genereic method/class
     public RoundState(GameStateManager gsm) {
         super(gsm);
         order = new ArrayDeque();
@@ -32,7 +29,7 @@ public class RoundState extends State {
 
         initializeTextures();
         makeCardButtons();
-        makeConfirmButtons();
+        makeConfirmationButtons();
     }
 
     public void initializeTextures() {
@@ -50,7 +47,7 @@ public class RoundState extends State {
         }
     }
 
-    public void makeConfirmButtons() {
+    public void makeConfirmationButtons() {
         confirm = new CustomImageButton("Confirm.png", "Confirm.png", RobotDemo.WIDTH - 300, RobotDemo.CARD_WIDTH / 2, 100, 50);
         reset = new CustomImageButton("Reset.png", "Reset.png", RobotDemo.WIDTH - 300, 30, 100, 50);
         confirm.getButton().addListener(new InputListener() {
@@ -123,6 +120,10 @@ public class RoundState extends State {
 
     @Override
     public void dispose() {
+        confirm.getTexture().dispose();
+        reset.getTexture().dispose();
+        cardBackground.dispose();
+        tileTexture.dispose();
 
     }
 }
