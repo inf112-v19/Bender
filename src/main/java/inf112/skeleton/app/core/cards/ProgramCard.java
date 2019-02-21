@@ -1,4 +1,4 @@
-package inf112.skeleton.app.cards;
+package inf112.skeleton.app.core.cards;
 
 public abstract class ProgramCard implements IProgramCard {
 
@@ -12,6 +12,4 @@ public abstract class ProgramCard implements IProgramCard {
     public int priority() {
         return this.priority;
     }
-
-    public abstract void execute();
 }

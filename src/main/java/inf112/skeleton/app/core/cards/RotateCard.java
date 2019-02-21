@@ -1,4 +1,4 @@
-package inf112.skeleton.app.cards;
+package inf112.skeleton.app.core.cards;
 
 public class RotateCard extends ProgramCard {
 
@@ -9,9 +9,5 @@ public class RotateCard extends ProgramCard {
     public RotateCard(int priority, Direction dir) {
         super(priority);
         this.dir = dir;
-    }
-
-    public void execute() {
-        // TODO: implement
     }
 }
