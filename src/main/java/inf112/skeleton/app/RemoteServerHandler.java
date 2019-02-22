@@ -1,5 +1,7 @@
 package inf112.skeleton.app;
 
+import com.google.gson.Gson;
+import inf112.skeleton.app.core.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.interfaces.API;
 import inf112.skeleton.app.interfaces.IAction;
@@ -15,10 +17,15 @@ import java.util.Scanner;
 public class RemoteServerHandler extends API {
 
     private WebSocketClient client;
+    private Gson json = new Gson();
 
     public RemoteServerHandler(IAction handler) throws URISyntaxException {
         super(handler);
-        client = new WSC(new URI("ws://localhost:8887"));
+        newClient();
+    }
+
+    private WebSocketClient newClient() throws URISyntaxException {
+        return client = new WSC(new URI("ws://localhost:8887"));
     }
 
     @Override
@@ -31,12 +38,16 @@ public class RemoteServerHandler extends API {
         client.send("DRAWCARD");
     }
 
+    public WebSocketClient getClient() {
+        return client;
+    }
+
     public static void main(String[] args) throws URISyntaxException, InterruptedException {
         RemoteServerHandler client;
         mainHandler handler = new mainHandler();
         Scanner sc = new Scanner(System.in);
+        client = new RemoteServerHandler(handler);
         while (true) {
-            client = new RemoteServerHandler(handler);
             client.handler.handleINFO("Connecting...");
             client.connect();
             if (client.isOpen()) {
@@ -48,6 +59,8 @@ public class RemoteServerHandler extends API {
                     return;
                 }
             }
+
+            client.newClient();
         }
         while(sc.hasNext()) {
             String next = sc.next();
@@ -120,7 +133,7 @@ public class RemoteServerHandler extends API {
         public void onMessage(String message) {
             System.out.println("received message: " + message);
             if (message.length()>8 && message.substring(0, 8).equals("BOARD")) {
-                // handler.handleBOARD(message.substring(9));
+                handler.handleBOARD(json.fromJson(message.substring(9), Board.class));
             }
         }
 

@@ -3,8 +3,13 @@ package inf112.skeleton.server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.util.Map;
 import java.util.Scanner;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import inf112.skeleton.app.utils.SerialFormat;
+import javafx.util.Pair;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -17,8 +22,8 @@ public class ServerMain extends WebSocketServer {
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        conn.send("Welcome to the server!"); //This method sends a message to the new client
-        broadcast( "new connection: " + handshake.getResourceDescriptor() ); //This method sends a message to all clients connected
+        // conn.send("Welcome to the server!"); //This method sends a message to the new client
+        // broadcast( "new connection: " + handshake.getResourceDescriptor() ); //This method sends a message to all clients connected
         System.out.println("new connection to " + conn.getRemoteSocketAddress());
     }
 
@@ -44,7 +49,7 @@ public class ServerMain extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-        System.err.println("an error occured on connection " + conn.getRemoteSocketAddress()  + ":" + ex);
+        System.err.println("an error occurred on connection " + conn.getRemoteSocketAddress()  + ":" + ex);
         // TODO: Figure out and handle errors
     }
 

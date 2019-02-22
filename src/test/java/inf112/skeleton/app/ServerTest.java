@@ -5,7 +5,6 @@ import org.junit.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import static org.junit.Assert.*;
