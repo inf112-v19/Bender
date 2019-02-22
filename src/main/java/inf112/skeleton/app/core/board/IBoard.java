@@ -6,7 +6,7 @@ import inf112.skeleton.app.enums.Direction;
 import inf112.skeleton.app.interfaces.IRobot;
 import inf112.skeleton.app.interfaces.ITile;
 
-public interface IBoard {
+public interface IBoard extends java.io.Serializable {
 
     /**
      * Get the tile at (x, y)
