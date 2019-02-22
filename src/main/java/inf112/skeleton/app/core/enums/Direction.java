@@ -1,4 +1,4 @@
-package inf112.skeleton.app.enums;
+package inf112.skeleton.app.core.enums;
 
 import inf112.skeleton.app.core.Position;
 

@@ -1,7 +1,7 @@
 // ** PROJECT BENDER / ROBOrally 2019
 // ** Created 1.feb 2019 Rune Thelen
 
-package inf112.skeleton.app;
+package inf112.skeleton.app.other;
 import java.io.*;
 import java.util.ArrayList;
 

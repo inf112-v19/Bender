@@ -1,4 +1,4 @@
-package inf112.skeleton.server;
+package inf112.skeleton.app.server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

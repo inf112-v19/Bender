@@ -1,6 +1,6 @@
-package inf112.skeleton.app.interfaces;
+package inf112.skeleton.app.core.interfaces;
 
-import inf112.skeleton.app.enums.Direction;
+import inf112.skeleton.app.core.enums.Direction;
 
 // RT initial setup jan 29/30 - 2019 - cont feb 12
 public interface IRobot {

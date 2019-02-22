@@ -1,4 +1,4 @@
-package inf112.skeleton.app.interfaces;
+package inf112.skeleton.app.core.interfaces;
 
 /**
  * Class for two way communication between server and client.

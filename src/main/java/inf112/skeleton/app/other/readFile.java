@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.other;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

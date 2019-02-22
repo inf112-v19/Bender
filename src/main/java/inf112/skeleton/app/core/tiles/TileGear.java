@@ -1,6 +1,6 @@
-package inf112.skeleton.app.tiles;
+package inf112.skeleton.app.core.tiles;
 
-import inf112.skeleton.app.interfaces.IRobot;
+import inf112.skeleton.app.core.interfaces.IRobot;
 
 public class TileGear extends Tile {
     private int angle;

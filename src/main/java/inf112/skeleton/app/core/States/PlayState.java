@@ -1,9 +1,9 @@
-package inf112.skeleton.app.States;
+package inf112.skeleton.app.core.States;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.skeleton.app.RobotDemo;
+import inf112.skeleton.app.libgdx.RobotDemo;
 
 public class PlayState extends State {
 
@@ -13,9 +13,9 @@ public class PlayState extends State {
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        card = new Texture(Gdx.files.internal("res\\Card.png"));
-        cardBackground = new Texture(Gdx.files.internal("res\\card_background.PNG"));
-        tile = new Texture(Gdx.files.internal("res\\dungeon_tile.png"));
+        card = new Texture(Gdx.files.internal("res/card.png"));
+        cardBackground = new Texture(Gdx.files.internal("res/card_background.png"));
+        tile = new Texture(Gdx.files.internal("res/dungeon_tile.png"));
     }
 
     @Override

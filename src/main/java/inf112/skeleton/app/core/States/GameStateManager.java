@@ -1,4 +1,4 @@
-package inf112.skeleton.app.States;
+package inf112.skeleton.app.core.States;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

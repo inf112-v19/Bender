@@ -1,7 +1,7 @@
-package inf112.skeleton.app.tiles;
+package inf112.skeleton.app.core.tiles;
 
-import inf112.skeleton.app.interfaces.IRobot;
-import inf112.skeleton.app.enums.Dir;
+import inf112.skeleton.app.core.interfaces.IRobot;
+import inf112.skeleton.app.core.enums.Dir;
 
 public class TileAssemblyLine extends Tile {
     private int strength;

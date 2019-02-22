@@ -1,4 +1,4 @@
-package inf112.skeleton.app.tiles;
+package inf112.skeleton.app.core.tiles;
 
 public class Flag {
     private int ordinal;

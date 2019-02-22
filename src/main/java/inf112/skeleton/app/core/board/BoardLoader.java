@@ -1,6 +1,6 @@
 package inf112.skeleton.app.core.board;
 
-import inf112.skeleton.app.interfaces.ITile;
+import inf112.skeleton.app.core.tiles.Tile;
 
 import java.io.*;
 
@@ -40,9 +40,9 @@ public class BoardLoader {
      * @return
      * @throws IOException
      */
-    public static ITile[][] loadBoard(String fileName) throws IOException {
+    public static Tile[][] loadBoard(String fileName) throws IOException {
         int[][] file = loadFile(fileName);
-        ITile[][] tiles = new ITile[file.length][file[0].length];
+        Tile[][] tiles = new Tile[file.length][file[0].length];
         for (int i = 0; i < file.length; i++) {
             for (int j = 0; j < file[i].length; j++) {
                 tiles[i][j] = getTile(file[i][j]);
@@ -81,7 +81,7 @@ public class BoardLoader {
      * @param type
      * @return
      */
-    private static ITile getTile(int type) {
+    private static Tile getTile(int type) {
         switch (type) {
             case EMPTY: return null;
             case ROTATE_LEFT: return null;

@@ -1,10 +1,7 @@
 package inf112.skeleton.app.core.cards;
 
-import inf112.skeleton.app.interfaces.IPlayer;
-
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class Deck<T> implements IDeck<T> {
 

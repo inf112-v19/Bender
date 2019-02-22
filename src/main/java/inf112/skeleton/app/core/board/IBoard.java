@@ -2,9 +2,9 @@ package inf112.skeleton.app.core.board;
 
 import inf112.skeleton.app.core.Position;
 import inf112.skeleton.app.core.cards.IProgramCard;
-import inf112.skeleton.app.enums.Direction;
-import inf112.skeleton.app.interfaces.IRobot;
-import inf112.skeleton.app.interfaces.ITile;
+import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.core.interfaces.IRobot;
+import inf112.skeleton.app.core.tiles.Tile;
 
 public interface IBoard extends java.io.Serializable {
 
@@ -14,14 +14,14 @@ public interface IBoard extends java.io.Serializable {
      * @param y
      * @return
      */
-    ITile getTile(int x, int y);    // Method for getting a tile in pos (x,y)
+    Tile getTile(int x, int y);    // Method for getting a tile in pos (x,y)
 
     /**
      * Get the tile at (position.x, position.y)
      * @param position
      * @return
      */
-    ITile getTile(Position position);
+    Tile getTile(Position position);
 
     /**
      * Execute a program card on a robot

@@ -1,11 +1,11 @@
 package inf112.skeleton.app;
 
-import inf112.skeleton.server.ServerMain;
+import inf112.skeleton.app.server.RemoteServerHandler;
+import inf112.skeleton.app.server.ServerMain;
 import org.junit.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import static org.junit.Assert.*;

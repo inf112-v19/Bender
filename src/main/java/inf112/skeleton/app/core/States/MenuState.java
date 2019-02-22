@@ -1,4 +1,4 @@
-package inf112.skeleton.app.States;
+package inf112.skeleton.app.core.States;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import inf112.skeleton.app.RobotDemo;
+import inf112.skeleton.app.libgdx.RobotDemo;
 
 public class MenuState extends State {
     private Texture background;
@@ -30,9 +30,9 @@ public class MenuState extends State {
         super(gsm);
         touched = false;
 
-        playButtonTexturePressed = new Texture(Gdx.files.internal("res\\New Game Button Pressed.png"));
-        background = new Texture(Gdx.files.internal("res\\main_menu.png"));
-        playButtonTexture = new Texture(Gdx.files.internal("res\\New Game Button.png"));
+        playButtonTexturePressed = new Texture(Gdx.files.internal("res/new_game_button_pressed.png"));
+        background = new Texture(Gdx.files.internal("res/main_menu.png"));
+        playButtonTexture = new Texture(Gdx.files.internal("res/new_game_button.png"));
 
 
         stage = new Stage(new ScreenViewport());

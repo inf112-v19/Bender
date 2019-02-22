@@ -1,4 +1,4 @@
-package inf112.skeleton.app.interfaces;
+package inf112.skeleton.app.core.interfaces;
 
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
