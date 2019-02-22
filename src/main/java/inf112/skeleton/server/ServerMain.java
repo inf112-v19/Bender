@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import inf112.skeleton.app.utils.SerialFormat;
 import javafx.util.Pair;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
