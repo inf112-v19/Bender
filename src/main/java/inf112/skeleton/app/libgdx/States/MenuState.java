@@ -1,4 +1,4 @@
-package inf112.skeleton.app.core.States;
+package inf112.skeleton.app.libgdx.States;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

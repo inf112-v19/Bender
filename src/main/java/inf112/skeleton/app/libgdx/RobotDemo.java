@@ -5,8 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.skeleton.app.core.States.GameStateManager;
-import inf112.skeleton.app.core.States.MenuState;
+import inf112.skeleton.app.libgdx.States.GameStateManager;
+import inf112.skeleton.app.libgdx.States.MenuState;
 
 public class RobotDemo extends ApplicationAdapter {
 
