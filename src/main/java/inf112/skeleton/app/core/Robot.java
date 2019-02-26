@@ -1,7 +1,7 @@
 package inf112.skeleton.app.core;
 
-import inf112.skeleton.app.core.enums.Direction;
-import inf112.skeleton.app.core.interfaces.IRobot;
+import inf112.skeleton.app.enums.Direction;
+import inf112.skeleton.app.interfaces.IRobot;
 
 class Robot implements IRobot {
 

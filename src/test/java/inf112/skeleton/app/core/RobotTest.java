@@ -3,7 +3,8 @@ package inf112.skeleton.app.core;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.enums.Direction;
+import org.junit.Before;
 import org.junit.Test;
 
 
