@@ -1,8 +1,9 @@
 package inf112.skeleton.app;
 
-import inf112.skeleton.server.ServerMain;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
+import inf112.skeleton.app.server.RemoteServerHandler;
+import inf112.skeleton.app.server.ServerMain;
 import org.junit.*;
 
 import java.io.IOException;
