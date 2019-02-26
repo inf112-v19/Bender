@@ -38,6 +38,16 @@ public class RemoteServerHandler extends API {
         client.send("DRAWCARD");
     }
 
+    @Override
+    public void createRoom() {
+        client.send("CREATEROOM");
+    }
+
+    @Override
+    public void joinRoom(String id) {
+        client.send(String.format("JOINROOM {\"roomId\":\"%s\"}", id));
+    }
+
     public WebSocketClient getClient() {
         return client;
     }
@@ -55,7 +65,7 @@ public class RemoteServerHandler extends API {
                 break;
             } else {
                 client.handler.handleERROR("Failed to connect... retry? ([y]/n)");
-                if (sc.next().charAt(0) == 'n') {
+                if (sc.nextLine().charAt(0) == 'n') {
                     return;
                 }
             }
@@ -63,7 +73,7 @@ public class RemoteServerHandler extends API {
             client.newClient();
         }
         while(sc.hasNext()) {
-            String next = sc.next();
+            String next = sc.nextLine();
             if (next.equals("stop")) break;
             client.client.send(next);
         }

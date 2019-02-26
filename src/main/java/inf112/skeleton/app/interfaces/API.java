@@ -33,6 +33,8 @@ public abstract class API {
     }
 
     public abstract void getBoard();
-
     public abstract void drawCard();
+
+    public abstract void createRoom();
+    public abstract void joinRoom(String id);
 }
