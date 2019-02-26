@@ -1,6 +1,6 @@
 package inf112.skeleton.app.core.enums;
 
-import inf112.skeleton.app.core.Position;
+import inf112.skeleton.app.core.position.Position;
 
 public enum Direction {
 
