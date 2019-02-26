@@ -5,7 +5,6 @@ import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.interfaces.IRobot;
 import inf112.skeleton.app.core.tiles.Tile;
-
 import java.util.HashMap;
 
 public class Board implements IBoard {

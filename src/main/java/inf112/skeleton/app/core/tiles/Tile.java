@@ -1,6 +1,6 @@
 package inf112.skeleton.app.core.tiles;
 
-import inf112.skeleton.app.core.enums.Dir;
+import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.interfaces.IRobot;
 
 public class Tile {
@@ -20,7 +20,7 @@ public class Tile {
      *
      * @return The check result
      */
-    public boolean canMove(Dir dir) {
+    public boolean canMove(Direction dir) {
         return false;
     }
 
@@ -58,12 +58,11 @@ public class Tile {
      *
      * @throws Error if the direction is invalid
      */
-    public void moveRobot(Dir dir) throws Error {
+    public void moveRobot(Direction dir) throws Error {
         if(!this.canMove(dir)) return;
 
         int dirInt;
         switch (dir) {
-            case NONE: return;
             case NORTH:
                 dirInt = 0;
                 break;
@@ -87,5 +86,5 @@ public class Tile {
         this.robot = null;
     }
 
-    public void exec() { this.moveRobot(Dir.NONE); }
+    public void exec() { /**/ }
 }
