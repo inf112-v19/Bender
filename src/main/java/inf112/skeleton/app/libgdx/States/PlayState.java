@@ -13,9 +13,9 @@ public class PlayState extends State {
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        card = new Texture(Gdx.files.internal("res/cards/card.png"));
-        cardBackground = new Texture(Gdx.files.internal("res/cards/card_background.png"));
-        tile = new Texture(Gdx.files.internal("res/tiles/dungeon_tile.png"));
+        card = new Texture(Gdx.files.internal("src/main/resources/cards/card.png"));
+        cardBackground = new Texture(Gdx.files.internal("src/main/resources/cards/card_background.png"));
+        tile = new Texture(Gdx.files.internal("src/main/resources/tiles/dungeon_tile.png"));
     }
 
     @Override

@@ -30,9 +30,9 @@ public class MenuState extends State {
         super(gsm);
         touched = false;
 
-        playButtonTexturePressed = new Texture(Gdx.files.internal("res/buttons/new_game_button_pressed.png"));
-        background = new Texture(Gdx.files.internal("res/other/main_menu.png"));
-        playButtonTexture = new Texture(Gdx.files.internal("res/buttons/new_game_button.png"));
+        playButtonTexturePressed = new Texture(Gdx.files.internal("src/main/resources/buttons/new_game_button_pressed.png"));
+        background = new Texture(Gdx.files.internal("src/main/resources/other/main_menu.png"));
+        playButtonTexture = new Texture(Gdx.files.internal("src/main/resources/buttons/new_game_button.png"));
 
 
         stage = new Stage(new ScreenViewport());
