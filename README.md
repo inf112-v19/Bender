@@ -12,3 +12,7 @@
 
 ## Tests
 * Execute `mvn test` in the root folder of the project to run all tests
+
+## Wiki
+* [How to use maven](https://github.com/inf112-v19/Bender/wiki/How-to-use-maven)
+* [Server client specification](https://github.com/inf112-v19/Bender/wiki)
