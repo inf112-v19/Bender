@@ -1,8 +1,7 @@
 package inf112.skeleton.app.core.robot;
 
-import inf112.skeleton.app.core.cards.ProgramCard;
+import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
-import inf112.skeleton.app.core.robot.IRobot;
 
 import java.util.ArrayList;
 
@@ -10,7 +9,7 @@ class Robot implements IRobot {
 
     private int robotEnergy = 100;
     private Direction robotDirection;
-    private ArrayList<ProgramCard> cards = new ArrayList<>();
+    private ArrayList<IProgramCard> cards = new ArrayList<>();
 
     public Robot(Direction robotDirection) {
         this.robotDirection = robotDirection;
@@ -39,20 +38,20 @@ class Robot implements IRobot {
     }
 
     @Override
-    public int checkEnergy() {
+    public int getEnergy() {
         return robotEnergy;
     }
 
     @Override
     public void shootLazer() {
-        // Unsure how to implement. Must be related to board/tiles somehow
+        // TODO: implement
     }
 
-    public void addCard(ProgramCard card) {
+    public void addCard(IProgramCard card) {
         this.cards.add(card);
     }
 
-    public ProgramCard drawCard() {
+    public IProgramCard drawCard() {
         if(this.cards.size() == 0) return null;
         return this.cards.remove(this.cards.size()-1);
     }
