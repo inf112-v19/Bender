@@ -1,4 +1,4 @@
-package inf112.skeleton.app.core;
+package inf112.skeleton.app.core.card;
 
 import inf112.skeleton.app.core.cards.*;
 
