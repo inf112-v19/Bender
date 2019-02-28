@@ -1,5 +1,7 @@
 package inf112.skeleton.app.core.board;
 
+import inf112.skeleton.app.core.cards.MoveCard;
+import inf112.skeleton.app.core.cards.RotateCard;
 import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
@@ -41,7 +43,12 @@ public class Board implements IBoard {
 
     @Override
     public void moveRobot(IRobot robot, IProgramCard card) {
-        // TODO: implement
+        if (card instanceof RotateCard) {
+            Direction newDirection = ((RotateCard) card).getDir(robot.getDirection());
+            robot.setDirection(newDirection);
+        } else if (card instanceof MoveCard) {
+
+        }
     }
 
     @Override
@@ -49,7 +56,7 @@ public class Board implements IBoard {
         Position position = robots.get(robot);
         Position newPosition = dir.getNewPosition(position);
         if (withinBounds(newPosition)) {
-            // TODO: implement
+
         } else {
             // TODO: implement
         }
@@ -66,7 +73,12 @@ public class Board implements IBoard {
     }
 
     public void stepRobots() {
-        // TODO: Call exec method on all robots on board
+        for (IRobot robot : robots.keySet()) {
+            IProgramCard card = robot.drawCard();
+            if (card != null) {
+                moveRobot(robot, card);
+            }
+        }
     }
 
     public void stepTiles() {

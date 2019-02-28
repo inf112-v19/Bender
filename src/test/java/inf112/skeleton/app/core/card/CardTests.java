@@ -26,7 +26,7 @@ public class CardTests {
     public void sizeWhenInsertingCardsTest() {
         IDeck<IProgramCard> deck = new ProgramDeck();
         int size = deck.numberOfCards();
-        deck.insert(new MoveCard(0, MoveCard.Direction.FORWARDS, 2));
+        deck.insert(new MoveCard(0, MoveCard.MoveDirection.FORWARDS, 2));
         assertTrue(deck.numberOfCards() == size + 1);
     }
 

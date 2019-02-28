@@ -2,14 +2,15 @@ package inf112.skeleton.app.core.cards;
 
 public class MoveCard extends ProgramCard {
 
-    public enum Direction { FORWARDS, BACKWARDS }
+    public enum MoveDirection { FORWARDS, BACKWARDS }
 
     private final int ammount;
-    private final Direction dir;
+    private final MoveDirection dir;
 
-    public MoveCard(int priority, Direction dir, int ammount) {
+    public MoveCard(int priority, MoveDirection dir, int ammount) {
         super(priority);
         this.dir = dir;
         this.ammount = ammount;
     }
 }
+
