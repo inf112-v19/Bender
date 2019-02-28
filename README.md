@@ -7,23 +7,13 @@
 [![Open Issues](https://img.shields.io/github/issues-raw/inf112-v19/Bender.svg?maxAge=2592000&colorB=critical)]() 
 [![GClosed Issues](https://img.shields.io/github/issues-closed-raw/inf112-v19/Bender.svg?maxAge=2592000)]()
 
-# Documentation
-## The board loader
-* The board loader can be used to parse text-files into two-dimensional arrays of tiles.
-* The file format:
-    * The file should start with two integers, *width* and *height*.
-    * The next *height* lines should contain *width* integers seperated by spaces.
-    * Example
-```
-10 10
-0 0 0 0 0 0 0 0 0 0
-0 0 0 0 0 2 0 0 0 0
-0 0 0 0 0 0 0 0 0 0
-0 0 1 0 0 0 0 0 0 0
-0 0 0 0 0 0 0 0 0 0
-0 0 0 0 0 0 0 0 0 0
-0 0 0 0 0 2 0 0 0 0
-0 0 0 0 0 0 0 0 0 0
-0 0 1 0 0 0 0 0 0 0
-0 0 0 0 0 0 0 0 0 0
-```
+## Build
+* Run `mvn install` in the root folder of the project
+* This will create three jar files in *target/*
+   * libgdx-app.jar: the libgdx application
+   * server-app.jar: the server application
+   * client-app.jar: the client application
+* To run a jar file type `java -jar sample.jar`
+
+## Test
+* Run `mvn test` in the root folder of the project
