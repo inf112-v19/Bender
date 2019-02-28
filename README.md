@@ -8,12 +8,12 @@
 [![GClosed Issues](https://img.shields.io/github/issues-closed-raw/inf112-v19/Bender.svg?maxAge=2592000)]()
 
 ## Build
-* Run `mvn install` in the root folder of the project
+* Execute `mvn install` in the root folder of the project
 * This will create three jar files in *target/*
-   * libgdx-app.jar: the libgdx application
-   * server-app.jar: the server application
-   * client-app.jar: the client application
+   * *libgdx-app.jar*: the libgdx application
+   * *server-app.jar*: the server application
+   * *client-app.jar*: the client application
 * To run a jar file type `java -jar sample.jar`
 
-## Test
-* Run `mvn test` in the root folder of the project
+## Tests
+* Execute `mvn test` in the root folder of the project to run all tests
