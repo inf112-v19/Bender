@@ -1,15 +1,24 @@
 package inf112.skeleton.app.libgdx.States;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.libgdx.RobotDemo;
 import inf112.skeleton.app.libgdx.VisualBoardLoader;
 
 import java.io.IOException;
 
-public class PhaseState extends State{
+public class PhaseState extends State {
     private VisualBoardLoader visualBoardLoader;
+    private Texture boardBackground;
     protected PhaseState(GameStateManager gsm) throws IOException {
         super(gsm);
         visualBoardLoader = new VisualBoardLoader("res/boards/sampleboard1.txt");
+        initializeTextures();
+    }
+
+    private void initializeTextures() {
+        boardBackground = new Texture(Gdx.files.internal("res/boards/board_background_new.png"));
     }
 
     @Override
@@ -25,7 +34,11 @@ public class PhaseState extends State{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        visualBoardLoader.renderBoard(sb);
+        sb.draw(boardBackground, 0, 0);
+        int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
+        System.out.println("y:" + (RobotDemo.WIDTH/2 - temp));
+        System.out.println("x:" + (RobotDemo.HEIGHT/2 - temp));
+        visualBoardLoader.renderBoard(sb, RobotDemo.WIDTH / 2 - temp, RobotDemo.HEIGHT / 2 - temp);
         sb.end();
 
     }
