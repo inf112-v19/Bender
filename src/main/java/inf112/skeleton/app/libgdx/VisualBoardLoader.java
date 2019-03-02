@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO add comments
 public class VisualBoardLoader {
     private BoardLoader boardloader;
     private Map<Integer, String> tilePathNameToNumber;

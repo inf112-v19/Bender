@@ -36,8 +36,6 @@ public class PhaseState extends State {
         sb.begin();
         sb.draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
-        System.out.println("y:" + (RobotDemo.WIDTH/2 - temp));
-        System.out.println("x:" + (RobotDemo.HEIGHT/2 - temp));
         visualBoardLoader.renderBoard(sb, RobotDemo.WIDTH / 2 - temp, RobotDemo.HEIGHT / 2 - temp);
         sb.end();
 

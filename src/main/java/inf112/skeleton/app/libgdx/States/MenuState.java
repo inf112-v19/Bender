@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.libgdx.RobotDemo;
 
+import java.io.IOException;
+
 public class MenuState extends State {
     private CustomImageButton myButton;
     private ImageButton button;
@@ -71,7 +73,11 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (touched) {
-            gsm.set(new RoundState(gsm));
+            try {
+                gsm.set(new RoundState(gsm));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             dispose();
         }
     }
