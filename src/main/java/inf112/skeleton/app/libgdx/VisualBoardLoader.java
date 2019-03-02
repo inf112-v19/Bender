@@ -3,10 +3,8 @@ package inf112.skeleton.app.libgdx;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.BoardLoader;
-import inf112.skeleton.app.core.tiles.Tile;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,12 +14,14 @@ public class VisualBoardLoader {
     private BoardLoader boardloader;
     private Map<Integer, String> tilePathNameToNumber;
     private Texture[] tileTextures;
-    int[][] tiles;
+    private int[][] tiles;
+    private int tileWidthHeight;
 
     public VisualBoardLoader(String filepath) throws IOException {
         tileTextures = new Texture[15];
         tilePathNameToNumber = new HashMap<>();
         boardloader = new BoardLoader();
+        tileWidthHeight = 64;
 
         makeMap();
         initializeTextures();
@@ -29,18 +29,33 @@ public class VisualBoardLoader {
         tiles = boardloader.loadFile(filepath);
     }
 
+    public int getTileWidthHeight() {
+        return tileWidthHeight;
+    }
+
     private void initializeTextures() {
-        for (int i = 0; i < tileTextures.length; i++) {
+        for (int i = 0; i < tileTextures.length; i++)
             tileTextures[i] = resizeTexture(64, 64, tilePathNameToNumber.get(i));
-//            tileTextures[i] = new Texture(Gdx.files.internal(tilePathNameToNumber.get(i)));
-        }
+    }
+
+    public void initializeCustomSizeTextures(int width, int height) {
+        tileWidthHeight = height;
+        for (int i = 0; i < tileTextures.length; i++)
+            tileTextures[i] = resizeTexture(width, height, tilePathNameToNumber.get(i));
+    }
+
+    public void renderBoardCustomSize(SpriteBatch sb, int xStart, int yStart, int width, int height) {
+        initializeCustomSizeTextures(width, height);
+        for (int y = 0; y < tiles.length; y++)
+            for (int x = 0; x < tiles[y].length; x++)
+                sb.draw(tileTextures[tiles[x][y]], (x * width) + xStart, (y * height) + yStart);
     }
 
     //The SpriteBatch should be started prior calling this method
-    public void renderBoard(SpriteBatch sb) {
+    public void renderBoard(SpriteBatch sb, int xStart, int yStart) {
         for (int y = 0; y < tiles.length; y++)
             for (int x = 0; x < tiles[y].length; x++)
-                sb.draw(tileTextures[tiles[x][y]], x * 64, y * 64);
+                sb.draw(tileTextures[tiles[x][y]], (x * 64) + xStart, (y * 64) + yStart);
     }
 
     private Texture resizeTexture(int newWidth, int newHeight, String path) {
