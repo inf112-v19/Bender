@@ -17,6 +17,7 @@ import inf112.skeleton.app.libgdx.VisualBoardLoader;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 public class RoundState extends State {
     private ProgramDeck deck;
@@ -30,7 +31,7 @@ public class RoundState extends State {
     private ArrayDeque<IProgramCard> chosenCards;
     private BitmapFont font;
     private GlyphLayout[] visualCardSequencing;
-    private int latestSelectedCardPos;
+    private ArrayList<Integer> selectedCardPosX;
     private VisualBoardLoader visualBoardLoader;
 
 
@@ -38,13 +39,14 @@ public class RoundState extends State {
     private CustomImageButton reset;
     private Texture boardBackground;
 
+    //TODO code quality, remove unnecessary stuff
     public RoundState(GameStateManager gsm) throws IOException {
         super(gsm);
         chosenCards = new ArrayDeque();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         selectedCard = new boolean[5];
-        latestSelectedCardPos = 0;
+        selectedCardPosX = new ArrayList();
         visualBoardLoader = new VisualBoardLoader("res/boards/sampleboard1.txt");
 
         initializeTextures();
@@ -110,21 +112,27 @@ public class RoundState extends State {
     //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
     public void handleVisualSelection() {
         if (chosenCards.size() > 0 && chosenCards.size() < 6)
-            drawSelectedNumber(chosenCards.size() - 1);
+            for (int i = 0; i <chosenCards.size() ; i++) {
+                drawSelectedNumber(chosenCards.size() - 1);
+            }
     }
 
     //Draw as in paint
     //Draws the currently selected card's number on board
     private void drawSelectedNumber(int selectedNum) {
         BitmapFontCache bc = new BitmapFontCache(font);
-        float xPos = ((RobotDemo.CARD_WIDTH * latestSelectedCardPos + RobotDemo.CARD_WIDTH / 4) + visualCardSequencing[selectedNum].width);
         float yPos = (RobotDemo.CARD_HEIGHT - 60 + visualCardSequencing[selectedNum].height);
-        bc.addText(visualCardSequencing[selectedNum], xPos, yPos);
+        for (int i = 0; i <selectedCardPosX.size() ; i++) {
+            float xPos = ((RobotDemo.CARD_WIDTH * selectedCardPosX.get(i) + RobotDemo.CARD_WIDTH / 4) + visualCardSequencing[i].width / 2);
+            bc.addText(visualCardSequencing[i], xPos, yPos);
+        }
         bc.draw(stage.getBatch());
     }
 
     public void disposeFonts() {
         font.dispose();
+        selectedCardPosX.clear();
+        createVisualCardSequencing();
     }
 
     public void makeConfirmationButtons() {
@@ -145,6 +153,7 @@ public class RoundState extends State {
                 chosenCards.clear();
                 disposeFonts();
                 confirmed = false;
+                createVisualCardSequencing();
                 return true;
             }
         });
@@ -173,7 +182,7 @@ public class RoundState extends State {
                     if (!chosenCards.contains(availableRoundCard[finalI]) && chosenCards.size() < 5) {
                         chosenCards.add(availableRoundCard[finalI]);
                         selectedCard[nth] = true;
-                        latestSelectedCardPos = finalI;
+                        selectedCardPosX.add(finalI);
                     }
 
                     return true;
