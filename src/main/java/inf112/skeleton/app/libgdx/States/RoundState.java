@@ -3,16 +3,19 @@ package inf112.skeleton.app.libgdx.States;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.skeleton.app.core.cards.IProgramCard;
-import inf112.skeleton.app.core.cards.ProgramCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.libgdx.RobotDemo;
+import inf112.skeleton.app.libgdx.VisualBoardLoader;
 
+
+import java.io.IOException;
 import java.util.ArrayDeque;
 
 public class RoundState extends State {
@@ -25,21 +28,24 @@ public class RoundState extends State {
     private IProgramCard[] availableRoundCard;
     private boolean[] selectedCard;
     private ArrayDeque<IProgramCard> chosenCards;
-    private BitmapFont[] font;
+    private BitmapFont font;
     private GlyphLayout[] visualCardSequencing;
     private int latestSelectedCardPos;
+    private VisualBoardLoader visualBoardLoader;
 
 
     private CustomImageButton confirm;
     private CustomImageButton reset;
+    private Texture boardBackground;
 
-    public RoundState(GameStateManager gsm) {
+    public RoundState(GameStateManager gsm) throws IOException {
         super(gsm);
         chosenCards = new ArrayDeque();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         selectedCard = new boolean[5];
         latestSelectedCardPos = 0;
+        visualBoardLoader = new VisualBoardLoader("res/boards/sampleboard1.txt");
 
         initializeTextures();
         makeCardButtons();
@@ -47,15 +53,15 @@ public class RoundState extends State {
         makeDeck();
     }
 
+    //Creates unique glyph layouts for each card
     public void createVisualCardSequencing() {
         visualCardSequencing = new GlyphLayout[5];
-        font = new BitmapFont[5];
         for (int i = 0; i < 5; i++) {
-            font[i] = new BitmapFont(Gdx.files.internal("res\\font\\font.fnt"), Gdx.files.internal("res\\font\\font.png"), false);
-            font[i].getData().setScale(0.5f, 0.5f);
-            font[i].setColor(90f / 255f, 14f / 255f, 14f / 255f, 255f / 255f);
-            String text = "" + (i+1);
-            visualCardSequencing[i] = new GlyphLayout(font[i], text);
+            font = new BitmapFont(Gdx.files.internal("res/font/font.fnt"), Gdx.files.internal("res/font/font.png"), false);
+            font.getData().setScale(0.5f, 0.5f);
+            font.setColor(90f / 255f, 14f / 255f, 14f / 255f, 255f / 255f);
+            String text = "" + (i + 1);
+            visualCardSequencing[i] = new GlyphLayout(font, text);
 
         }
     }
@@ -64,6 +70,8 @@ public class RoundState extends State {
         createVisualCardSequencing();
         cardBackground = new Texture(Gdx.files.internal("res/Card_background1.png"));
         tileTexture = new Texture(Gdx.files.internal("res/tiles/empty_tile.png"));
+        boardBackground = new Texture(Gdx.files.internal("res/boards/board_background_round.png"));
+
     }
 
     public void makeDeck() {
@@ -71,6 +79,7 @@ public class RoundState extends State {
         this.drawForRound();
     }
 
+    //Draw as in draw deck
     public void drawForRound() {
         availableRoundCard = new IProgramCard[9];
         for (int i = 0; i < 9; i++) {
@@ -86,29 +95,36 @@ public class RoundState extends State {
     // Handles criteria necessary for proceeding to the next stage
     public void handleNextStage() {
         if (chosenCards.size() == 5 && confirmed) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5; i++)
                 System.out.println(chosenCards.pop().priority());
+            try {
                 gsm.set(new PhaseState(gsm));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
 
     ///Draws numbers 1-5 to the position of chosen card
     //TODO adjusting for duplicates
+    //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
     public void handleVisualSelection() {
-        if (selectedCard.length != 0)
-            drawSelectedNumber(chosenCards.size());
+        if (chosenCards.size() > 0 && chosenCards.size() < 6)
+            drawSelectedNumber(chosenCards.size() - 1);
     }
 
+    //Draw as in paint
+    //Draws the currently selected card's number on board
     private void drawSelectedNumber(int selectedNum) {
-        float width = ((RobotDemo.CARD_WIDTH * latestSelectedCardPos+ RobotDemo.CARD_WIDTH / 4) + visualCardSequencing[selectedNum].width );
-        float height = (RobotDemo.CARD_HEIGHT - 60 + visualCardSequencing[selectedNum].height);
-        font[1].draw(stage.getBatch(), visualCardSequencing[selectedNum], width, height);
-//        font[selectedNum+1].draw(stage.getBatch(), visualCardSequencing[selectedNum], width, height);
+        BitmapFontCache bc = new BitmapFontCache(font);
+        float xPos = ((RobotDemo.CARD_WIDTH * latestSelectedCardPos + RobotDemo.CARD_WIDTH / 4) + visualCardSequencing[selectedNum].width);
+        float yPos = (RobotDemo.CARD_HEIGHT - 60 + visualCardSequencing[selectedNum].height);
+        bc.addText(visualCardSequencing[selectedNum], xPos, yPos);
+        bc.draw(stage.getBatch());
     }
+
     public void disposeFonts() {
-        for (int i = 0; i < font.length; i++)
-            font[i].dispose();
+        font.dispose();
     }
 
     public void makeConfirmationButtons() {
@@ -138,6 +154,7 @@ public class RoundState extends State {
     }
 
 
+    //Each card button has a listener for user input
     public void makeCardButtons() {
         cards = new CustomImageButton[9];
 
@@ -175,17 +192,19 @@ public class RoundState extends State {
     public void render(SpriteBatch sb) {
         stage.act();
         stage.getBatch().begin();
-        this.renderTiles(sb);
+        this.renderBoard((SpriteBatch) stage.getBatch());
         handleVisualSelection();
         stage.getBatch().end();
         stage.draw();
     }
 
-    public void renderTiles(SpriteBatch sb) { // Eventually should be implemented in board class, based on tile positions // board.draw();?
+    public void renderBoard(SpriteBatch sb) {
+        int height = (RobotDemo.HEIGHT - cardBackground.getHeight()) / 10;
+        stage.getBatch().draw(boardBackground, 0, 0);
+        int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
+        visualBoardLoader.renderBoardCustomSize(sb, RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
         stage.getBatch().draw(cardBackground, 0, 0);
-        for (int i = 0; i < RobotDemo.WIDTH; i += 64)
-            for (int j = 200; j < RobotDemo.HEIGHT; j += 64)
-                stage.getBatch().draw(tileTexture, i, j);
+
     }
 
     @Override
