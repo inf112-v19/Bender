@@ -1,6 +1,7 @@
 package inf112.skeleton.app.libgdx;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,20 +31,28 @@ public class VisualBoardLoader {
 
     private void initializeTextures() {
         for (int i = 0; i < tileTextures.length; i++) {
-            System.out.println(i);
-            System.out.println(tilePathNameToNumber.get(i));
-            tileTextures[i] = new Texture(Gdx.files.internal(tilePathNameToNumber.get(i)));
+            tileTextures[i] = resizeTexture(64, 64, tilePathNameToNumber.get(i));
+//            tileTextures[i] = new Texture(Gdx.files.internal(tilePathNameToNumber.get(i)));
         }
     }
+
     //The SpriteBatch should be started prior calling this method
     public void renderBoard(SpriteBatch sb) {
-        for (int y = 0; y < tiles.length; y++) {
-            for (int x = 0; x < tiles[y].length; x++) {
-                sb.draw(tileTextures[tiles[x][y]], x*64, y*64);
-            }
-        }
+        for (int y = 0; y < tiles.length; y++)
+            for (int x = 0; x < tiles[y].length; x++)
+                sb.draw(tileTextures[tiles[x][y]], x * 64, y * 64);
+    }
 
-
+    private Texture resizeTexture(int newWidth, int newHeight, String path) {
+        Pixmap pixmapOld = new Pixmap(Gdx.files.internal(path));
+        Pixmap pixmapNew = new Pixmap(newWidth, newHeight, pixmapOld.getFormat());
+        pixmapNew.drawPixmap(pixmapOld,
+                0, 0, pixmapOld.getWidth(), pixmapOld.getHeight(),
+                0, 0, pixmapNew.getWidth(), pixmapNew.getHeight()
+        );
+//        pixmapOld.dispose();
+//        pixmapNew.dispose();
+        return new Texture(pixmapNew);
     }
 
     private void makeMap() {
