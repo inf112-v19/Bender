@@ -1,4 +1,4 @@
-package inf112.skeleton.app.libgdx.States;
+package inf112.skeleton.app.libgdx.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,9 +25,7 @@ public class RoundState extends State {
     private Stage stage;
     private Texture tileTexture;
     private Texture cardBackground;
-    private CustomImageButton[] cards;
     private IProgramCard[] availableRoundCard;
-    private boolean[] selectedCard;
     private ArrayDeque<IProgramCard> chosenCards;
     private BitmapFont font;
     private GlyphLayout[] visualCardSequencing;
@@ -45,7 +43,6 @@ public class RoundState extends State {
         chosenCards = new ArrayDeque();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-        selectedCard = new boolean[5];
         selectedCardPosX = new ArrayList();
         visualBoardLoader = new VisualBoardLoader("res/boards/sampleboard1.txt");
 
@@ -165,7 +162,7 @@ public class RoundState extends State {
 
     //Each card button has a listener for user input
     public void makeCardButtons() {
-        cards = new CustomImageButton[9];
+        CustomImageButton[] cards = new CustomImageButton[9];
 
         for (int i = 0; i < 9; i++) {
             int x = RobotDemo.CARD_WIDTH * i + RobotDemo.CARD_WIDTH / 4;
@@ -175,13 +172,11 @@ public class RoundState extends State {
             cards[i] = new CustomImageButton("res/cards/card.png", "res/cards/card.png", x, y, width, height);
 
             final int finalI = i;
-            int nth = 0;
             cards[i].getButton().addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     if (!chosenCards.contains(availableRoundCard[finalI]) && chosenCards.size() < 5) {
                         chosenCards.add(availableRoundCard[finalI]);
-                        selectedCard[nth] = true;
                         selectedCardPosX.add(finalI);
                     }
 

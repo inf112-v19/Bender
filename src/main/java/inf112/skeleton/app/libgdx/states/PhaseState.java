@@ -1,4 +1,4 @@
-package inf112.skeleton.app.libgdx.States;
+package inf112.skeleton.app.libgdx.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,12 +23,13 @@ public class PhaseState extends State {
 
     @Override
     protected void handleInput() {
+        //TODO
 
     }
 
     @Override
     public void update(float dt) {
-
+        //TODO
     }
 
     @Override
@@ -38,11 +39,10 @@ public class PhaseState extends State {
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoard(sb, RobotDemo.WIDTH / 2 - temp, RobotDemo.HEIGHT / 2 - temp);
         sb.end();
-
     }
 
     @Override
     public void dispose() {
-
+        //TODO
     }
 }
