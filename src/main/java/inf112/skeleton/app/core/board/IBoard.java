@@ -23,15 +23,6 @@ public interface IBoard extends java.io.Serializable {
      */
     ITile getTile(Position position);
 
-   /**
-    * Method for checking if robot can mode in a direction
-    *
-    * @param dir The direction to check
-    *
-    * @return The check result
-    */
-    boolean canMove(Direction dir);
-
     /**
      * Execute a program card on a robot
      * @param robot
@@ -40,9 +31,11 @@ public interface IBoard extends java.io.Serializable {
     void moveRobot(IRobot robot, IProgramCard card);
 
     /**
-     * Move a robot one square in a direction
+     *
      * @param robot
      * @param dir
+     * @param amount
+     * @return true if the robot moved
      */
-    void moveRobot(IRobot robot, Direction dir);
+    boolean moveRobot(IRobot robot, Direction dir, int amount);
 }

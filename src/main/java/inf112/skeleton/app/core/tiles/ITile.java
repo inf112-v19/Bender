@@ -1,10 +1,15 @@
 package inf112.skeleton.app.core.tiles;
 
+import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 
 public interface ITile {
+
     IRobot getRobot();
+
     void setRobot(IRobot robot);
+
+    boolean hasRobot();
 
    /**
     * Method for checking if tile has flag
@@ -24,4 +29,6 @@ public interface ITile {
     * Method for performing an operation in the robot
     */
     void exec();
+
+    boolean canEnter(Direction direction);
 }
