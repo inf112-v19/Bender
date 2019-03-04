@@ -1,7 +1,7 @@
 package inf112.skeleton.app.core.tiles;
 
 import inf112.skeleton.app.core.enums.Direction;
-import org.junit.Assert.*;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TileAssemblyLineTest {
@@ -12,7 +12,7 @@ public class TileAssemblyLineTest {
         int strength = 5;
         this.tile = new TileAssemblyLine(null, null, strength, Direction.NORTH);
 
-        assert this.tile.getStrength() == strength;
+        assertEquals(this.tile.getStrength(), strength);
     }
 
     @Test
@@ -22,18 +22,18 @@ public class TileAssemblyLineTest {
         int strength = 10;
         this.tile.setStrength(strength);
 
-        assert this.tile.getStrength() == strength;
+        assertEquals(this.tile.getStrength(), strength);
     }
 
     @Test
     public void moveRobotTest() {
         // TODO
-        assert true;
+        fail();
     }
 
     @Test
     public void execTest() {
         // TODO
-        assert true;
+        fail();
     }
 }

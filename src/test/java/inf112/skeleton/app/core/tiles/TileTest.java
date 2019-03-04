@@ -5,6 +5,7 @@ import inf112.skeleton.app.core.flag.IFlag;
 import inf112.skeleton.app.core.flag.Flag;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.robot.Robot;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TileTest {
@@ -15,7 +16,7 @@ public class TileTest {
         IRobot robot = new Robot(Direction.NORTH);
         this.tile = new Tile(robot, null);
 
-        assert this.tile.getRobot().compareTo(robot) == 0;
+        assertEquals(this.tile.getRobot().compareTo(robot), 0);
     }
 
     @Test
@@ -25,7 +26,7 @@ public class TileTest {
         IRobot robot = new Robot(Direction.EAST);
         this.tile.setRobot(robot);
 
-        assert this.tile.getRobot().compareTo(robot) == 0;
+        assertEquals(this.tile.getRobot().compareTo(robot), 0);
     }
 
     @Test
@@ -33,7 +34,7 @@ public class TileTest {
         IFlag flag = new Flag(0);
         this.tile = new Tile(null, flag);
 
-        assert this.tile.hasFlag();
+        assertTrue(this.tile.hasFlag());
     }
 
     @Test
@@ -41,12 +42,12 @@ public class TileTest {
         Flag flag = new Flag(0);
         this.tile = new Tile(null, flag);
 
-        assert this.tile.getFlag().compareTo(flag) == 0;
+        assertEquals(this.tile.getFlag().compareTo(flag), 0);
     }
 
     @Test
     public void execTest() {
         // TODO
-        assert true;
+        fail();
     }
 }

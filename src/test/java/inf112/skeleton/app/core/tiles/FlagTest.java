@@ -1,6 +1,7 @@
 package inf112.skeleton.app.core.tiles;
 
 import inf112.skeleton.app.core.flag.Flag;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class FlagTest {
@@ -11,7 +12,7 @@ public class FlagTest {
         int ord = 0;
         this.flag = new Flag(ord);
 
-        assert this.flag.getOrdinal() == ord;
+        assertEquals(this.flag.getOrdinal(), ord);
     }
 
     @Test
@@ -21,6 +22,6 @@ public class FlagTest {
         int ord = 5;
         this.flag.setOrdinal(ord);
 
-        assert this.flag.getOrdinal() == ord;
+        assertEquals(this.flag.getOrdinal(), ord);
     }
 }

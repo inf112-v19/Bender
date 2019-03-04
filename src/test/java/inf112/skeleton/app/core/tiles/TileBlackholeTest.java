@@ -3,7 +3,7 @@ package inf112.skeleton.app.core.tiles;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.robot.Robot;
-import org.junit.Assert.*;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TileBlackholeTest {
@@ -16,12 +16,12 @@ public class TileBlackholeTest {
 
         this.tile.removeRobot();
 
-        assert this.tile.getRobot() == null;
+        assertNull(this.tile.getRobot());
     }
 
     @Test
     public void execTest() {
         // TODO
-        assert true;
+        fail();
     }
 }
