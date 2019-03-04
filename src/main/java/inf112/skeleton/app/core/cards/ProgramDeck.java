@@ -9,6 +9,10 @@ public class ProgramDeck extends Deck<IProgramCard> {
         super(standardProgramDeck());
     }
 
+    public ProgramDeck(Iterable<IProgramCard> cards) {
+        super(cards);
+    }
+
     private static Iterable<IProgramCard> standardProgramDeck() {
         int priorityValue = 0;
         List<IProgramCard> cards = new ArrayList<>();

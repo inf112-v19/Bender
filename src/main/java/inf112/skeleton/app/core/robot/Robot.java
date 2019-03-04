@@ -5,7 +5,7 @@ import inf112.skeleton.app.core.enums.Direction;
 
 import java.util.ArrayList;
 
-class Robot implements IRobot {
+public class Robot implements IRobot {
 
     private int robotEnergy = 100;
     private Direction robotDirection;

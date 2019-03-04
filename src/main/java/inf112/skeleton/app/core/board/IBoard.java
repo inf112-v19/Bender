@@ -38,4 +38,19 @@ public interface IBoard extends java.io.Serializable {
      * @return true if the robot moved
      */
     boolean moveRobot(IRobot robot, Direction dir, int amount);
+
+    /**
+     * Add robot at position if legal
+     *
+     * @throws IllegalArgumentException if the position if illegal
+     * @param robot
+     * @param position
+     */
+    void addRobot(IRobot robot, Position position);
+
+    /**
+     * The board chooses position
+     * @param robot
+     */
+    void addRobot(IRobot robot);
 }

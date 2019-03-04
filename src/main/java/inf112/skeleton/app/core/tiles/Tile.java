@@ -8,6 +8,11 @@ public class Tile implements ITile {
     private IRobot robot;
     private Flag flag;
 
+    public Tile() {
+        this.robot = null;
+        this.flag = null;
+    }
+
     public Tile(IRobot robot, Flag flag) {
         this.robot = robot;
         this.flag = flag;

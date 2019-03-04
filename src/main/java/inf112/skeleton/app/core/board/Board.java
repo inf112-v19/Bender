@@ -7,6 +7,7 @@ import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.ITile;
+import inf112.skeleton.app.core.tiles.Tile;
 
 import java.util.*;
 
@@ -23,6 +24,25 @@ public class Board implements IBoard {
         this.height = height;
         this.grid = new ITile[width][height];
         this.robots = new HashMap<>();
+    }
+
+    public Board(String type, int width, int height) {
+        if (type.equals("empty")) {
+            this.width = width;
+            this.height = height;
+            this.robots = new HashMap<>();
+            this.grid = emptyGrid(width, height);
+        }
+    }
+
+    private static ITile[][] emptyGrid(int w, int h) {
+        ITile[][] grid = new ITile[w][h];
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                grid[i][j] = new Tile();
+            }
+        }
+        return grid;
     }
 
     public void mainStep() {
@@ -89,12 +109,12 @@ public class Board implements IBoard {
             if (nextTile.canEnter(dir)) { // if there are no walls
                 if (nextTile.hasRobot()) {
                     if (moveRobot(nextTile.getRobot(), dir, 1)) {
-                        moveRobotToNewTile(currentTile, nextTile);
+                        moveRobotToNewTile(currentPosition, newPosition);
                         return moveRobot(robot, dir, amount - 1);
                     }
                 } else {
                     // if the new tile is empty and has no walls
-                    moveRobotToNewTile(currentTile, nextTile);
+                    moveRobotToNewTile(currentPosition, newPosition);
                     return moveRobot(robot, dir, amount - 1);
                 }
             }
@@ -105,15 +125,29 @@ public class Board implements IBoard {
         return false;
     }
 
+    public void addRobot(IRobot robot, Position position) {
+        // TODO: check if position is legal
+        robots.put(robot, position);
+        getTile(position).setRobot(robot);
+    }
+
+    public void addRobot(IRobot robot) {
+        // TODO: assign a random/(or chosen) position for the robot
+        addRobot(robot, new Position(0, 0));
+    }
+
     /**
      * HELPER METHODS
      */
 
-    private void moveRobotToNewTile(ITile from, ITile to) {
-        if (!from.hasRobot()) throw new IllegalArgumentException("can't move a robot from a tile that has no robot");
-        IRobot robot = from.getRobot();
-        to.setRobot(robot);
-        from.setRobot(null);
+    private void moveRobotToNewTile(Position from, Position to) {
+        ITile fromTile = getTile(from);
+        ITile toTile = getTile(to);
+        if (!fromTile.hasRobot()) throw new IllegalArgumentException("can't move a robot from a tile that has no robot");
+        IRobot robot = fromTile.getRobot();
+        toTile.setRobot(robot);
+        fromTile.setRobot(null);
+        robots.put(robot, to);
     }
 
     private boolean withinBounds(Position position) {
