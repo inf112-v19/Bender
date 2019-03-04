@@ -12,7 +12,6 @@ import java.util.Map;
 
 //TODO add comments
 public class VisualBoardLoader {
-    private BoardLoader boardloader;
     private Map<Integer, String> tilePathNameToNumber;
     private Texture[] tileTextures;
     private int[][] tiles;
@@ -21,7 +20,7 @@ public class VisualBoardLoader {
     public VisualBoardLoader(String filepath) throws IOException {
         tileTextures = new Texture[15];
         tilePathNameToNumber = new HashMap<>();
-        boardloader = new BoardLoader();
+        BoardLoader boardloader = new BoardLoader();
         tileWidthHeight = 64;
 
         makeMap();
