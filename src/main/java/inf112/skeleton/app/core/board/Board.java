@@ -8,7 +8,7 @@ import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.ITile;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class Board implements IBoard {
 
@@ -31,8 +31,19 @@ public class Board implements IBoard {
     }
 
     public void stepRobots() {
-        // TODO: execute cards in prioritized order
-        for (IRobot robot : robots.keySet()) {
+        // Order the robots by their program card priorities
+        List<IRobot> executionOrder = new ArrayList<>();
+        executionOrder.addAll(robots.keySet());
+        executionOrder.sort(new Comparator<IRobot>() {
+            @Override
+            public int compare(IRobot r1, IRobot r2) {
+                if (r1.peekCard() == null) return -1;
+                if (r2.peekCard() == null) return 1;
+                return r1.peekCard().priority() - r2.peekCard().priority();
+            }
+        });
+
+        for (IRobot robot : executionOrder) {
             IProgramCard card = robot.drawCard();
             if (card != null) {
                 moveRobot(robot, card);

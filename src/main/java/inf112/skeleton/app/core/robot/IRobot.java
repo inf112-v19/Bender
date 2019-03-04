@@ -51,4 +51,6 @@ public interface IRobot {
      * @return
      */
     IProgramCard drawCard();
+
+    IProgramCard peekCard();
 }

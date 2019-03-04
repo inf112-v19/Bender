@@ -56,4 +56,9 @@ class Robot implements IRobot {
         return this.cards.remove(this.cards.size()-1);
     }
 
+    public IProgramCard peekCard() {
+        if (this.cards.size() == 0) return null;
+        return this.cards.get(this.cards.size() - 1);
+    }
+
 }
