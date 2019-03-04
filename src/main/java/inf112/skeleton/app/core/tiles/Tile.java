@@ -1,12 +1,13 @@
 package inf112.skeleton.app.core.tiles;
 
+import inf112.skeleton.app.core.flag.IFlag;
 import inf112.skeleton.app.core.robot.IRobot;
 
 public class Tile implements ITile {
     private IRobot robot;
-    private Flag flag;
+    private IFlag flag;
 
-    public Tile(IRobot robot, Flag flag) {
+    public Tile(IRobot robot, IFlag flag) {
         this.robot = robot;
         this.flag = flag;
     }
@@ -22,7 +23,7 @@ public class Tile implements ITile {
         return !(this.flag == null);
     }
 
-    public Flag getFlag() {
+    public IFlag getFlag() {
         if(this.hasFlag()) return this.flag;
         return null;
     }

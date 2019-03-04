@@ -1,5 +1,6 @@
 package inf112.skeleton.app.core.tiles;
 
+import inf112.skeleton.app.core.flag.Flag;
 import inf112.skeleton.app.core.robot.IRobot;
 
 public class TileBlackhole extends Tile {
@@ -12,8 +13,6 @@ public class TileBlackhole extends Tile {
     public void removeRobot() {
         IRobot robot = super.getRobot();
 
-        // TODO: Add setTile method to robot
-        //robot.setTile(null);
         super.setRobot(null);
     }
 
