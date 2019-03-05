@@ -1,6 +1,7 @@
 package inf112.skeleton.app.libgdx.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -37,11 +38,13 @@ public class MenuState extends State {
     }
 
     public void initializeGraphics() {
-        background = new Texture(Gdx.files.internal("res\\other\\main_menu.png"));
+        background = new Texture(Gdx.files.internal("other/main_menu.png"));
     }
 
     private void makeTitle() {
-        font = new BitmapFont(Gdx.files.internal("res\\font\\font.fnt"), Gdx.files.internal("res\\font\\font.png"), false);
+        FileHandle f = Gdx.files.internal("fonts/font.fnt");
+        FileHandle f2 = Gdx.files.internal("fonts/font.png");
+        font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
         String text = "R O B O R A L L Y";
         font.getData().setScale(2f, 2f);
         font.setColor(90f / 255f, 14f / 255f, 14f / 255f, 255f / 255f);
@@ -51,7 +54,7 @@ public class MenuState extends State {
     private void makeButton() {
         int y = (RobotDemo.HEIGHT / 2) - 50;
         int x = (RobotDemo.WIDTH / 2) - 100;
-        myButton = new CustomImageButton("res/buttons/new_game_button.png", "res/buttons/new_game_button_pressed.png", x, y, 150, 100);
+        myButton = new CustomImageButton("buttons/new_game_button.png", "buttons/new_game_button_pressed.png", x, y, 150, 100);
 
 
         button = myButton.getButton();

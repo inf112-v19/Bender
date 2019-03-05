@@ -71,22 +71,22 @@ public class VisualBoardLoader {
     }
 
     private void makeMap() {
-        tilePathNameToNumber.put(0, "res/tiles/empty_tile.png");
-        tilePathNameToNumber.put(1, "res/tiles/rotate_left_tile.png");
-        tilePathNameToNumber.put(2, "res/tiles/rotate_right_tile.png");
-        tilePathNameToNumber.put(3, "res/tiles/assembly_orange_straight_down_tile.png");
-        tilePathNameToNumber.put(4, "res/tiles/assembly_orange_straight_up_tile.png");
-        tilePathNameToNumber.put(5, "res/tiles/assembly_orange_straight_right_tile.png");
-        tilePathNameToNumber.put(6, "res/tiles/assembly_orange_straight_left_tile.png");
+        tilePathNameToNumber.put(0, "tiles/empty_tile.png");
+        tilePathNameToNumber.put(1, "tiles/rotate_left_tile.png");
+        tilePathNameToNumber.put(2, "tiles/rotate_right_tile.png");
+        tilePathNameToNumber.put(3, "tiles/assembly_orange_straight_down_tile.png");
+        tilePathNameToNumber.put(4, "tiles/assembly_orange_straight_up_tile.png");
+        tilePathNameToNumber.put(5, "tiles/assembly_orange_straight_right_tile.png");
+        tilePathNameToNumber.put(6, "tiles/assembly_orange_straight_left_tile.png");
 
-        tilePathNameToNumber.put(7, "res/tiles/assembly_orange_turn_left_up_tile.png");
-        tilePathNameToNumber.put(8, "res/tiles/assembly_orange_turn_left_down_tile.png");
-        tilePathNameToNumber.put(9, "res/tiles/assembly_orange_turn_right_up_tile.png");
-        tilePathNameToNumber.put(10, "res/tiles/assembly_orange_turn_right_down_tile.png");
-        tilePathNameToNumber.put(11, "res/tiles/assembly_orange_turn_down_right_tile.png");
-        tilePathNameToNumber.put(12, "res/tiles/assembly_orange_turn_down_left_tile.png");
-        tilePathNameToNumber.put(13, "res/tiles/assembly_orange_turn_up_left_tile.png");
-        tilePathNameToNumber.put(14, "res/tiles/assembly_orange_turn_up_right_tile.png");
+        tilePathNameToNumber.put(7, "tiles/assembly_orange_turn_left_up_tile.png");
+        tilePathNameToNumber.put(8, "tiles/assembly_orange_turn_left_down_tile.png");
+        tilePathNameToNumber.put(9, "tiles/assembly_orange_turn_right_up_tile.png");
+        tilePathNameToNumber.put(10, "tiles/assembly_orange_turn_right_down_tile.png");
+        tilePathNameToNumber.put(11, "tiles/assembly_orange_turn_down_right_tile.png");
+        tilePathNameToNumber.put(12, "tiles/assembly_orange_turn_down_left_tile.png");
+        tilePathNameToNumber.put(13, "tiles/assembly_orange_turn_up_left_tile.png");
+        tilePathNameToNumber.put(14, "tiles/assembly_orange_turn_up_right_tile.png");
     }
 }
 

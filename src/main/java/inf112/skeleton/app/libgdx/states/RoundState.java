@@ -46,7 +46,7 @@ public class RoundState extends State {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         selectedCardPosX = new ArrayList();
-        visualBoardLoader = new VisualBoardLoader("res/boards/sampleboard1.txt");
+        visualBoardLoader = new VisualBoardLoader("boards/sampleboard1.txt");
 
         initializeTextures();
         makeCardButtons();
@@ -58,7 +58,7 @@ public class RoundState extends State {
     public void createVisualCardSequencing() {
         visualCardSequencing = new GlyphLayout[5];
         for (int i = 0; i < 5; i++) {
-            font = new BitmapFont(Gdx.files.internal("res/font/font.fnt"), Gdx.files.internal("res/font/font.png"), false);
+            font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
             font.getData().setScale(0.5f, 0.5f);
             font.setColor(90f / 255f, 14f / 255f, 14f / 255f, 255f / 255f);
             String text = "" + (i + 1);
@@ -69,9 +69,9 @@ public class RoundState extends State {
 
     public void initializeTextures() {
         createVisualCardSequencing();
-        cardBackground = new Texture(Gdx.files.internal("res/Card_background1.png"));
-        tileTexture = new Texture(Gdx.files.internal("res/tiles/empty_tile.png"));
-        boardBackground = new Texture(Gdx.files.internal("res/boards/board_background_round.png"));
+        cardBackground = new Texture(Gdx.files.internal("cards/Card_background1.png"));
+        tileTexture = new Texture(Gdx.files.internal("tiles/empty_tile.png"));
+        boardBackground = new Texture(Gdx.files.internal("boards/board_background_round.png"));
 
     }
 
@@ -135,8 +135,8 @@ public class RoundState extends State {
     }
 
     public void makeConfirmationButtons() {
-        confirm = new CustomImageButton("res/buttons/Confirm.png", "res/buttons/Confirm.png", RobotDemo.WIDTH - 250, CARD_WIDTH / 2 + 50, 100, 50);
-        reset = new CustomImageButton("res/buttons/Reset.png", "res/buttons/Reset.png", RobotDemo.WIDTH - 250, 30, 100, 50);
+        confirm = new CustomImageButton("buttons/Confirm.png", "buttons/Confirm.png", RobotDemo.WIDTH - 250, CARD_WIDTH / 2 + 50, 100, 50);
+        reset = new CustomImageButton("buttons/Reset.png", "buttons/Reset.png", RobotDemo.WIDTH - 250, 30, 100, 50);
         confirm.getButton().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -171,7 +171,7 @@ public class RoundState extends State {
             int y = 18;
             int width = CARD_WIDTH - 30;
             int height = CARD_HEIGHT - 60;
-            cards[i] = new CustomImageButton("res/cards/card.png", "res/cards/card.png", x, y, width, height);
+            cards[i] = new CustomImageButton("cards/card.png", "cards/card.png", x, y, width, height);
 
             final int finalI = i;
             cards[i].getButton().addListener(new InputListener() {

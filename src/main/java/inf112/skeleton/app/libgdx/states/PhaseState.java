@@ -13,12 +13,12 @@ public class PhaseState extends State {
     private Texture boardBackground;
     protected PhaseState(GameStateManager gsm) throws IOException {
         super(gsm);
-        visualBoardLoader = new VisualBoardLoader("res/boards/sampleboard1.txt");
+        visualBoardLoader = new VisualBoardLoader("boards/sampleboard1.txt");
         initializeTextures();
     }
 
     private void initializeTextures() {
-        boardBackground = new Texture(Gdx.files.internal("res/boards/board_background_new.png"));
+        boardBackground = new Texture(Gdx.files.internal("boards/board_background_new.png"));
     }
 
     @Override
