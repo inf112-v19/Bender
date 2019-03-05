@@ -1,5 +1,6 @@
 package inf112.skeleton.app.core.tiles;
 
+import inf112.skeleton.app.core.flag.IFlag;
 import inf112.skeleton.app.core.robot.IRobot;
 
 public interface ITile {
@@ -18,7 +19,7 @@ public interface ITile {
     *
     * @return The flag
     */
-    Flag getFlag();
+    IFlag getFlag();
 
    /**
     * Method for performing an operation in the robot
