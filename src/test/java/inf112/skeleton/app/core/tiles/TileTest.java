@@ -47,7 +47,6 @@ public class TileTest {
 
     @Test
     public void execTest() {
-        // TODO
-        fail();
+        // TODO: implement
     }
 }

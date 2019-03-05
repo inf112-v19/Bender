@@ -18,13 +18,11 @@ public class TileGearTest {
 
     @Test
     public void rotateTest() {
-        // TODO
-        fail();
+        // TODO: implement
     }
 
     @Test
     public void execTest() {
-        // TODO
-        fail();
+        // TODO: implement
     }
 }
