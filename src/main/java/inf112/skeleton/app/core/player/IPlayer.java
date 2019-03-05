@@ -1,4 +1,4 @@
-package inf112.skeleton.app.core.interfaces;
+package inf112.skeleton.app.core.player;
 
 public interface IPlayer {
     /**

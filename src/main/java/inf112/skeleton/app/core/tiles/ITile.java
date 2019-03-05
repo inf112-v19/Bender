@@ -1,0 +1,27 @@
+package inf112.skeleton.app.core.tiles;
+
+import inf112.skeleton.app.core.robot.IRobot;
+
+public interface ITile {
+    IRobot getRobot();
+    void setRobot(IRobot robot);
+
+   /**
+    * Method for checking if tile has flag
+    *
+    * @return Result of check
+    */
+    boolean hasFlag();
+
+   /**
+    * Method for getting the the current flag
+    *
+    * @return The flag
+    */
+    Flag getFlag();
+
+   /**
+    * Method for performing an operation in the robot
+    */
+    void exec();
+}

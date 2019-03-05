@@ -1,8 +1,9 @@
 package inf112.skeleton.app.server;
 
+import com.google.gson.Gson;
+import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
-import inf112.skeleton.app.core.interfaces.API;
 import inf112.skeleton.app.core.interfaces.IAction;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -15,10 +16,15 @@ import java.util.Scanner;
 public class RemoteServerHandler extends API {
 
     private WebSocketClient client;
+    private Gson json = new Gson();
 
     public RemoteServerHandler(IAction handler) throws URISyntaxException {
         super(handler);
-        client = new WSC(new URI("ws://localhost:8887"));
+        newClient();
+    }
+
+    private WebSocketClient newClient() throws URISyntaxException {
+        return client = new WSC(new URI("ws://localhost:8887"));
     }
 
     @Override
@@ -31,12 +37,26 @@ public class RemoteServerHandler extends API {
         client.send("DRAWCARD");
     }
 
+    @Override
+    public void createRoom() {
+        client.send("CREATEROOM");
+    }
+
+    @Override
+    public void joinRoom(String id) {
+        client.send(String.format("JOINROOM {\"roomId\":\"%s\"}", id));
+    }
+
+    public WebSocketClient getClient() {
+        return client;
+    }
+
     public static void main(String[] args) throws URISyntaxException, InterruptedException {
         RemoteServerHandler client;
         mainHandler handler = new mainHandler();
         Scanner sc = new Scanner(System.in);
+        client = new RemoteServerHandler(handler);
         while (true) {
-            client = new RemoteServerHandler(handler);
             client.handler.handleINFO("Connecting...");
             client.connect();
             if (client.isOpen()) {
@@ -44,13 +64,15 @@ public class RemoteServerHandler extends API {
                 break;
             } else {
                 client.handler.handleERROR("Failed to connect... retry? ([y]/n)");
-                if (sc.next().charAt(0) == 'n') {
+                if (sc.nextLine().charAt(0) == 'n') {
                     return;
                 }
             }
+
+            client.newClient();
         }
         while(sc.hasNext()) {
-            String next = sc.next();
+            String next = sc.nextLine();
             if (next.equals("stop")) break;
             client.client.send(next);
         }
@@ -120,7 +142,7 @@ public class RemoteServerHandler extends API {
         public void onMessage(String message) {
             System.out.println("received message: " + message);
             if (message.length()>8 && message.substring(0, 8).equals("BOARD")) {
-                // handler.handleBOARD(message.substring(9));
+                handler.handleBOARD(json.fromJson(message.substring(9), Board.class));
             }
         }
 

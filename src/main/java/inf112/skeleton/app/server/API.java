@@ -1,22 +1,26 @@
-package inf112.skeleton.app.core.interfaces;
+package inf112.skeleton.app.server;
+
+import inf112.skeleton.app.core.interfaces.IAction;
 
 /**
  * Class for two way communication between server and client.
  *
  * Client should instantiate an implementation of this class
  * that takes as argument an implementation of the
- * #IAction interface.
+ * {@link IAction IAction} interface.
  *
  * Implementation of this class should handle errors and try
- * to resolve them automatically. It should also call
- * #IAction.handleX() method with status of the errors.
+ * to resolve them automatically. It should also call the
+ * {@link IAction#handleERROR(String) handleERROR} method
+ * with the status of the errors.
  *
  * Client actions should be implemented as methods in this
  * class. The methods should only return void.
  *
  * The implementation of this class should handle
- * communication with a server. you implement client handling
- * of the server responses in the #IAction.handleX() methods.
+ * communication with a server. you implement handling of the
+ * server responses in the {@link IAction IAction.handleX()}
+ * methods.
  */
 public abstract class API {
     /**
@@ -31,6 +35,8 @@ public abstract class API {
     }
 
     public abstract void getBoard();
-
     public abstract void drawCard();
+
+    public abstract void createRoom();
+    public abstract void joinRoom(String id);
 }

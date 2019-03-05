@@ -1,7 +1,6 @@
 package inf112.skeleton.app.core.board;
 
 import inf112.skeleton.app.core.tiles.Tile;
-
 import java.io.*;
 
 public class BoardLoader {
