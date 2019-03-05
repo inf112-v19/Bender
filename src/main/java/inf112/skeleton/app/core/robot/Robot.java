@@ -6,7 +6,7 @@ import inf112.skeleton.app.core.robot.IRobot;
 
 import java.util.ArrayList;
 
-class Robot implements IRobot {
+public class Robot implements IRobot {
 
     private int robotEnergy = 100;
     private Direction robotDirection;
@@ -55,6 +55,17 @@ class Robot implements IRobot {
     public ProgramCard drawCard() {
         if(this.cards.size() == 0) return null;
         return this.cards.remove(this.cards.size()-1);
+    }
+
+    @Override
+    public int compareTo(IRobot that) {
+        int energyDiff = this.checkEnergy() - that.checkEnergy();
+
+        int dirDiff = this.getDirection().ordinal() - that.getDirection().ordinal();
+
+        // TODO: Add checks for program cards?
+
+        return energyDiff + dirDiff;
     }
 
 }
