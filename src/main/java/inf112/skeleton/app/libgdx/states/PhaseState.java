@@ -13,7 +13,7 @@ public class PhaseState extends State {
     private Texture boardBackground;
     protected PhaseState(GameStateManager gsm) throws IOException {
         super(gsm);
-        visualBoardLoader = new VisualBoardLoader("boards/sampleboard1.txt");
+        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
         initializeTextures();
     }
 

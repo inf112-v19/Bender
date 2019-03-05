@@ -46,7 +46,7 @@ public class RoundState extends State {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         selectedCardPosX = new ArrayList();
-        visualBoardLoader = new VisualBoardLoader("boards/sampleboard1.txt");
+        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
 
         initializeTextures();
         makeCardButtons();
