@@ -36,6 +36,8 @@ public class RoundState extends State {
     private CustomImageButton confirm;
     private CustomImageButton reset;
     private Texture boardBackground;
+    public static final int CARD_WIDTH = 110 ;
+    public static final int CARD_HEIGHT = 220;
 
     //TODO code quality, remove unnecessary stuff
     public RoundState(GameStateManager gsm) throws IOException {
@@ -118,9 +120,9 @@ public class RoundState extends State {
     //Draws the currently selected card's number on board
     private void drawSelectedNumber(int selectedNum) {
         BitmapFontCache bc = new BitmapFontCache(font);
-        float yPos = (RobotDemo.CARD_HEIGHT - 60 + visualCardSequencing[selectedNum].height);
+        float yPos = (CARD_HEIGHT - 65 + visualCardSequencing[selectedNum].height);
         for (int i = 0; i <selectedCardPosX.size() ; i++) {
-            float xPos = ((RobotDemo.CARD_WIDTH * selectedCardPosX.get(i) + RobotDemo.CARD_WIDTH / 4) + visualCardSequencing[i].width / 2);
+            float xPos = ((CARD_WIDTH * selectedCardPosX.get(i) + CARD_WIDTH / 4) + visualCardSequencing[i].width / 2 + CARD_WIDTH /2);
             bc.addText(visualCardSequencing[i], xPos, yPos);
         }
         bc.draw(stage.getBatch());
@@ -133,7 +135,7 @@ public class RoundState extends State {
     }
 
     public void makeConfirmationButtons() {
-        confirm = new CustomImageButton("res/buttons/Confirm.png", "res/buttons/Confirm.png", RobotDemo.WIDTH - 250, RobotDemo.CARD_WIDTH / 2 + 50, 100, 50);
+        confirm = new CustomImageButton("res/buttons/Confirm.png", "res/buttons/Confirm.png", RobotDemo.WIDTH - 250, CARD_WIDTH / 2 + 50, 100, 50);
         reset = new CustomImageButton("res/buttons/Reset.png", "res/buttons/Reset.png", RobotDemo.WIDTH - 250, 30, 100, 50);
         confirm.getButton().addListener(new InputListener() {
             @Override
@@ -165,10 +167,10 @@ public class RoundState extends State {
         CustomImageButton[] cards = new CustomImageButton[9];
 
         for (int i = 0; i < 9; i++) {
-            int x = RobotDemo.CARD_WIDTH * i + RobotDemo.CARD_WIDTH / 4;
+            int x = CARD_WIDTH * i + CARD_WIDTH / 4;
             int y = 18;
-            int width = RobotDemo.CARD_WIDTH - 30;
-            int height = RobotDemo.CARD_HEIGHT - 60;
+            int width = CARD_WIDTH - 30;
+            int height = CARD_HEIGHT - 60;
             cards[i] = new CustomImageButton("res/cards/card.png", "res/cards/card.png", x, y, width, height);
 
             final int finalI = i;

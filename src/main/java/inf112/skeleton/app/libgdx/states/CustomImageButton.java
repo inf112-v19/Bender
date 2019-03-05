@@ -11,8 +11,11 @@ public class CustomImageButton {
     private ImageButton button;
     private Texture texture;
     private Drawable image;
+    private int height, width;
 
     public CustomImageButton(String textureLocation, String texturePressedLocation, int xPos, int yPos, int width, int height) {
+        this.height = height;
+        this.width = width;
         texture = new Texture(Gdx.files.internal(textureLocation));
         Texture texturePressed = new Texture(Gdx.files.internal(texturePressedLocation));
         button = new ImageButton(image);
@@ -20,8 +23,6 @@ public class CustomImageButton {
         button.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(texture));
         button.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(texturePressed));
         button.setPosition(xPos, yPos);
-
-
     }
 
     public ImageButton getButton() {
@@ -30,5 +31,13 @@ public class CustomImageButton {
 
     public Texture getTexture() {
         return texture;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

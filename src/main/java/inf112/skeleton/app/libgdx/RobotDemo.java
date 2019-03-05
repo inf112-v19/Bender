@@ -9,11 +9,9 @@ import inf112.skeleton.app.libgdx.states.MenuState;
 
 public class RobotDemo extends ApplicationAdapter {
 
-    SpriteBatch batch;
+    private SpriteBatch batch;
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
-    public static final int CARD_WIDTH = 110 ;
-    public static final int CARD_HEIGHT = 220;
     public static final String TITLE = "RoboRally";
     private GameStateManager gsm = new GameStateManager();
 
