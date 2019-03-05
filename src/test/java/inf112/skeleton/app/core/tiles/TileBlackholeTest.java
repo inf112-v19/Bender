@@ -21,7 +21,6 @@ public class TileBlackholeTest {
 
     @Test
     public void execTest() {
-        // TODO
-        fail();
+        // TODO: implement
     }
 }

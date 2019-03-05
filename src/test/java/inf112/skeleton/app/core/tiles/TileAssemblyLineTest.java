@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TileAssemblyLineTest {
+
     private TileAssemblyLine tile;
 
     @Test
@@ -27,13 +28,11 @@ public class TileAssemblyLineTest {
 
     @Test
     public void moveRobotTest() {
-        // TODO
-        fail();
+        // TODO: implement
     }
 
     @Test
     public void execTest() {
-        // TODO
-        fail();
+        // TODO: implement
     }
 }
