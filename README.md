@@ -12,6 +12,7 @@
 
 ## Tests
 * Execute `mvn test` in the root folder of the project to run all tests
+* The server tests has some os-delay problems and must be run manually (mvn will skip these tests)
 
 ## Wiki
 * [How to use maven](https://github.com/inf112-v19/Bender/wiki/How-to-use-maven)
