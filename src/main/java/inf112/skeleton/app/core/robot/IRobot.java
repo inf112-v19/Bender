@@ -3,7 +3,7 @@ package inf112.skeleton.app.core.robot;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 
-public interface IRobot {
+public interface IRobot extends Comparable<IRobot> {
 
     /**
      * @return current direction of robot

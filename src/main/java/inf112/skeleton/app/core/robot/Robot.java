@@ -61,4 +61,15 @@ public class Robot implements IRobot {
         return this.cards.get(this.cards.size() - 1);
     }
 
+    @Override
+    public int compareTo(IRobot that) {
+        int energyDiff = this.getEnergy() - that.getEnergy();
+
+        int dirDiff = this.getDirection().ordinal() - that.getDirection().ordinal();
+
+        // TODO: Add checks for program cards?
+
+        return energyDiff + dirDiff;
+    }
+
 }
