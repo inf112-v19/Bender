@@ -1,11 +1,12 @@
 package inf112.skeleton.app.core.robot;
 
+
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 
 import java.util.ArrayList;
 
-public class Robot implements IRobot {
+public class Robot implements IRobot, Comparable<IRobot> {
 
     private int robotEnergy = 100;
     private Direction robotDirection;
@@ -47,7 +48,6 @@ public class Robot implements IRobot {
         // TODO: implement
     }
 
-  public ProgramCard drawCard() {
     public void addCard(IProgramCard card) {
         this.cards.add(card);
     }
