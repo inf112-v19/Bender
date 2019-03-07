@@ -49,11 +49,11 @@ class Robot implements IRobot {
     }
 
     public void addCard(ProgramCard card) {
-        this.cards.add(card);
+        if ((this.cards.size() < 5))
+        { this.cards.add(card); }
     }
 
     public ProgramCard drawCard() {
-        if(this.cards.size() == 0) return null;
         return this.cards.remove(this.cards.size()-1);
     }
 
