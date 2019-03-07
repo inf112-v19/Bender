@@ -3,6 +3,8 @@ package inf112.skeleton.app.core.robot;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import inf112.skeleton.app.core.cards.ProgramCard;
+import inf112.skeleton.app.core.cards.RotateCard;
 import inf112.skeleton.app.core.enums.Direction;
 import org.junit.Test;
 
@@ -35,5 +37,14 @@ public class RobotTest {
         robotBender.takeEnergy(20);
         robotBender.takeEnergy(20);
         assertEquals(robotBender.getEnergy(),60);
+    }
+
+    @Test
+    public void giveCardToRobotGivesOneCardBack() {
+        // TODO
+    }
+
+    public void giveTwoCardsAndTakeGivesNull() {
+        // TODO
     }
 }

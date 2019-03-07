@@ -47,6 +47,7 @@ public class Robot implements IRobot {
         // TODO: implement
     }
 
+  public ProgramCard drawCard() {
     public void addCard(IProgramCard card) {
         this.cards.add(card);
     }
