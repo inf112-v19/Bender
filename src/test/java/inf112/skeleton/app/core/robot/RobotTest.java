@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import inf112.skeleton.app.core.cards.ProgramCard;
 import inf112.skeleton.app.core.cards.RotateCard;
 import inf112.skeleton.app.core.enums.Direction;
-import inf112.skeleton.app.core.robot.Robot;
 import org.junit.Test;
 
 
@@ -18,13 +17,13 @@ public class RobotTest {
     public void takeRobotEnergyTest() {
         int energy = 20;
         robotBender.takeEnergy(energy);
-        assertEquals(robotBender.checkEnergy(),100-energy);
+        assertEquals(robotBender.getEnergy(),100-energy);
     }
 
     @Test
     public void giveRobotEnergyTest() {
         robotBender.giveEnergy(20);
-        assertEquals(robotBender.checkEnergy(),120);
+        assertEquals(robotBender.getEnergy(),120);
     }
 
     @Test
@@ -37,7 +36,7 @@ public class RobotTest {
     public void takeTwoTimesEnergyGivesDifferenceTest() {
         robotBender.takeEnergy(20);
         robotBender.takeEnergy(20);
-        assertEquals(robotBender.checkEnergy(),60);
+        assertEquals(robotBender.getEnergy(),60);
     }
 
     @Test

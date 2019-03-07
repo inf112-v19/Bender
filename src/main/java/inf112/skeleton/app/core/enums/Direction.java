@@ -15,4 +15,34 @@ public enum Direction {
             default: return null;
         }
     }
+
+    public Direction getRight() {
+        switch (this) {
+            case SOUTH: return WEST;
+            case NORTH: return EAST;
+            case WEST: return NORTH;
+            case EAST: return SOUTH;
+            default: return null;
+        }
+    }
+
+    public Direction getLeft() {
+        switch (this) {
+            case SOUTH: return EAST;
+            case NORTH: return WEST;
+            case WEST: return SOUTH;
+            case EAST: return NORTH;
+            default: return null;
+        }
+    }
+
+    public Direction getOpposite() {
+        switch (this) {
+            case NORTH: return SOUTH;
+            case SOUTH: return NORTH;
+            case WEST: return EAST;
+            case EAST: return WEST;
+            default: return null;
+        }
+    }
 }

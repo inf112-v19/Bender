@@ -1,17 +1,56 @@
 package inf112.skeleton.app.core.robot;
 
+import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 
-// RT initial setup jan 29/30 - 2019 - cont feb 12
-public interface IRobot {
+public interface IRobot extends Comparable<IRobot> {
 
-    public Direction getDirection(); // give current direction of robot as ENUM dir();
-    public void setDirection(Direction direction); // set direction after action from board (turn from card or tile)
+    /**
+     * @return current direction of robot
+     */
+    Direction getDirection();
 
-    public int takeEnergy(int energy);    // receive damage (int) and update energy, return new energy (int)
-    public int giveEnergy(int energy);    // boost energy (int) from action or card, return new energy (int)
-    public int checkEnergy();   // return energy level (int) of current robot
+    /**
+     * Change the direction of the robot
+     * @param direction
+     */
+    void setDirection(Direction direction);
 
-    public void shootLazer();   // fire lazer in current direction (from getDirection();)
+    /**
+     * Damage robot and
+     * @param energy
+     * @return new energy level
+     */
+    int takeEnergy(int energy);
 
+    /**
+     * Add energy to robot
+     * @param energy
+     * @return new energy level
+     */
+    int giveEnergy(int energy);
+
+    /**
+     * @return current energy level
+     */
+    int getEnergy();
+
+    /**
+     * Fire lazer in current direction
+      */
+    void shootLazer();
+
+    /**
+     * Add a programcard to the robots 'register'
+     * @param card
+     */
+    void addCard(IProgramCard card);
+
+    /**
+     * 'Draw' a program card from the robots register
+     * @return
+     */
+    IProgramCard drawCard();
+
+    IProgramCard peekCard();
 }

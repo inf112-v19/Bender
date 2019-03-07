@@ -1,16 +1,15 @@
 package inf112.skeleton.app.core.robot;
 
-import inf112.skeleton.app.core.cards.ProgramCard;
+import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
-import inf112.skeleton.app.core.robot.IRobot;
 
 import java.util.ArrayList;
 
-class Robot implements IRobot {
+public class Robot implements IRobot {
 
     private int robotEnergy = 100;
     private Direction robotDirection;
-    private ArrayList<ProgramCard> cards = new ArrayList<>();
+    private ArrayList<IProgramCard> cards = new ArrayList<>();
 
     public Robot(Direction robotDirection) {
         this.robotDirection = robotDirection;
@@ -39,22 +38,39 @@ class Robot implements IRobot {
     }
 
     @Override
-    public int checkEnergy() {
+    public int getEnergy() {
         return robotEnergy;
     }
 
     @Override
     public void shootLazer() {
-        // Unsure how to implement. Must be related to board/tiles somehow
+        // TODO: implement
     }
 
-    public void addCard(ProgramCard card) {
-        if ((this.cards.size() < 5))
-        { this.cards.add(card); }
+  public ProgramCard drawCard() {
+    public void addCard(IProgramCard card) {
+        this.cards.add(card);
     }
 
-    public ProgramCard drawCard() {
+    public IProgramCard drawCard() {
+        if(this.cards.size() == 0) return null;
         return this.cards.remove(this.cards.size()-1);
+    }
+
+    public IProgramCard peekCard() {
+        if (this.cards.size() == 0) return null;
+        return this.cards.get(this.cards.size() - 1);
+    }
+
+    @Override
+    public int compareTo(IRobot that) {
+        int energyDiff = this.getEnergy() - that.getEnergy();
+
+        int dirDiff = this.getDirection().ordinal() - that.getDirection().ordinal();
+
+        // TODO: Add checks for program cards?
+
+        return energyDiff + dirDiff;
     }
 
 }
