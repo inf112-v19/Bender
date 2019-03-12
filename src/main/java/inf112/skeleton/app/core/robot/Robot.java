@@ -63,9 +63,9 @@ public class Robot implements IRobot, Comparable<IRobot> {
     }
 
     // TODO: Add output for number of program cards in RobotMemory
-    // public int getNumberOfCards() {
-    // return this.cards.get(this.cards).size()); ??
-    // }
+     public int getNumberOfCards() {
+     return this.cards.size();
+     }
 
     @Override
     public int compareTo(IRobot that) {

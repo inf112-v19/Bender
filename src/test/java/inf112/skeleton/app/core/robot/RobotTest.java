@@ -44,13 +44,16 @@ public class RobotTest {
     @Test
     public void giveCardToRobotGivesOneCardBack() {
         robotBender.addCard(new MoveCard(8, false, 2));
+        assertTrue(robotBender.getNumberOfCards()==1);
         robotBender.drawCard();
     }
 
-    public void giveTwoCardsAndTakeGivesNull() {
+    public void giveTwoCardsAndTakeGivesZero() {
         robotBender.addCard(new MoveCard(8, false, 2));
         robotBender.addCard(new MoveCard(20, true, 1));
+        assertTrue(robotBender.getNumberOfCards()==2);
         robotBender.drawCard();
         robotBender.drawCard();
+        assertTrue(robotBender.getNumberOfCards()==0);
     }
 }
