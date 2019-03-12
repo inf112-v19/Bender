@@ -8,7 +8,7 @@ public class TileGearTest {
     private TileGear tile;
 
     @Test
-    public void getAngleTest() {
+    public void setAngleOnRobotGivesSameBackWhenGetAngleTest() {
         Direction dir = Direction.NORTH;
 
         this.tile = new TileGear(null, null, dir);
