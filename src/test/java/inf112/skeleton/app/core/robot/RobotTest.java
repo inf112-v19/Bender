@@ -45,12 +45,11 @@ public class RobotTest {
     public void giveCardToRobotGivesOneCardBack() {
         robotBender.addCard(new MoveCard(8, false, 2));
         robotBender.drawCard();
-
     }
 
     public void giveTwoCardsAndTakeGivesNull() {
         robotBender.addCard(new MoveCard(8, false, 2));
-        robotBender.addCard(new MoveCard(8, false, 2));
+        robotBender.addCard(new MoveCard(20, true, 1));
         robotBender.drawCard();
         robotBender.drawCard();
     }

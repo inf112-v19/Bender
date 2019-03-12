@@ -62,6 +62,11 @@ public class Robot implements IRobot, Comparable<IRobot> {
         return this.cards.get(this.cards.size() - 1);
     }
 
+    // TODO: Add output for number of program cards in RobotMemory
+    // public int getNumberOfCards() {
+    // return this.cards.get(this.cards).size()); ??
+    // }
+
     @Override
     public int compareTo(IRobot that) {
         int energyDiff = this.getEnergy() - that.getEnergy();
@@ -69,6 +74,7 @@ public class Robot implements IRobot, Comparable<IRobot> {
         int dirDiff = this.getDirection().ordinal() - that.getDirection().ordinal();
 
         // TODO: Add checks for program cards?
+
 
         return energyDiff + dirDiff;
     }
