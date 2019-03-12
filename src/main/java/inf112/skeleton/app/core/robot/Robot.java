@@ -74,6 +74,7 @@ public class Robot implements IRobot, Comparable<IRobot> {
         int dirDiff = this.getDirection().ordinal() - that.getDirection().ordinal();
 
         // TODO: Add checks for program cards?
+        // USE above routine to compare cards of two robots
 
 
         return energyDiff + dirDiff;
