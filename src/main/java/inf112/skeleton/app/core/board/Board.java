@@ -122,15 +122,11 @@ public class Board implements IBoard {
         return false;
     }
 
+    @Override
     public void addRobot(IRobot robot, Position position) {
-        // TODO: check if position is legal
+        if (hasRobot(position)) throw new IllegalArgumentException("Tile is occupied.");
         robots.put(robot, position);
         getTile(position).setRobot(robot);
-    }
-
-    public void addRobot(IRobot robot) {
-        // TODO: assign a random/(or chosen) position for the robot
-        addRobot(robot, new Position(0, 0));
     }
 
     /**
