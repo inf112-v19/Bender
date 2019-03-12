@@ -14,6 +14,6 @@ public class Main {
         cfg.width = RobotDemo.WIDTH;
         cfg.height= RobotDemo.HEIGHT;
         cfg.title = RobotDemo.TITLE;
-        new LwjglApplication(new RobotDemo(), cfg);
+        new LwjglApplication(new ServerDemo(), cfg);
     }
 }
