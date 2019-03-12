@@ -19,11 +19,11 @@ public class Position {
     }
 
     public Position east() {
-        return new Position(x - 1, y);
+        return new Position(x + 1, y);
     }
 
     public Position west() {
-        return new Position(x + 1, y);
+        return new Position(x - 1, y);
     }
 
     public Position north() {

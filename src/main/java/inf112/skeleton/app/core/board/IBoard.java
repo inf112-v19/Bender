@@ -53,4 +53,22 @@ public interface IBoard extends java.io.Serializable {
      * @param robot
      */
     void addRobot(IRobot robot);
+
+    /**
+     * @param pos
+     * @return true if there is a robot at pos
+     */
+    boolean hasRobot(Position pos);
+
+    /**
+     * @param pos
+     * @return robot object if robot at position, otherwise null
+     */
+    IRobot getRobot(Position pos);
+
+    /**
+     * Takes the top card from each robot and moves them in
+     * prioritized order
+     */
+    void stepRobots();
 }

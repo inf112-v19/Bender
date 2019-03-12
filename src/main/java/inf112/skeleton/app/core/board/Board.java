@@ -50,6 +50,7 @@ public class Board implements IBoard {
         this.stepRobots();
     }
 
+    @Override
     public void stepRobots() {
         // Order the robots by their program card priorities
         List<IRobot> executionOrder = new ArrayList<>();
@@ -57,17 +58,14 @@ public class Board implements IBoard {
         executionOrder.sort(new Comparator<IRobot>() {
             @Override
             public int compare(IRobot r1, IRobot r2) {
-                if (r1.peekCard() == null) return -1;
-                if (r2.peekCard() == null) return 1;
-                return r1.peekCard().priority() - r2.peekCard().priority();
+                if (r1.peekCard() == null || r2.peekCard() == null) return 1;
+                return r2.peekCard().priority() - r1.peekCard().priority();
             }
         });
 
         for (IRobot robot : executionOrder) {
             IProgramCard card = robot.drawCard();
-            if (card != null) {
-                moveRobot(robot, card);
-            }
+            if (card != null) moveRobot(robot, card);
         }
     }
 
@@ -101,7 +99,6 @@ public class Board implements IBoard {
         if (amount == 0) return true;
 
         Position currentPosition = robots.get(robot);
-        ITile currentTile = getTile(currentPosition);
         Position newPosition = dir.getNewPosition(currentPosition);
 
         if (withinBounds(newPosition)) {
@@ -169,5 +166,16 @@ public class Board implements IBoard {
     public ITile getTile(int x, int y) {
         if (!withinBounds(x, y)) throw new IllegalArgumentException("coordinates out of bounds");
         return this.grid[x][y];
+    }
+
+    @Override
+    public boolean hasRobot(Position position) {
+        return getTile(position).hasRobot();
+    }
+
+    @Override
+    public IRobot getRobot(Position position) {
+        if (hasRobot(position)) return this.getTile(position).getRobot();
+        return null;
     }
 }

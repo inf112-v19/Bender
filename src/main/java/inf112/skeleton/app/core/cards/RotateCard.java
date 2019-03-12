@@ -4,7 +4,7 @@ import inf112.skeleton.app.core.enums.Direction;
 
 public class RotateCard extends ProgramCard {
 
-    enum DirectionChange { RIGHT, LEFT, UTURN }
+    public enum DirectionChange { RIGHT, LEFT, UTURN }
 
     private final DirectionChange dir;
 
