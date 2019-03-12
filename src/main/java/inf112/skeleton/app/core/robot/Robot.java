@@ -67,6 +67,10 @@ public class Robot implements IRobot, Comparable<IRobot> {
      return this.cards.size();
      }
 
+     public ArrayList getCardArray() {
+        return this.cards;
+     }
+
     @Override
     public int compareTo(IRobot that) {
         int energyDiff = this.getEnergy() - that.getEnergy();
@@ -74,7 +78,7 @@ public class Robot implements IRobot, Comparable<IRobot> {
         int dirDiff = this.getDirection().ordinal() - that.getDirection().ordinal();
 
         // TODO: Add checks for program cards?
-        // USE above routine to compare cards of two robots
+        // can use routine above "getNumberOfCards" or "getCardArray" to compare cards of two robots
 
 
         return energyDiff + dirDiff;
