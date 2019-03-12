@@ -49,12 +49,6 @@ public interface IBoard extends java.io.Serializable {
     void addRobot(IRobot robot, Position position);
 
     /**
-     * The board chooses position
-     * @param robot
-     */
-    void addRobot(IRobot robot);
-
-    /**
      * @param pos
      * @return true if there is a robot at pos
      */
