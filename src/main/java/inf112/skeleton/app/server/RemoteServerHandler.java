@@ -87,6 +87,7 @@ public class RemoteServerHandler extends API {
         return client.isOpen();
     }
 
+    @Override
     public void connect() throws InterruptedException {
         client.connectBlocking();
     }
@@ -116,6 +117,11 @@ public class RemoteServerHandler extends API {
         public void handleCardDraw(IProgramCard card) {
 
         }
+
+        @Override
+        public void handleROOM(String roomId) {
+            System.out.println("ROOM: "+roomId);
+        }
     }
 
     /**
@@ -140,9 +146,16 @@ public class RemoteServerHandler extends API {
 
         @Override
         public void onMessage(String message) {
+            String[] messageData = message.split(" ", 2);
             System.out.println("received message: " + message);
-            if (message.length()>8 && message.substring(0, 8).equals("BOARD")) {
-                handler.handleBOARD(json.fromJson(message.substring(9), Board.class));
+            if (messageData[0].equals("BOARD")) {
+                handler.handleBOARD(json.fromJson(messageData[1], Board.class));
+            }
+            if (messageData[0].equals("INFO")) {
+                handler.handleINFO(json.toJsonTree(messageData[1]).getAsJsonObject().get("message").getAsString());
+            }
+            if (messageData[0].equals("ROOM")) {
+                handler.handleROOM(json.toJsonTree(messageData[1]).getAsJsonObject().get("roomId").getAsString());
             }
         }
 

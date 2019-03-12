@@ -45,7 +45,7 @@ public class ServerMain extends WebSocketServer {
             conn.send(String.format("ROOM {\"roomId\":\"%s\"}", gameRoom.getRoomId()));
             return;
         }
-        if (messageData[0].equals("JOINROOM")) {
+        else if (messageData[0].equals("JOINROOM")) {
             JsonElement data = json.parse(messageData[1]);
             String roomId = data.getAsJsonObject().get("roomId").getAsString();
             for (GameRoom gameRoom : userRoomPairs.values()) {
@@ -59,8 +59,9 @@ public class ServerMain extends WebSocketServer {
             conn.send("ERROR {\"message\":\"Room was not found!\"}");
 //        if (message.equals("GETBOARD")){
 //            // TODO: generate a board and send to the client.
+        } else {
+            conn.send("ERROR {\"message\":\"This command has not yet been implemented\"}");
         }
-        conn.send("ERROR {\"message\":\"This command has not yet been implemented\"}");
     }
 
     private GameRoom createRoom() {
@@ -89,7 +90,7 @@ public class ServerMain extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-        System.err.println("an error occurred on connection " + conn.getRemoteSocketAddress()  + ":" + ex);
+        System.err.println("an error occurred:" + ex);
         // TODO: Figure out and handle errors
     }
 

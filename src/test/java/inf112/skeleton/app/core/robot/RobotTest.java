@@ -10,7 +10,6 @@ import inf112.skeleton.app.core.enums.Direction;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 public class RobotTest {
 
     public Robot robotBender = new Robot(Direction.NORTH);

@@ -19,4 +19,5 @@ public interface IAction {
     void handleINFO(String message);
     void handleBOARD(IBoard board);
     void handleCardDraw(IProgramCard card);
+    void handleROOM(String roomId);
 }
