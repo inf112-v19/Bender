@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         // cfg.title = "hello-world";
         // cfg.width = 480;
@@ -14,6 +14,6 @@ public class Main {
         cfg.width = RobotDemo.WIDTH;
         cfg.height= RobotDemo.HEIGHT;
         cfg.title = RobotDemo.TITLE;
-        new LwjglApplication(new RobotDemo(), cfg);
+        new LwjglApplication(new ServerDemo(), cfg);
     }
 }
