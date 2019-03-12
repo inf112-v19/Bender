@@ -62,7 +62,7 @@ public class Robot implements IRobot, Comparable<IRobot> {
         return this.cards.get(this.cards.size() - 1);
     }
 
-    // TODO: Add output for number of program cards in RobotMemory
+    // OUTPUTS number of cards in Robot-memory
      public int getNumberOfCards() {
      return this.cards.size();
      }

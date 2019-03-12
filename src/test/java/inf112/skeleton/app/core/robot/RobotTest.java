@@ -48,6 +48,7 @@ public class RobotTest {
         robotBender.drawCard();
     }
 
+    @Test
     public void giveTwoCardsAndTakeGivesZero() {
         robotBender.addCard(new MoveCard(8, false, 2));
         robotBender.addCard(new MoveCard(20, true, 1));
