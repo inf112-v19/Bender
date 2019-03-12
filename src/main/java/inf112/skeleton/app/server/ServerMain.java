@@ -5,7 +5,6 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.util.*;
 
-import com.badlogic.gdx.Game;
 import com.google.gson.*;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;

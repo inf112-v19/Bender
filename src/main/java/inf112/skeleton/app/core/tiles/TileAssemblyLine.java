@@ -1,7 +1,8 @@
 package inf112.skeleton.app.core.tiles;
 
 import inf112.skeleton.app.core.enums.Direction;
-import inf112.skeleton.app.core.interfaces.IRobot;
+import inf112.skeleton.app.core.flag.Flag;
+import inf112.skeleton.app.core.robot.IRobot;
 
 public class TileAssemblyLine extends Tile {
     private int strength;
@@ -21,7 +22,7 @@ public class TileAssemblyLine extends Tile {
      * Method for moving the robot from the current tile to a neighbor
      */
     public void moveRobot() {
-        super.moveRobot(lineDir);
+        //
     }
 
     @Override

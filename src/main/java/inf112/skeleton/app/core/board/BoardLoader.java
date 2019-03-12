@@ -58,7 +58,7 @@ public class BoardLoader {
      * @return an integer array from a text file
      * @throws IOException
      */
-    private static int[][] loadFile(String fileName) throws IOException {
+    public static int[][] loadFile(String fileName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String line = reader.readLine();
         String[] dimensions = line.split(" ");
@@ -68,7 +68,7 @@ public class BoardLoader {
         for (int i = 0; i < h; i++) {
             String[] numbers = reader.readLine().split(" ");
             for (int j = 0; j < w; j++) {
-                result[w][h] = Integer.parseInt(numbers[j]);
+                result[i][j] = Integer.parseInt(numbers[j]);
             }
         }
         return result;

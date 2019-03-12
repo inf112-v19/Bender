@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 
 import static org.junit.Assert.*;
 
+@Ignore
 public class ServerTest {
 
     private ServerMain server;

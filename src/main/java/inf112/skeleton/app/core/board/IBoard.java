@@ -1,10 +1,10 @@
 package inf112.skeleton.app.core.board;
 
-import inf112.skeleton.app.core.Position;
+import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
-import inf112.skeleton.app.core.interfaces.IRobot;
-import inf112.skeleton.app.core.tiles.Tile;
+import inf112.skeleton.app.core.robot.IRobot;
+import inf112.skeleton.app.core.tiles.ITile;
 
 public interface IBoard extends java.io.Serializable {
 
@@ -14,14 +14,14 @@ public interface IBoard extends java.io.Serializable {
      * @param y
      * @return
      */
-    Tile getTile(int x, int y);    // Method for getting a tile in pos (x,y)
+    ITile getTile(int x, int y);    // Method for getting a tile in pos (x,y)
 
     /**
      * Get the tile at (position.x, position.y)
      * @param position
      * @return
      */
-    Tile getTile(Position position);
+    ITile getTile(Position position);
 
     /**
      * Execute a program card on a robot
@@ -31,9 +31,38 @@ public interface IBoard extends java.io.Serializable {
     void moveRobot(IRobot robot, IProgramCard card);
 
     /**
-     * Move a robot one square in a direction
+     *
      * @param robot
      * @param dir
+     * @param amount
+     * @return true if the robot moved
      */
-    void moveRobot(IRobot robot, Direction dir);
+    boolean moveRobot(IRobot robot, Direction dir, int amount);
+
+    /**
+     * Add robot at position if legal
+     *
+     * @throws IllegalArgumentException if the position if illegal
+     * @param robot
+     * @param position
+     */
+    void addRobot(IRobot robot, Position position);
+
+    /**
+     * @param pos
+     * @return true if there is a robot at pos
+     */
+    boolean hasRobot(Position pos);
+
+    /**
+     * @param pos
+     * @return robot object if robot at position, otherwise null
+     */
+    IRobot getRobot(Position pos);
+
+    /**
+     * Takes the top card from each robot and moves them in
+     * prioritized order
+     */
+    void stepRobots();
 }
