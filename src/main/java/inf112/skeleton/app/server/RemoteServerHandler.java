@@ -87,6 +87,7 @@ public class RemoteServerHandler extends API {
         return client.isOpen();
     }
 
+    @Override
     public void connect() throws InterruptedException {
         client.connectBlocking();
     }

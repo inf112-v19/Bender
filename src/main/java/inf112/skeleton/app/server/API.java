@@ -39,4 +39,6 @@ public abstract class API {
 
     public abstract void createRoom();
     public abstract void joinRoom(String id);
+
+    public abstract void connect() throws InterruptedException;
 }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         // cfg.title = "hello-world";
         // cfg.width = 480;
