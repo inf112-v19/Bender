@@ -46,6 +46,7 @@ public class RobotTest {
         robotBender.addCard(new MoveCard(8, false, 2));
         assertTrue(robotBender.getNumberOfCards()==1);
         robotBender.drawCard();
+        assertTrue(robotBender.getNumberOfCards()==0);
     }
 
     @Test
