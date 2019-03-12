@@ -3,9 +3,11 @@ package inf112.skeleton.app.core.robot;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramCard;
 import inf112.skeleton.app.core.cards.RotateCard;
 import inf112.skeleton.app.core.enums.Direction;
+import org.junit.Assert;
 import org.junit.Test;
 
 
@@ -41,10 +43,15 @@ public class RobotTest {
 
     @Test
     public void giveCardToRobotGivesOneCardBack() {
-        // TODO
+        robotBender.addCard(new MoveCard(8, false, 2));
+        robotBender.drawCard();
+
     }
 
     public void giveTwoCardsAndTakeGivesNull() {
-        // TODO
+        robotBender.addCard(new MoveCard(8, false, 2));
+        robotBender.addCard(new MoveCard(8, false, 2));
+        robotBender.drawCard();
+        robotBender.drawCard();
     }
 }
