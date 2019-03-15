@@ -2,7 +2,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9551cfb1be2c4646a922e5e798830533)](https://www.codacy.com/app/inf112-Bender/Bender?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=inf112-v19/Bender&amp;utm_campaign=Badge_Grade)
 
 ## Build and run
-* Execute `mvn install` in the root folder of the project
+* Execute `mvn clean install` in the root folder of the project
 * This will create three jar files in *target/*
    * *libgdx-app.jar*: the libgdx application
    * *server-app.jar*: the server application
