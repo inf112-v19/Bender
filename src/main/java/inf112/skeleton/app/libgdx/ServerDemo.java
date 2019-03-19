@@ -12,18 +12,19 @@ import inf112.skeleton.app.libgdx.states.MainMenuState;
 import inf112.skeleton.app.server.API;
 import inf112.skeleton.app.server.RemoteServerHandler;
 
-import java.net.URISyntaxException;
-
 public class ServerDemo extends ApplicationAdapter {
 
     private SpriteBatch batch;
     private GameStateManager gsm = new GameStateManager();
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 720;
-    public static final String TITLE = "Server Demo";
+    private int width = 1280;
+    private int height = 720;
+    private String title = "Server Demo";
     private API serverHandler = new RemoteServerHandler(new handler());
 
-    public ServerDemo() throws Exception {
+    public ServerDemo(int width, int height, String title) throws Exception {
+        this.width = width;
+        this.height = height;
+        this.title = title;
         serverHandler.connect();
     }
 
@@ -32,7 +33,7 @@ public class ServerDemo extends ApplicationAdapter {
         batch = new SpriteBatch();
         gsm = new GameStateManager();
         Gdx.gl.glClearColor(1, 1, 1, 1);
-        gsm.push(new MainMenuState(gsm, serverHandler));
+        gsm.push(new MainMenuState(gsm, serverHandler, getWidth(), getHeight()));
     }
 
     @Override
@@ -40,6 +41,18 @@ public class ServerDemo extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // wipes the screen clear
         gsm.update(Gdx.graphics.getDeltaTime()); //Difference between the render times
         gsm.render(batch);
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public String getTitle() {
+        return this.title;
     }
 
     private class handler implements IAction {

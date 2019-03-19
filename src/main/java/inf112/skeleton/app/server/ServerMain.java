@@ -52,7 +52,7 @@ public class ServerMain extends WebSocketServer {
                 if (gameRoom.getRoomId().equals(roomId)) {
                     conn.send("INFO {\"message\":\"Room joined successfully\"}");
                     userRoomPairs.put(conn, gameRoom);
-                    conn.send(String.format("ROOM {\"roomId\":\"&s\"}", roomId));
+                    conn.send(String.format("ROOM {\"roomId\":\"%s\"}", roomId));
                     return;
                 }
             }

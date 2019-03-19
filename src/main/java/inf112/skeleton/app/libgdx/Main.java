@@ -6,14 +6,11 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        ServerDemo demo = new ServerDemo(1280, 720, "server demo");
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        // cfg.title = "hello-world";
-        // cfg.width = 480;
-        // cfg.height = 320;
-        // new LwjglApplication(new HelloWorld(), cfg);
-        cfg.width = RobotDemo.WIDTH;
-        cfg.height= RobotDemo.HEIGHT;
-        cfg.title = RobotDemo.TITLE;
-        new LwjglApplication(new ServerDemo(), cfg);
+        cfg.width = demo.getWidth();
+        cfg.height= demo.getHeight();
+        cfg.title = demo.getTitle();
+        new LwjglApplication(demo, cfg);
     }
 }
