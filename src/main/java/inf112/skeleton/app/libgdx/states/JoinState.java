@@ -3,31 +3,23 @@ package inf112.skeleton.app.libgdx.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.server.API;
 
-import javax.swing.text.Style;
+public class JoinState extends State {
 
-public class MainMenuState extends State {
-
-    private int height;
     private int width;
+    private int height;
     private int padding;
 
     private Stage stage;
     private Texture background;
-
-    private CustomImageButton createButton;
-    private static String createButtonTexture = "buttons/create_game_button.png";
-    private static String createButtonPressedTexture = "buttons/create_game_button_pressed.png";
-    private int createButtonX;
-    private int createButtonY;
-    private int createButtonWidth;
-    private int createButtonHeight;
 
     private CustomImageButton joinButton;
     private static String joinButtonTexture = "buttons/join_game_button.png";
@@ -37,19 +29,32 @@ public class MainMenuState extends State {
     private int joinButtonWidth;
     private int joinButtonHeight;
 
-    private API serverHandler;
+    private TextField roomIdInput;
+    private int idInputX;
+    private int idInputY;
+    private int idInputWidth;
+    private int idInputHeight;
 
-    public MainMenuState(GameStateManager mng, API serverHandler, int width, int height) {
-        super(mng);
-        this.height = height;
+    private Skin skin;
+
+    public JoinState(GameStateManager gsm, API serverHandler, int width, int height) {
+        super(gsm);
         this.width = width;
-        this.serverHandler = serverHandler;
-
+        this.height = height;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         background = new Texture(Gdx.files.internal("other/main_menu.png"));
-        calculateUiCoordinates();
-        addUiElements();
+        TextureAtlas atlas;
+        atlas = new TextureAtlas(Gdx.files.internal("atlas/craftacular-ui.json"));
+        Skin skin = new Skin();
+        skin.addRegions(atlas);
+        this.skin = skin;
+
+
+
+
+        this.calculateUiCoordinates();
+        this.addUiElements();
     }
 
     private void calculateUiCoordinates() {
@@ -60,15 +65,24 @@ public class MainMenuState extends State {
         joinButtonX = (getWidth() / 2) - (joinButtonWidth / 2);
         joinButtonY = getHeight() - (getHeight() / 4);
 
-        createButtonHeight = 100;
-        createButtonWidth = 254;
-        createButtonX = (getWidth() / 2) - (createButtonWidth / 2);
-        createButtonY = joinButtonY - joinButtonHeight - padding;
+        idInputHeight = 100;
+        idInputWidth = 200;
+        idInputX = (getWidth() / 2) - (idInputWidth / 2);
+        idInputY = joinButtonY - joinButtonHeight - padding;
     }
 
     private void addUiElements() {
         addJoinButton();
-        addCreateButton();
+        addRoomIdInput();
+    }
+
+    private void addRoomIdInput() {
+        roomIdInput = new TextField("RoomId", skin);
+        roomIdInput.setX(idInputX);
+        roomIdInput.setY(idInputY);
+        roomIdInput.setWidth(idInputWidth);
+        roomIdInput.setHeight(idInputHeight);
+        stage.addActor(roomIdInput);
     }
 
     private void addJoinButton() {
@@ -78,28 +92,10 @@ public class MainMenuState extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                gsm.push(new JoinState(gsm, serverHandler, width, height));
-             }
-        });
-        stage.addActor(joinButton.getButton());
-    }
-
-    private void addCreateButton() {
-        createButton = new CustomImageButton(createButtonTexture, createButtonPressedTexture,
-                createButtonX, createButtonY, createButtonWidth, createButtonHeight);
-        createButton.getButton().addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                // TODO : create room and go to page with room info
+                // TODO : go to new page with input field
             }
         });
-        stage.addActor(createButton.getButton());
-    }
-
-    @Override
-    protected void handleInput() {
-
+        stage.addActor(joinButton.getButton());
     }
 
     @Override
@@ -121,14 +117,18 @@ public class MainMenuState extends State {
     public void dispose() {
         background.dispose();
         joinButton.getTexture().dispose();
-        createButton.getTexture().dispose();
     }
 
-    private int getHeight() {
-        return height;
+    @Override
+    protected void handleInput() {
+
     }
 
-    private int getWidth() {
-        return width;
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
     }
 }

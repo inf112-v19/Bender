@@ -4,6 +4,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.interfaces.IAction;
@@ -34,6 +36,7 @@ public class ServerDemo extends ApplicationAdapter {
         gsm = new GameStateManager();
         Gdx.gl.glClearColor(1, 1, 1, 1);
         gsm.push(new MainMenuState(gsm, serverHandler, getWidth(), getHeight()));
+
     }
 
     @Override
