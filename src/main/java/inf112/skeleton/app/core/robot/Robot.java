@@ -67,6 +67,7 @@ public class Robot implements IRobot, Comparable<IRobot> {
      return this.cards.size();
      }
 
+     // OUTPUTS the whole array of cards
      public ArrayList getCardArray() {
         return this.cards;
      }
