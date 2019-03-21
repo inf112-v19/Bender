@@ -3,6 +3,7 @@ package inf112.skeleton.app.libgdx.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.libgdx.RobotDemo;
 import inf112.skeleton.app.libgdx.VisualBoardLoader;
 
@@ -11,9 +12,10 @@ import java.io.IOException;
 public class PhaseState extends State {
     private VisualBoardLoader visualBoardLoader;
     private Texture boardBackground;
-    protected PhaseState(GameStateManager gsm) throws IOException {
+    protected PhaseState(GameStateManager gsm, Board board) throws IOException {
         super(gsm);
-        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
+        visualBoardLoader = new VisualBoardLoader(board);
+//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
         initializeTextures();
     }
 

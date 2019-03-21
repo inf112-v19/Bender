@@ -24,6 +24,9 @@ public class TileAssemblyLine extends Tile {
     public void moveRobot() {
         //
     }
+    public Direction getDirection() {
+        return lineDir;
+    }
 
     @Override
     public void exec() { this.moveRobot(); }

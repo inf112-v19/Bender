@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
+import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.libgdx.RobotDemo;
 import inf112.skeleton.app.libgdx.VisualBoardLoader;
 
@@ -18,8 +20,10 @@ import inf112.skeleton.app.libgdx.VisualBoardLoader;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RoundState extends State {
+//    private final List<Player> players;
     private ProgramDeck deck;
     private boolean confirmed;
     private Stage stage;
@@ -31,6 +35,7 @@ public class RoundState extends State {
     private GlyphLayout[] visualCardSequencing;
     private ArrayList<Integer> selectedCardPosX;
     private VisualBoardLoader visualBoardLoader;
+    private Board board;
 
 
     private CustomImageButton confirm;
@@ -40,18 +45,39 @@ public class RoundState extends State {
     public static final int CARD_HEIGHT = 220;
 
     //TODO code quality, remove unnecessary stuff
-    public RoundState(GameStateManager gsm) throws IOException {
+    public RoundState(GameStateManager gsm)  throws IOException {
         super(gsm);
+        board = new Board(10, 10);
         chosenCards = new ArrayDeque();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         selectedCardPosX = new ArrayList();
-        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
+        visualBoardLoader = new VisualBoardLoader(board);
+//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
 
         initializeTextures();
         makeCardButtons();
         makeConfirmationButtons();
         makeDeck();
+    }
+
+    public RoundState(GameStateManager gsm, Board board, List<Player> players) throws IOException {
+        super(gsm);
+
+        this.board = board;
+//        this.players = players;
+
+        chosenCards = new ArrayDeque();
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        selectedCardPosX = new ArrayList();
+//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
+
+        initializeTextures();
+        makeCardButtons();
+        makeConfirmationButtons();
+        makeDeck();
+
     }
 
     //Creates unique glyph layouts for each card
@@ -99,7 +125,7 @@ public class RoundState extends State {
             for (int i = 0; i < 5; i++)
                 System.out.println(chosenCards.pop().priority());
             try {
-                gsm.set(new PhaseState(gsm));
+                gsm.set(new PhaseState(gsm, board));
             } catch (IOException e) {
                 e.printStackTrace();
             }
