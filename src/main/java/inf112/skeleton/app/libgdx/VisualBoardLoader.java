@@ -25,6 +25,7 @@ public class VisualBoardLoader {
     private Board board;
     private int boardHeight;
     private int boardWidth;
+    private Texture mergeTestTexture;
 
     public VisualBoardLoader(Board board) throws IOException {
         this.board = board;
@@ -131,8 +132,20 @@ public class VisualBoardLoader {
     public void renderRobot(SpriteBatch sb, int xStart, int yStart) {
         for (int x = 0; x < boardWidth; x++)
             for (int y = 0; y < boardHeight; y++)
-                if (board.hasRobot(new Position(x,y)))
+                if (board.hasRobot(new Position(x, y))) {
                     sb.draw(tileTextures[2], (x * 64) + xStart, (y * 64) + yStart);// update for actual texture later
+                }
+    }
+
+    public void updateBoard(Board board) {
+        this.board = board;
+    }
+
+    public void renderRobot(SpriteBatch sb, int xStart, int yStart, Position pos) {
+
+        sb.draw(tileTextures[2], (pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);// update for actual texture later
+//                    System.out.println("robot is currently at position: " + x + ", " + y);
+
     }
 
     private void makeMap() {

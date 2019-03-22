@@ -15,7 +15,7 @@ public class Robot implements IRobot, Comparable<IRobot> {
     public Robot(Direction robotDirection) {
         this.robotDirection = robotDirection;
     }
-    
+
     @Override
     public Direction getDirection() {
         return robotDirection;

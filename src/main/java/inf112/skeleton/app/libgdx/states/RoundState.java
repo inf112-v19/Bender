@@ -14,7 +14,9 @@ import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.core.position.Position;
+import inf112.skeleton.app.libgdx.CardTextureGenerator;
 import inf112.skeleton.app.libgdx.RobotDemo;
+import inf112.skeleton.app.libgdx.TextureEditor;
 import inf112.skeleton.app.libgdx.VisualBoardLoader;
 
 
@@ -25,6 +27,7 @@ import java.util.List;
 
 public class RoundState extends State {
     //    private final List<Player> players;
+    private TextureEditor textureEditor;
     private ProgramDeck deck;
     private boolean confirmed;
     private Stage stage;
@@ -38,6 +41,8 @@ public class RoundState extends State {
     private VisualBoardLoader visualBoardLoader;
     private Board board;
     private Player player;
+    private Texture mergeTestTexture;
+    private CardTextureGenerator cardTextureGenerator;
 
 
     private CustomImageButton confirm;
@@ -49,6 +54,9 @@ public class RoundState extends State {
     //TODO code quality, remove unnecessary stuff
     public RoundState(GameStateManager gsm) throws IOException {
         super(gsm);
+        textureEditor = new TextureEditor();
+        cardTextureGenerator = new CardTextureGenerator();
+        mergeTestTexture = new Texture(Gdx.files.internal("cards/arrow_forward.png"));
         player = new Player("test");
         board = new Board("empty", 10, 10);
         chosenCards = new ArrayDeque();
@@ -60,27 +68,33 @@ public class RoundState extends State {
 
         board.addRobot(player.getRobot(), new Position(0, 0));
         initializeTextures();
+        makeDeck();
         makeCardButtons();
         makeConfirmationButtons();
-        makeDeck();
     }
 
-    public RoundState(GameStateManager gsm, Board board, Player player) throws IOException {
+    public RoundState(GameStateManager gsm, Board board, Player player, VisualBoardLoader visualBoardLoader) throws IOException {
         super(gsm);
 
         this.board = board;
         this.player = player;
+        textureEditor = new TextureEditor();
+        cardTextureGenerator = new CardTextureGenerator();
+        mergeTestTexture = new Texture(Gdx.files.internal("cards/arrow_forward.png"));
+        player = new Player("test");
+        board = new Board("empty", 10, 10);
         chosenCards = new ArrayDeque();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         selectedCardPosX = new ArrayList();
-        visualBoardLoader = new VisualBoardLoader(board);
+        this.visualBoardLoader = visualBoardLoader;
+//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
 
-
+        board.addRobot(player.getRobot(), new Position(0, 0));
         initializeTextures();
+        makeDeck();
         makeCardButtons();
         makeConfirmationButtons();
-        makeDeck();
 
     }
 
@@ -201,7 +215,12 @@ public class RoundState extends State {
             int y = 18;
             int width = CARD_WIDTH - 30;
             int height = CARD_HEIGHT - 60;
-            cards[i] = new CustomImageButton("cards/card.png", "cards/card.png", x, y, width, height);
+//            Texture testTextureVard = new Texture(Gdx.files.internal("cards/card.png"));
+//            Texture testTexture = textureEditor.mergeTextures(mergeTestTexture, testTextureVard, 20, 100, 140, 140);
+            //            cards[i] = new CustomImageButton("cards/card.png", "cards/card.png", x, y, width, height);
+//            cards[i] = new CustomImageButton(testTexture, "tiles/empty_tile.png", x, y, width, height);
+            Texture cardTexture = cardTextureGenerator.generateTexture(availableRoundCard[i]);
+            cards[i] = new CustomImageButton(cardTexture, "tiles/empty_tile.png", x, y, width, height);
 
             final int finalI = i;
             cards[i].getButton().addListener(new InputListener() {

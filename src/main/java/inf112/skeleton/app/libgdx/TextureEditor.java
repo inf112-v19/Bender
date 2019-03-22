@@ -5,11 +5,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class TextureEditor {
 
     public Texture rotate90(Texture texture) {
         TextureData textureData = texture.getTextureData();
+        if (!textureData.isPrepared())
+            textureData.prepare();
         Pixmap pixmap = textureData.consumePixmap();
         final int height = pixmap.getHeight();
         final int width = pixmap.getWidth();
@@ -71,8 +74,8 @@ public class TextureEditor {
     }
 
     //Currently assumes that the textures have same dimensions
-    public Texture mergeTextures(Texture frontTexture, Texture backTexture) {
-        frontTexture = this.resizeTexture(backTexture.getWidth(), backTexture.getHeight(), frontTexture);
+    public Texture mergeTextures(Texture frontTexture, Texture backTexture, int xPos, int yPos, int newFrontTextureHeight, int newFrontTextureWidth) {
+        frontTexture = this.resizeTexture(newFrontTextureWidth, newFrontTextureHeight, frontTexture);
         TextureData frontTextureData = frontTexture.getTextureData();
         TextureData backTextureData = backTexture.getTextureData();
 //        frontTextureData.prepare();
@@ -81,16 +84,14 @@ public class TextureEditor {
         backTextureData.prepare();
         Pixmap backPixmap = backTextureData.consumePixmap();
 
-        final int textureHeight = frontPixmap.getHeight();
-        final int textureWidth = frontPixmap.getWidth();
-
-        Pixmap newPixmap = new Pixmap(textureWidth, textureHeight, frontPixmap.getFormat());
+        final int textureHeight = backPixmap.getHeight();
+        final int textureWidth = backPixmap.getWidth();
+//        System.out.println("xPos: " + xPos + " yPos: " + yPos);
+//        System.out.println("height: " + textureHeight + " width: " + textureWidth);
         for (int x = 0; x < textureWidth; x++)
             for (int y = 0; y < textureHeight; y++) {
                 int frontVal = frontPixmap.getPixel(x, y);
-//                System.out.println(frontVal);
-                if (frontVal != 255)
-                    backPixmap.drawPixel(x, y, frontVal);
+                backPixmap.drawPixel((x + xPos), (y - 10), frontVal);
             }
         return new Texture(backPixmap);
 
@@ -104,9 +105,16 @@ public class TextureEditor {
         return changeColour(texture, 25f / 255f, 25f / 255f, 112f / 255f, 255f / 255f);
     }
 
+    public Texture flip(Texture t, boolean x, boolean y) {
+        TextureRegion textureRegion = new TextureRegion(t);
+        textureRegion.flip(x, y);
+        return textureRegion.getTexture();
+    }
+
     public Texture resizeTexture(int newWidth, int newHeight, Texture texture) {
         TextureData textureData = texture.getTextureData();
-        textureData.prepare();
+        if (!textureData.isPrepared())
+            textureData.prepare();
         Pixmap pixmapOld = textureData.consumePixmap();
         Pixmap pixmapNew = new Pixmap(newWidth, newHeight, pixmapOld.getFormat());
         pixmapNew.drawPixmap(pixmapOld,

@@ -2,7 +2,7 @@ package inf112.skeleton.app.core.cards;
 
 import inf112.skeleton.app.core.enums.Direction;
 
-public class RotateCard extends ProgramCard {
+public class  RotateCard extends ProgramCard {
 
     public enum DirectionChange { RIGHT, LEFT, UTURN }
 
@@ -20,5 +20,8 @@ public class RotateCard extends ProgramCard {
             case UTURN: return currentDirection.getOpposite();
             default: return null;
         }
+    }
+    public DirectionChange getCurrentDirection() {
+        return dir;
     }
 }
