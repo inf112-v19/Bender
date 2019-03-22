@@ -15,7 +15,7 @@ public class Robot implements IRobot, Comparable<IRobot> {
     public Robot(Direction robotDirection) {
         this.robotDirection = robotDirection;
     }
-
+    
     @Override
     public Direction getDirection() {
         return robotDirection;
@@ -53,8 +53,8 @@ public class Robot implements IRobot, Comparable<IRobot> {
     }
 
     public IProgramCard drawCard() {
-        if(this.cards.size() == 0) return null;
-        return this.cards.remove(this.cards.size()-1);
+        if (this.cards.size() == 0) return null;
+        return this.cards.remove(this.cards.size() - 1);
     }
 
     public IProgramCard peekCard() {
@@ -63,14 +63,14 @@ public class Robot implements IRobot, Comparable<IRobot> {
     }
 
     // OUTPUTS number of cards in Robot-memory
-     public int getNumberOfCards() {
-     return this.cards.size();
-     }
+    public int getNumberOfCards() {
+        return this.cards.size();
+    }
 
-     // OUTPUTS the whole array of cards
-     public ArrayList getCardArray() {
+    // OUTPUTS the whole array of cards
+    public ArrayList getCardArray() {
         return this.cards;
-     }
+    }
 
     @Override
     public int compareTo(IRobot that) {

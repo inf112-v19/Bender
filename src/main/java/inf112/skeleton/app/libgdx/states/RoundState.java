@@ -13,6 +13,7 @@ import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
+import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.libgdx.RobotDemo;
 import inf112.skeleton.app.libgdx.VisualBoardLoader;
 
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoundState extends State {
-//    private final List<Player> players;
+    //    private final List<Player> players;
     private ProgramDeck deck;
     private boolean confirmed;
     private Stage stage;
@@ -36,18 +37,20 @@ public class RoundState extends State {
     private ArrayList<Integer> selectedCardPosX;
     private VisualBoardLoader visualBoardLoader;
     private Board board;
+    private Player player;
 
 
     private CustomImageButton confirm;
     private CustomImageButton reset;
     private Texture boardBackground;
-    public static final int CARD_WIDTH = 110 ;
+    public static final int CARD_WIDTH = 110;
     public static final int CARD_HEIGHT = 220;
 
     //TODO code quality, remove unnecessary stuff
-    public RoundState(GameStateManager gsm)  throws IOException {
+    public RoundState(GameStateManager gsm) throws IOException {
         super(gsm);
-        board = new Board(10, 10);
+        player = new Player("test");
+        board = new Board("empty", 10, 10);
         chosenCards = new ArrayDeque();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -55,23 +58,24 @@ public class RoundState extends State {
         visualBoardLoader = new VisualBoardLoader(board);
 //        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
 
+        board.addRobot(player.getRobot(), new Position(0, 0));
         initializeTextures();
         makeCardButtons();
         makeConfirmationButtons();
         makeDeck();
     }
 
-    public RoundState(GameStateManager gsm, Board board, List<Player> players) throws IOException {
+    public RoundState(GameStateManager gsm, Board board, Player player) throws IOException {
         super(gsm);
 
         this.board = board;
-//        this.players = players;
-
+        this.player = player;
         chosenCards = new ArrayDeque();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         selectedCardPosX = new ArrayList();
-//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
+        visualBoardLoader = new VisualBoardLoader(board);
+
 
         initializeTextures();
         makeCardButtons();
@@ -123,9 +127,9 @@ public class RoundState extends State {
     public void handleNextStage() {
         if (chosenCards.size() == 5 && confirmed) {
             for (int i = 0; i < 5; i++)
-                System.out.println(chosenCards.pop().priority());
+                player.giveCardToRobot(chosenCards.pop());
             try {
-                gsm.set(new PhaseState(gsm, board));
+                gsm.set(new PhaseState(gsm, board, player));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -137,7 +141,7 @@ public class RoundState extends State {
     //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
     public void handleVisualSelection() {
         if (chosenCards.size() > 0 && chosenCards.size() < 6)
-            for (int i = 0; i <chosenCards.size() ; i++) {
+            for (int i = 0; i < chosenCards.size(); i++) {
                 drawSelectedNumber(chosenCards.size() - 1);
             }
     }
@@ -147,8 +151,8 @@ public class RoundState extends State {
     private void drawSelectedNumber(int selectedNum) {
         BitmapFontCache bc = new BitmapFontCache(font);
         float yPos = (CARD_HEIGHT - 65 + visualCardSequencing[selectedNum].height);
-        for (int i = 0; i <selectedCardPosX.size() ; i++) {
-            float xPos = ((CARD_WIDTH * selectedCardPosX.get(i) + CARD_WIDTH / 4) + visualCardSequencing[i].width / 2 + CARD_WIDTH /2);
+        for (int i = 0; i < selectedCardPosX.size(); i++) {
+            float xPos = ((CARD_WIDTH * selectedCardPosX.get(i) + CARD_WIDTH / 4) + visualCardSequencing[i].width / 2 + CARD_WIDTH / 2);
             bc.addText(visualCardSequencing[i], xPos, yPos);
         }
         bc.draw(stage.getBatch());
@@ -235,6 +239,7 @@ public class RoundState extends State {
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoardCustomSize(sb, RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
+        visualBoardLoader.renderRobot(sb, RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight());
         stage.getBatch().draw(cardBackground, 0, 0);
 
     }
