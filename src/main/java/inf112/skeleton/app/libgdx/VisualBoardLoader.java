@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.BoardLoader;
 import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.tiles.Tile;
 import inf112.skeleton.app.core.tiles.TileAssemblyLine;
 import inf112.skeleton.app.core.tiles.TileGear;
@@ -125,6 +126,13 @@ public class VisualBoardLoader {
 //        pixmapOld.dispose();
 //        pixmapNew.dispose();
         return new Texture(pixmapNew);
+    }
+
+    public void renderRobot(SpriteBatch sb, int xStart, int yStart) {
+        for (int x = 0; x < boardWidth; x++)
+            for (int y = 0; y < boardHeight; y++)
+                if (board.hasRobot(new Position(x,y)))
+                    sb.draw(tileTextures[2], (x * 64) + xStart, (y * 64) + yStart);// update for actual texture later
     }
 
     private void makeMap() {
