@@ -46,7 +46,7 @@ public class VisualBoardLoader {
 
     private void initializeTextures() {
         for (int i = 0; i < tileTextures.length; i++)
-            tileTextures[i] = resizeTexture(32, 32, tilePathNameToNumber.get(i));
+            tileTextures[i] = resizeTexture(64, 64, tilePathNameToNumber.get(i));
     }
 
     public void initializeCustomSizeTextures(int width, int height) {
@@ -108,11 +108,11 @@ public class VisualBoardLoader {
 
     //TODO
     private Texture getTexture(Tile tile, boolean isTIleGear, boolean isTileAssemblyLine, Direction dir) {
-        return tileTextures[1];
+        return tileTextures[2];
     }
 
     private Texture getEmptyTexture() {
-        return new Texture(Gdx.files.internal("tiles/empty_tile.png"));
+        return tileTextures[0];
     }
 
     private Texture resizeTexture(int newWidth, int newHeight, String path) {
