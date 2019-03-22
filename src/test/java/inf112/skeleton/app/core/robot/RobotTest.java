@@ -57,4 +57,8 @@ public class RobotTest {
         robotBender.drawCard();
         assertTrue(robotBender.getNumberOfCards()==0);
     }
+
+    // Test .drawCard to give same card as .addCard
+
+    //
 }
