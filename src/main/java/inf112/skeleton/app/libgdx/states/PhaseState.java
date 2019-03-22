@@ -12,15 +12,33 @@ import java.io.IOException;
 public class PhaseState extends State {
     private VisualBoardLoader visualBoardLoader;
     private Texture boardBackground;
-    protected PhaseState(GameStateManager gsm, Board board) throws IOException {
+    private Board board;
+    private int phaseNumber;
+
+    public PhaseState(GameStateManager gsm, Board board) throws IOException {
         super(gsm);
+        phaseNumber = 1;
+        this.board = board;
         visualBoardLoader = new VisualBoardLoader(board);
 //        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
         initializeTextures();
     }
-
+    public PhaseState(GameStateManager gsm, Board board, int phaseNumber) throws IOException {
+        super(gsm);
+        phaseNumber++;
+        this.board = board;
+        visualBoardLoader = new VisualBoardLoader(board);
+//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
+        initializeTextures();
+    }
     private void initializeTextures() {
         boardBackground = new Texture(Gdx.files.internal("boards/board_background_new.png"));
+    }
+    private void moveRobot() {
+        board.stepRobots();
+    }
+    private void drawRobot(SpriteBatch sb) {
+
     }
 
     @Override
