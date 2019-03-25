@@ -53,10 +53,10 @@ public class CardTextureGenerator {
     }
 
     private Texture generateMoveCard(MoveCard card) {
-        if (card.movesBackwards()) {
+        if (!card.movesBackwards()) {
             return generateForwardCard();
         }
-        Texture flipped = textureEditor.flip(straightArrow, true, false);
+        Texture flipped = textureEditor.rotate90(textureEditor.rotate90(straightArrow));
         return textureEditor.mergeTextures(flipped, basicCard, 20, 100, 140, 140);
 
     }

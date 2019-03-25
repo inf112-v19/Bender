@@ -16,18 +16,17 @@ public class PhaseState extends State {
     private VisualBoardLoader visualBoardLoader;
     private Texture boardBackground;
     public Board board;
-    private int currentPhaseNumber;
-    private int initialPhaseNumber;
+//    private int currentPhaseNumber; not needed until some action needs to occur inbetween the phases.
+//    private int initialPhaseNumber;
     private Player player;
 
     public PhaseState(GameStateManager gsm, Board board, Player player) throws IOException {
         super(gsm);
         this.player = player;
-        currentPhaseNumber = 1;
-        initialPhaseNumber = 1;
+//        currentPhaseNumber = 1;
+//        initialPhaseNumber = 1;
         this.board = board;
         visualBoardLoader = new VisualBoardLoader(board);
-//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
         initializeTextures();
     }
 
@@ -37,20 +36,11 @@ public class PhaseState extends State {
         this.player = player;
         this.board = board;
         visualBoardLoader = new VisualBoardLoader(board);
-//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
         initializeTextures();
     }
 
     private void initializeTextures() {
         boardBackground = new Texture(Gdx.files.internal("boards/board_background_new.png"));
-    }
-
-    private void moveRobot() {
-        board.stepRobots();
-    }
-
-    private void drawRobot(SpriteBatch sb) {
-
     }
 
     @Override
@@ -59,30 +49,24 @@ public class PhaseState extends State {
         //TODO
 
     }
-    public Position getRobotPos() {
-        for (int x = 0; x < board.getWidth(); x++) {
-            for (int y = 0; y < board.getHeight(); y++) {
-                if (board.hasRobot(new Position(x, y)))
-                    return new Position(x, y);
-            }
-        }
-        return null;
-    }
+
     @Override
     public void update(float dt) {
         while (player.getRobot().getNumberOfCards() > 0) {
             visualBoardLoader.updateBoard(board);
             IProgramCard card = player.getRobot().drawCard();
-//            System.out.println(board.hasRobot(new Position(0,0)));
-//            System.out.println("drawn: " + card.toString());
             board.moveRobot(player.getRobot(), card);
-            currentPhaseNumber++;
+            System.out.println(player.getRobot().getDirection());
+            System.out.println(visualBoardLoader.getRobotPos().getX());
+            System.out.println(visualBoardLoader.getRobotPos().getY());
+            visualBoardLoader.updateBoard(this.board);
+//            currentPhaseNumber++;
         }
-//        try {
-//            gsm.set(new RoundState(gsm, board, player, visualBoardLoader));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            gsm.set(new RoundState(gsm, board, player, visualBoardLoader));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -91,7 +75,7 @@ public class PhaseState extends State {
         sb.draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoard(sb, RobotDemo.WIDTH / 2 - temp, RobotDemo.HEIGHT / 2 - temp);
-        visualBoardLoader.renderRobot(sb, RobotDemo.WIDTH / 2 - temp, RobotDemo.HEIGHT / 2 - temp, getRobotPos());
+        visualBoardLoader.renderRobot(sb, RobotDemo.WIDTH / 2 - temp, RobotDemo.HEIGHT / 2 - temp, visualBoardLoader.getRobotPos(), false);
         sb.end();
     }
 

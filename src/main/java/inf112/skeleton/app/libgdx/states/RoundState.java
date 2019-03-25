@@ -80,9 +80,6 @@ public class RoundState extends State {
         this.player = player;
         textureEditor = new TextureEditor();
         cardTextureGenerator = new CardTextureGenerator();
-        mergeTestTexture = new Texture(Gdx.files.internal("cards/arrow_forward.png"));
-        player = new Player("test");
-        board = new Board("empty", 10, 10);
         chosenCards = new ArrayDeque();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -90,7 +87,7 @@ public class RoundState extends State {
         this.visualBoardLoader = visualBoardLoader;
 //        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
 
-        board.addRobot(player.getRobot(), new Position(0, 0));
+//        board.addRobot(player.getRobot(), new Position(0, 0));
         initializeTextures();
         makeDeck();
         makeCardButtons();
@@ -139,8 +136,8 @@ public class RoundState extends State {
 
     // Handles criteria necessary for proceeding to the next stage
     public void handleNextStage() {
-        if (chosenCards.size() == 5 && confirmed) {
-            for (int i = 0; i < 5; i++)
+        if (chosenCards.size() == 2 && confirmed) {
+            for (int i = 0; i < 2; i++)
                 player.giveCardToRobot(chosenCards.pop());
             try {
                 gsm.set(new PhaseState(gsm, board, player));
@@ -154,7 +151,7 @@ public class RoundState extends State {
     //TODO adjusting for duplicates
     //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
     public void handleVisualSelection() {
-        if (chosenCards.size() > 0 && chosenCards.size() < 6)
+        if (chosenCards.size() > 0 && chosenCards.size() < 3)
             for (int i = 0; i < chosenCards.size(); i++) {
                 drawSelectedNumber(chosenCards.size() - 1);
             }
@@ -184,7 +181,7 @@ public class RoundState extends State {
         confirm.getButton().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (chosenCards.size() == 5)
+                if (chosenCards.size() == 2)
                     confirmed = true;
                 return true;
             }
@@ -215,10 +212,6 @@ public class RoundState extends State {
             int y = 18;
             int width = CARD_WIDTH - 30;
             int height = CARD_HEIGHT - 60;
-//            Texture testTextureVard = new Texture(Gdx.files.internal("cards/card.png"));
-//            Texture testTexture = textureEditor.mergeTextures(mergeTestTexture, testTextureVard, 20, 100, 140, 140);
-            //            cards[i] = new CustomImageButton("cards/card.png", "cards/card.png", x, y, width, height);
-//            cards[i] = new CustomImageButton(testTexture, "tiles/empty_tile.png", x, y, width, height);
             Texture cardTexture = cardTextureGenerator.generateTexture(availableRoundCard[i]);
             cards[i] = new CustomImageButton(cardTexture, "tiles/empty_tile.png", x, y, width, height);
 
@@ -226,7 +219,7 @@ public class RoundState extends State {
             cards[i].getButton().addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if (!chosenCards.contains(availableRoundCard[finalI]) && chosenCards.size() < 5) {
+                    if (!chosenCards.contains(availableRoundCard[finalI]) && chosenCards.size() < 2) {
                         chosenCards.add(availableRoundCard[finalI]);
                         selectedCardPosX.add(finalI);
                     }
@@ -258,7 +251,7 @@ public class RoundState extends State {
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoardCustomSize(sb, RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
-        visualBoardLoader.renderRobot(sb, RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight());
+        visualBoardLoader.renderRobot(sb, RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
         stage.getBatch().draw(cardBackground, 0, 0);
 
     }

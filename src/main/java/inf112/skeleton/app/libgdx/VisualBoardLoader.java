@@ -141,11 +141,24 @@ public class VisualBoardLoader {
         this.board = board;
     }
 
-    public void renderRobot(SpriteBatch sb, int xStart, int yStart, Position pos) {
-
-        sb.draw(tileTextures[2], (pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);// update for actual texture later
+    public void renderRobot(SpriteBatch sb, int xStart, int yStart, Position pos, boolean roundState) {
+        int height = (RobotDemo.HEIGHT - 200) / 10;
+        if (roundState)
+            sb.draw(tileTextures[2], (pos.getX() * height) + xStart, (pos.getY() * height) + yStart);// update for actual texture later
+        else
+            sb.draw(tileTextures[2], (pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);// update for actual texture later
 //                    System.out.println("robot is currently at position: " + x + ", " + y);
 
+    }
+
+    public Position getRobotPos() {
+        for (int x = 0; x < board.getWidth(); x++) {
+            for (int y = 0; y < board.getHeight(); y++) {
+                if (board.hasRobot(new Position(x, y)))
+                    return new Position(x, y);
+            }
+        }
+        return null;
     }
 
     private void makeMap() {
