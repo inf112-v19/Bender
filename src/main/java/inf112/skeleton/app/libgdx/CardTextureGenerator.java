@@ -2,9 +2,14 @@ package inf112.skeleton.app.libgdx;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.RotateCard;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 
 public class CardTextureGenerator {
     private TextureEditor textureEditor;
@@ -39,7 +44,7 @@ public class CardTextureGenerator {
     }
 
     private Texture makeUTurn() {
-        Texture rotated = textureEditor.rotate90(rotateLeft);
+        Texture rotated = textureEditor.rotate90(textureEditor.rotate90(rotateLeft));
         return textureEditor.mergeTextures(rotated, basicCard, 20, 100, 140, 140);
     }
 
@@ -63,5 +68,20 @@ public class CardTextureGenerator {
 
     private Texture generateForwardCard() {
         return textureEditor.mergeTextures(straightArrow, basicCard, 20, 100, 140, 140);
+    }
+
+    public void drawCardMoveAmount(MoveCard card, float xPos, float yPos, Stage stage) {
+        BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
+        BitmapFontCache bc = new BitmapFontCache(font);
+
+        font.getData().setScale(0.9f, 0.8f);
+        font.setColor(90f / 255f, 14f / 255f, 14f / 255f, 255f / 255f);
+        String text = "" + card.getAmmount();
+        GlyphLayout glyphLayout = new GlyphLayout(font, text);
+        bc.addText(glyphLayout, xPos, yPos);
+        stage.getBatch().begin();
+//        stage.getBatch().draw(new Texture(Gdx.files.internal("fonts/font.png")), 200, 200);
+        bc.draw(stage.getBatch());
+        stage.getBatch().end();
     }
 }

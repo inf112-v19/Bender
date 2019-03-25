@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
+import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.core.position.Position;
@@ -41,7 +42,6 @@ public class RoundState extends State {
     private VisualBoardLoader visualBoardLoader;
     private Board board;
     private Player player;
-    private Texture mergeTestTexture;
     private CardTextureGenerator cardTextureGenerator;
 
 
@@ -56,7 +56,6 @@ public class RoundState extends State {
         super(gsm);
         textureEditor = new TextureEditor();
         cardTextureGenerator = new CardTextureGenerator();
-        mergeTestTexture = new Texture(Gdx.files.internal("cards/arrow_forward.png"));
         player = new Player("test");
         board = new Board("empty", 10, 10);
         chosenCards = new ArrayDeque();
@@ -169,6 +168,7 @@ public class RoundState extends State {
         bc.draw(stage.getBatch());
     }
 
+
     public void disposeFonts() {
         font.dispose();
         selectedCardPosX.clear();
@@ -231,6 +231,17 @@ public class RoundState extends State {
         }
     }
 
+    private void drawCardMoveAmount() { //eventually should be moved to CardTextureGenerator
+        for (int i = 0; i < 9; i++) {
+            if (availableRoundCard[i] instanceof MoveCard) {
+                float yPos = 73;
+                float xPos = ((CARD_WIDTH * i + CARD_WIDTH / 4) + 171 / 2 - CARD_WIDTH / 2) - 110;
+                MoveCard card = (MoveCard) availableRoundCard[i];
+                cardTextureGenerator.drawCardMoveAmount(card, xPos, yPos, stage);
+            }
+        }
+    }
+
     @Override
     public void update(float dt) {
         handleInput();
@@ -244,6 +255,7 @@ public class RoundState extends State {
         handleVisualSelection();
         stage.getBatch().end();
         stage.draw();
+        this.drawCardMoveAmount();
     }
 
     public void renderBoard(SpriteBatch sb) {
