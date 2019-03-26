@@ -2,9 +2,10 @@ package inf112.skeleton.app.libgdx.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.ITile;
 import inf112.skeleton.app.core.tiles.TileAssemblyLine;
@@ -19,13 +20,31 @@ public class SpriteLoader {
 
     private int tileSize = 96;
 
+    private BitmapFont font;
+    private BitmapFontCache bfc;
+
     public SpriteLoader() {
         initializeSprites();
+        initializeFonts();
     }
 
     public SpriteLoader(int tileSize) {
         this.tileSize = tileSize;
         initializeSprites();
+        initializeFonts();
+    }
+
+    private void initializeFonts() {
+        font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
+        bfc = new BitmapFontCache(font);
+    }
+
+    public BitmapFont getFont() {
+        return this.font;
+    }
+
+    public BitmapFontCache getFontCache() {
+        return this.bfc;
     }
 
     private void initializeSprites() {
@@ -75,15 +94,15 @@ public class SpriteLoader {
 
     public void dispose() {
         for (Sprite sprite : sprites.values()) {
-            sprite.getTexture().dispose();
+            // sprite.getTexture().dispose();
+
         }
     }
 
     private Sprite getSprite(String name) {
         Sprite sprite = sprites.get(name);
-        sprite.setSize(tileSize, tileSize);
         sprite.setRotation(0);
-        sprites.get(name).setSize(tileSize, tileSize);
+        // sprite.setSize(tileSize, tileSize);
         return sprites.get(name);
     }
 

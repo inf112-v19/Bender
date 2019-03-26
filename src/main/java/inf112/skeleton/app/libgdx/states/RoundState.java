@@ -1,6 +1,7 @@
 package inf112.skeleton.app.libgdx.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
@@ -249,7 +250,6 @@ public class RoundState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
         stage.act();
         stage.getBatch().begin();
         this.renderBoard((SpriteBatch) stage.getBatch());
@@ -260,6 +260,7 @@ public class RoundState extends State {
     }
 
     public void renderBoard(SpriteBatch sb) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         int height = (RobotDemo.HEIGHT - cardBackground.getHeight()) / 10;
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
@@ -271,6 +272,7 @@ public class RoundState extends State {
 
     @Override
     public void dispose() {
+
         confirm.getTexture().dispose();
         reset.getTexture().dispose();
         cardBackground.dispose();

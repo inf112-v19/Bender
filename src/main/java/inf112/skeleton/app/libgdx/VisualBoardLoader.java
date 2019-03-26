@@ -3,6 +3,7 @@ package inf112.skeleton.app.libgdx;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.enums.Direction;
@@ -56,19 +57,26 @@ public class VisualBoardLoader {
     }
 
     public void renderBoardCustomSize(SpriteBatch sb, int xStart, int yStart, int width, int height) {
-        initializeCustomSizeTextures(width, height);
+        // initializeCustomSizeTextures(width, height);
+        spriteLoader.setTileSize(width);
         for (int y = 0; y < boardHeight; y++)
-            for (int x = 0; x < boardWidth; x++)
-                drawCorrsepnndingTiles(getTile(x, y), sb, (x * width) + xStart, (y * height) + yStart);
+            for (int x = 0; x < boardWidth; x++) {
+                Sprite sprite = spriteLoader.getTileSprite(getTile(x, y));
+                sprite.setSize(width, height);
+                sprite.setSize(1000, 1000);
+                //drawCorrsepnndingTiles(getTile(x, y), sb, (x * width) + xStart, (y * height) + yStart);
+                sb.draw(sprite, (x * width) + xStart, (y * height) + yStart);
+            }
     }
 
     //The SpriteBatch should be started prior calling this method
     public void renderBoard(SpriteBatch sb, int xStart, int yStart) {
-        for (int y = 0; y < boardHeight; y++)
+        renderBoardCustomSize(sb, xStart, yStart, 64, 64);
+        /*for (int y = 0; y < boardHeight; y++)
             for (int x = 0; x < boardWidth; x++) {
                 // drawCorrsepnndingTiles(getTile(x, y), sb, (x * 64) + xStart, (y * 64) + yStart);
                 sb.draw(spriteLoader.getTileSprite(getTile(x, y)), (x * 64) + xStart, (y * 64) + yStart);
-            }
+            }*/
     }
 
     //Cases will need to be changed accordingly to the new implementation of  getTexture method
