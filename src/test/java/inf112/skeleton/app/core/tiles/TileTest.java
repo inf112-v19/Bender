@@ -12,7 +12,7 @@ public class TileTest {
     private Tile tile;
 
     @Test
-    public void getRobotTest() {
+    public void putRobotOnTileAndGetSameRobotBackTest() {
         IRobot robot = new Robot(Direction.NORTH);
         this.tile = new Tile(robot, null);
 
@@ -20,7 +20,7 @@ public class TileTest {
     }
 
     @Test
-    public void setRobotTest() {
+    public void putRobotOnTileAndSetToGetChangedRobotBackTest() {
         this.tile = new Tile(new Robot(Direction.NORTH), null);
 
         IRobot robot = new Robot(Direction.EAST);
@@ -30,7 +30,7 @@ public class TileTest {
     }
 
     @Test
-    public void hasFlagTest() {
+    public void putFLagOnTileAndCheckThatItHasFlagTest() {
         IFlag flag = new Flag(0);
         this.tile = new Tile(null, flag);
 
@@ -38,7 +38,7 @@ public class TileTest {
     }
 
     @Test
-    public void getFlagTest() {
+    public void putFlagOnTileAndGetSameFlagBackTest() {
         Flag flag = new Flag(0);
         this.tile = new Tile(null, flag);
 
