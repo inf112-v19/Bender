@@ -59,4 +59,5 @@ public class Tile implements ITile {
             default:
                 return false;
         }
+    }
 }
