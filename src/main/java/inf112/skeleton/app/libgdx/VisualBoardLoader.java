@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
-import inf112.skeleton.app.core.board.BoardLoader;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.tiles.Tile;
@@ -21,21 +20,16 @@ public class VisualBoardLoader {
     private Map<Integer, String> tilePathNameToNumber;
     private Texture[] tileTextures;
     private int tileWidthHeight;
-    private TextureEditor textureEditor;
     private Board board;
     private int boardHeight;
     private int boardWidth;
-    private Texture mergeTestTexture;
 
     public VisualBoardLoader(Board board) throws IOException {
         this.board = board;
         boardHeight = board.getHeight();
         boardWidth = board.getWidth();
-        textureEditor = new TextureEditor();
         tileTextures = new Texture[15];
         tilePathNameToNumber = new HashMap<>();
-        BoardLoader boardloader = new BoardLoader();
-        TextureEditor textureEditor = new TextureEditor();
         tileWidthHeight = 64;
 
         makeMap();
@@ -61,19 +55,19 @@ public class VisualBoardLoader {
         initializeCustomSizeTextures(width, height);
         for (int y = 0; y < boardHeight; y++)
             for (int x = 0; x < boardWidth; x++)
-                drawCorrsepningTiles(getTile(x, y), sb, (x * width) + xStart, (y * height) + yStart);
+                drawCorrsepnndingTiles(getTile(x, y), sb, (x * width) + xStart, (y * height) + yStart);
     }
 
     //The SpriteBatch should be started prior calling this method
     public void renderBoard(SpriteBatch sb, int xStart, int yStart) {
         for (int y = 0; y < boardHeight; y++)
             for (int x = 0; x < boardWidth; x++) {
-                drawCorrsepningTiles(getTile(x, y), sb, (x * 64) + xStart, (y * 64) + yStart);
+                drawCorrsepnndingTiles(getTile(x, y), sb, (x * 64) + xStart, (y * 64) + yStart);
             }
     }
 
     //Cases will need to be changed accordingly to the new implementation of  getTexture method
-    private void drawCorrsepningTiles(Tile tile, SpriteBatch sb, int x, int y) {
+    private void drawCorrsepnndingTiles(Tile tile, SpriteBatch sb, int x, int y) {
         if (tile instanceof TileAssemblyLine) {
             TileAssemblyLine tileAssemblyLine = (TileAssemblyLine) tile;
             switch (tileAssemblyLine.getDirection()) {
@@ -103,7 +97,6 @@ public class VisualBoardLoader {
         }
     }
 
-    //Redundant method needs refactoring
     private Tile getTile(int x, int y) {
         return (Tile) board.getTile(x, y);
     }
@@ -124,17 +117,8 @@ public class VisualBoardLoader {
                 0, 0, pixmapOld.getWidth(), pixmapOld.getHeight(),
                 0, 0, pixmapNew.getWidth(), pixmapNew.getHeight()
         );
-//        pixmapOld.dispose();
-//        pixmapNew.dispose();
-        return new Texture(pixmapNew);
-    }
 
-    public void renderRobot(SpriteBatch sb, int xStart, int yStart) {
-        for (int x = 0; x < boardWidth; x++)
-            for (int y = 0; y < boardHeight; y++)
-                if (board.hasRobot(new Position(x, y))) {
-                    sb.draw(tileTextures[2], (x * 64) + xStart, (y * 64) + yStart);// update for actual texture later
-                }
+        return new Texture(pixmapNew);
     }
 
     public void updateBoard(Board board) {
@@ -144,11 +128,9 @@ public class VisualBoardLoader {
     public void renderRobot(SpriteBatch sb, int xStart, int yStart, Position pos, boolean roundState) {
         int height = (RobotDemo.HEIGHT - 200) / 10;
         if (roundState)
-            sb.draw(tileTextures[2], (pos.getX() * height) + xStart, (pos.getY() * height) + yStart);// update for actual texture later
+            sb.draw(tileTextures[2], (pos.getX() * height) + xStart, (pos.getY() * height) + yStart);
         else
-            sb.draw(tileTextures[2], (pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);// update for actual texture later
-//                    System.out.println("robot is currently at position: " + x + ", " + y);
-
+            sb.draw(tileTextures[2], (pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);
     }
 
     public Position getRobotPos() {

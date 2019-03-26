@@ -70,6 +70,7 @@ public class CardTextureGenerator {
         return textureEditor.mergeTextures(straightArrow, basicCard, 20, 100, 140, 140);
     }
 
+    //Draws the amount a card is supposed to move the player forwards.
     public void drawCardMoveAmount(MoveCard card, float xPos, float yPos, Stage stage) {
         BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
         BitmapFontCache bc = new BitmapFontCache(font);
@@ -80,7 +81,6 @@ public class CardTextureGenerator {
         GlyphLayout glyphLayout = new GlyphLayout(font, text);
         bc.addText(glyphLayout, xPos, yPos);
         stage.getBatch().begin();
-//        stage.getBatch().draw(new Texture(Gdx.files.internal("fonts/font.png")), 200, 200);
         bc.draw(stage.getBatch());
         stage.getBatch().end();
     }

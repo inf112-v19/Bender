@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.Player;
-import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.libgdx.RobotDemo;
 import inf112.skeleton.app.libgdx.VisualBoardLoader;
 
@@ -30,14 +29,15 @@ public class PhaseState extends State {
         initializeTextures();
     }
 
-    public PhaseState(GameStateManager gsm, Board board, Player player, int phaseNumber) throws IOException {
-        super(gsm);
-        phaseNumber++;
-        this.player = player;
-        this.board = board;
-        visualBoardLoader = new VisualBoardLoader(board);
-        initializeTextures();
-    }
+    //Redundant right now, will be needed for handling animations and actions inbetween phases further on.
+//    public PhaseState(GameStateManager gsm, Board board, Player player, int phaseNumber) throws IOException {
+//        super(gsm);
+//        phaseNumber++;
+//        this.player = player;
+//        this.board = board;
+//        visualBoardLoader = new VisualBoardLoader(board);
+//        initializeTextures();
+//    }
 
     private void initializeTextures() {
         boardBackground = new Texture(Gdx.files.internal("boards/board_background_new.png"));
@@ -55,6 +55,7 @@ public class PhaseState extends State {
         while (player.getRobot().getNumberOfCards() > 0) {
             visualBoardLoader.updateBoard(board);
             IProgramCard card = player.getRobot().drawCard();
+            System.out.println(card);
             board.moveRobot(player.getRobot(), card);
             System.out.println(player.getRobot().getDirection());
             System.out.println(visualBoardLoader.getRobotPos().getX());

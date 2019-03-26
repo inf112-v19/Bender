@@ -137,7 +137,7 @@ public class RoundState extends State {
     public void handleNextStage() {
         if (chosenCards.size() == 2 && confirmed) {
             for (int i = 0; i < 2; i++)
-                player.giveCardToRobot(chosenCards.pop());
+                player.giveCardToRobot(chosenCards.removeLast());
             try {
                 gsm.set(new PhaseState(gsm, board, player));
             } catch (IOException e) {
@@ -235,7 +235,7 @@ public class RoundState extends State {
         for (int i = 0; i < 9; i++) {
             if (availableRoundCard[i] instanceof MoveCard) {
                 float yPos = 73;
-                float xPos = ((CARD_WIDTH * i + CARD_WIDTH / 4) + 171 / 2 - CARD_WIDTH / 2) - 110;
+                float xPos = ((CARD_WIDTH * (i+1) + CARD_WIDTH / 4) + 171 / 2 - CARD_WIDTH / 2) - 110;
                 MoveCard card = (MoveCard) availableRoundCard[i];
                 cardTextureGenerator.drawCardMoveAmount(card, xPos, yPos, stage);
             }
