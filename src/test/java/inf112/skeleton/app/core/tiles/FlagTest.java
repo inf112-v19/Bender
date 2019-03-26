@@ -8,7 +8,7 @@ public class FlagTest {
     private Flag flag;
 
     @Test
-    public void getOrdinalTest() {
+    public void setOrdinalToFlagAndGetSameOrdinalBackTest() {
         int ord = 0;
         this.flag = new Flag(ord);
 
@@ -16,7 +16,7 @@ public class FlagTest {
     }
 
     @Test
-    public void setOrdinalTest() {
+    public void changeOrdinalOfFlagAndSetNewOrdinalAndGetSameBackTest() {
         this.flag = new Flag(0);
 
         int ord = 5;
