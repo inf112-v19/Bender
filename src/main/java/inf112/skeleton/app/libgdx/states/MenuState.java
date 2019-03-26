@@ -16,12 +16,12 @@ import inf112.skeleton.app.libgdx.RobotDemo;
 import java.io.IOException;
 
 public class MenuState extends State {
+
     private CustomImageButton myButton;
     private ImageButton button;
     private Texture background;
     private BitmapFont font;
     private GlyphLayout layout;
-
 
     private boolean touched;
     private Stage stage;

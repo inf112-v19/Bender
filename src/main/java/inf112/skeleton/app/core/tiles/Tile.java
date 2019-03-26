@@ -8,10 +8,12 @@ public class Tile implements ITile {
 
     private IRobot robot;
     private IFlag flag;
+    private boolean[] walls;
 
     public Tile() {
         this.robot = null;
         this.flag = null;
+        this.walls = new boolean[4];
     }
 
     public Tile(IRobot robot, IFlag flag) {
@@ -40,12 +42,22 @@ public class Tile implements ITile {
         return null;
     }
 
-    public void exec() {
-        // TODO: Do rotate/push operation on robot
-    }
+    public boolean canEnter(Direction dir) {
+        switch (dir) {
+            case NORTH:
+                return this.walls[0];
 
-    public boolean canEnter(Direction direction) {
-        // TODO: implement
-        return true;
+            case EAST:
+                return this.walls[1];
+
+            case SOUTH:
+                return this.walls[2];
+
+            case WEST:
+                return this.walls[3];
+
+            default:
+                return false;
+        }
     }
 }

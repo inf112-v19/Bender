@@ -26,10 +26,5 @@ public interface ITile {
     */
     IFlag getFlag();
 
-   /**
-    * Method for performing an operation in the robot
-    */
-    void exec();
-
     boolean canEnter(Direction direction);
 }

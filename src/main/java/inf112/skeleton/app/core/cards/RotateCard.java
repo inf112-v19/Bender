@@ -1,10 +1,9 @@
 package inf112.skeleton.app.core.cards;
 
 import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.core.enums.DirectionChange;
 
 public class  RotateCard extends ProgramCard {
-
-    public enum DirectionChange { RIGHT, LEFT, UTURN }
 
     private final DirectionChange dir;
 

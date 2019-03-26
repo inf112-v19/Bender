@@ -8,7 +8,6 @@ import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.ITile;
 import inf112.skeleton.app.core.tiles.Tile;
-
 import java.util.*;
 
 public class Board implements IBoard {
@@ -96,7 +95,7 @@ public class Board implements IBoard {
         } else if (card instanceof MoveCard) {
             MoveCard moveCard = (MoveCard) card;
             Direction dir = robot.getDirection();
-            int amount = moveCard.getAmmount();
+            int amount = moveCard.getAmount();
             if (moveCard.movesBackwards()) dir = dir.getOpposite();
             moveRobot(robot, dir, amount);
         }
