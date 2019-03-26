@@ -45,16 +45,16 @@ public class Tile implements ITile {
     public boolean canEnter(Direction dir) {
         switch (dir) {
             case NORTH:
-                return this.walls[0];
+                return !this.walls[0];
 
             case EAST:
-                return this.walls[1];
+                return !this.walls[1];
 
             case SOUTH:
-                return this.walls[2];
+                return !this.walls[2];
 
             case WEST:
-                return this.walls[3];
+                return !this.walls[3];
 
             default:
                 return false;

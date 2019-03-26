@@ -4,6 +4,7 @@ import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.RotateCard;
 import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.core.enums.DirectionChange;
 import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.robot.Robot;
@@ -24,7 +25,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
 
     @Test
     public void rotateRightTest() {
-        IProgramCard card = new RotateCard(0, RotateCard.DirectionChange.RIGHT);
+        IProgramCard card = new RotateCard(0, DirectionChange.RIGHT);
         Direction currentDir = robot.getDirection();
         board.moveRobot(robot, card);
         assertTrue(currentDir.getRight() == robot.getDirection());
@@ -32,7 +33,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
 
     @Test
     public void rotateLeftTest() {
-        IProgramCard card = new RotateCard(0, RotateCard.DirectionChange.LEFT);
+        IProgramCard card = new RotateCard(0, DirectionChange.LEFT);
         Direction currentDir = robot.getDirection();
         board.moveRobot(robot, card);
         assertTrue(currentDir.getLeft() == robot.getDirection());

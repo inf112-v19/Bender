@@ -77,7 +77,7 @@ public class CardTextureGenerator {
 
         font.getData().setScale(0.9f, 0.8f);
         font.setColor(90f / 255f, 14f / 255f, 14f / 255f, 255f / 255f);
-        String text = "" + card.getAmmount();
+        String text = "" + card.getAmount();
         GlyphLayout glyphLayout = new GlyphLayout(font, text);
         bc.addText(glyphLayout, xPos, yPos);
         stage.getBatch().begin();

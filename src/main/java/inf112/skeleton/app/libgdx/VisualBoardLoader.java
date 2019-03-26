@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.core.enums.DirectionChange;
 import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.tiles.Tile;
 import inf112.skeleton.app.core.tiles.TileAssemblyLine;
@@ -83,14 +84,12 @@ public class VisualBoardLoader {
         } else if (tile instanceof TileGear) {
             TileGear tileGear = (TileGear) tile;
             switch (tileGear.getAngle()) {
-                case NORTH:
+                case LEFT:
                     sb.draw(getTexture(tile, true, false, Direction.NORTH), x, y);
-                case SOUTH:
+                case RIGHT:
                     sb.draw(getTexture(tile, true, false, Direction.SOUTH), x, y);
-                case EAST:
+                case UTURN:
                     sb.draw(getTexture(tile, true, false, Direction.EAST), x, y);
-                case WEST:
-                    sb.draw(getTexture(tile, true, false, Direction.WEST), x, y);
             }
         } else {
             sb.draw(getEmptyTexture(), x, y);
