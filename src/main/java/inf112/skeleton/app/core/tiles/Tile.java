@@ -40,12 +40,12 @@ public class Tile implements ITile {
         return null;
     }
 
-    public void exec() {
-        // TODO: Do rotate/push operation on robot
-    }
-
     public boolean canEnter(Direction direction) {
         // TODO: implement
         return true;
+    }
+
+    public void exec() {
+        // TODO: Do rotate/push operation on robot
     }
 }

@@ -5,6 +5,7 @@ import inf112.skeleton.app.core.flag.Flag;
 import inf112.skeleton.app.core.robot.IRobot;
 
 public class TileAssemblyLine extends Tile {
+
     private int strength;
     private Direction lineDir;
 
@@ -16,6 +17,9 @@ public class TileAssemblyLine extends Tile {
 
     public int getStrength() { return this.strength; }
     public void setStrength(int strength) { this.strength = strength; }
+
+    public Direction getDirection() { return this.lineDir; }
+    public void setDirection(Direction dir) { this.lineDir = dir; }
 
 
     /**
