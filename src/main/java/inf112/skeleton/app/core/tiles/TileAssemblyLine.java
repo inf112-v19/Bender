@@ -17,14 +17,6 @@ public class TileAssemblyLine extends Tile {
     public int getStrength() { return this.strength; }
     public void setStrength(int strength) { this.strength = strength; }
 
-
-    /**
-     * Method for moving the robot from the current tile to a neighbor
-     */
-    public void moveRobot() {
-        //
-    }
-
-    @Override
-    public void exec() { this.moveRobot(); }
+    public Direction getDirection() { return this.lineDir; }
+    public void setDirection(Direction dir) { this.lineDir = dir; }
 }
