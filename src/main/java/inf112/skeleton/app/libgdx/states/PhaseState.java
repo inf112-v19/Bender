@@ -64,6 +64,7 @@ public class PhaseState extends State {
 //            currentPhaseNumber++;
         }
         try {
+            visualBoardLoader.disposeTextures();
             gsm.set(new RoundState(gsm, board, player, visualBoardLoader));
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,6 +73,7 @@ public class PhaseState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         sb.begin();
         sb.draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;

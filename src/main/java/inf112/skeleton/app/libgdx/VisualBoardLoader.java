@@ -11,6 +11,7 @@ import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.tiles.Tile;
 import inf112.skeleton.app.core.tiles.TileAssemblyLine;
 import inf112.skeleton.app.core.tiles.TileGear;
+import inf112.skeleton.app.libgdx.utils.SpriteLoader;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ public class VisualBoardLoader {
     private int boardHeight;
     private int boardWidth;
 
+    private SpriteLoader spriteLoader;
+
     public VisualBoardLoader(Board board) throws IOException {
         this.board = board;
         boardHeight = board.getHeight();
@@ -32,7 +35,7 @@ public class VisualBoardLoader {
         tileTextures = new Texture[15];
         tilePathNameToNumber = new HashMap<>();
         tileWidthHeight = 64;
-
+        this.spriteLoader = new SpriteLoader(tileWidthHeight);
         makeMap();
         initializeTextures();
     }
@@ -63,7 +66,8 @@ public class VisualBoardLoader {
     public void renderBoard(SpriteBatch sb, int xStart, int yStart) {
         for (int y = 0; y < boardHeight; y++)
             for (int x = 0; x < boardWidth; x++) {
-                drawCorrsepnndingTiles(getTile(x, y), sb, (x * 64) + xStart, (y * 64) + yStart);
+                // drawCorrsepnndingTiles(getTile(x, y), sb, (x * 64) + xStart, (y * 64) + yStart);
+                sb.draw(spriteLoader.getTileSprite(getTile(x, y)), (x * 64) + xStart, (y * 64) + yStart);
             }
     }
 
@@ -103,6 +107,10 @@ public class VisualBoardLoader {
     //TODO
     private Texture getTexture(Tile tile, boolean isTIleGear, boolean isTileAssemblyLine, Direction dir) {
         return tileTextures[2];
+    }
+
+    public void disposeTextures() {
+        spriteLoader.dispose();
     }
 
     private Texture getEmptyTexture() {

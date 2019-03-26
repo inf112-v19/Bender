@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.ITile;
 import inf112.skeleton.app.core.tiles.TileAssemblyLine;
@@ -23,7 +24,7 @@ public class SpriteLoader {
     }
 
     public SpriteLoader(int tileSize) {
-        this.tileSize = 96;
+        this.tileSize = tileSize;
         initializeSprites();
     }
 
@@ -72,6 +73,12 @@ public class SpriteLoader {
         sprites.put("robot", robot);
     }
 
+    public void dispose() {
+        for (Sprite sprite : sprites.values()) {
+            sprite.getTexture().dispose();
+        }
+    }
+
     private Sprite getSprite(String name) {
         Sprite sprite = sprites.get(name);
         sprite.setSize(tileSize, tileSize);
@@ -86,15 +93,39 @@ public class SpriteLoader {
      * @return
      */
     public Sprite getTileSprite(ITile tile) {
-        if (tile instanceof TileGear) {
-
+        if (tile instanceof TileAssemblyLine) {
+            TileAssemblyLine tileAssemblyLine = (TileAssemblyLine) tile;
+            switch (tileAssemblyLine.getDirection()) {
+                case NORTH:
+                    Sprite sprite = getSprite("assemblyLineForward");
+                    sprite.rotate(90);
+                    return sprite;
+                case SOUTH:
+                    sprite = getSprite("assemblyLineForward");
+                    sprite.rotate(90);
+                    return sprite;
+                case EAST:
+                    sprite = getSprite("assemblyLineForward");
+                    sprite.rotate(90);
+                    return sprite;
+                case WEST:
+                    sprite = getSprite("assemblyLineForward");
+                    sprite.rotate(90);
+                    return sprite;
+            }
+        } else if (tile instanceof TileGear) {
+            TileGear tileGear = (TileGear) tile;
+            switch (tileGear.getAngle()) {
+                case LEFT:
+                    return getSprite("rotateLeft");
+                case RIGHT:
+                    return getSprite("rotateRight");
+                case UTURN:
+                    return null;
+            }
         } else if (tile instanceof TileBlackhole) {
             return sprites.get("blackHole");
-        } else if (tile instanceof TileAssemblyLine) {
-            // rotation example:
-            // sprite.setRotation(180);
         }
-
         return getSprite("empty");
     }
 

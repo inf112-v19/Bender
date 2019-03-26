@@ -72,6 +72,7 @@ public class CardTextureGenerator {
 
     //Draws the amount a card is supposed to move the player forwards.
     public void drawCardMoveAmount(MoveCard card, float xPos, float yPos, Stage stage) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
         BitmapFontCache bc = new BitmapFontCache(font);
 

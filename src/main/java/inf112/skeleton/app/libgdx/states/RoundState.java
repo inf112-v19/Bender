@@ -249,6 +249,7 @@ public class RoundState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         stage.act();
         stage.getBatch().begin();
         this.renderBoard((SpriteBatch) stage.getBatch());
