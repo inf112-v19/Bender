@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.util.*;
 
 import com.google.gson.*;
+import inf112.skeleton.app.core.tiles.TileAssemblyLine;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -52,7 +53,7 @@ public class ServerMain extends WebSocketServer {
                 if (gameRoom.getRoomId().equals(roomId)) {
                     conn.send("INFO {\"message\":\"Room joined successfully\"}");
                     userRoomPairs.put(conn, gameRoom);
-                    conn.send(String.format("ROOM {\"roomId\":\"&s\"}", roomId));
+                    conn.send(String.format("ROOM {\"roomId\":\"%s\"}", roomId));
                     return;
                 }
             }
