@@ -34,6 +34,14 @@ public class Board implements IBoard {
         }
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     private static ITile[][] emptyGrid(int w, int h) {
         ITile[][] grid = new ITile[w][h];
         for (int i = 0; i < w; i++) {
@@ -135,7 +143,8 @@ public class Board implements IBoard {
     private void moveRobotToNewTile(Position from, Position to) {
         ITile fromTile = getTile(from);
         ITile toTile = getTile(to);
-        if (!fromTile.hasRobot()) throw new IllegalArgumentException("can't move a robot from a tile that has no robot");
+        if (!fromTile.hasRobot())
+            throw new IllegalArgumentException("can't move a robot from a tile that has no robot");
         IRobot robot = fromTile.getRobot();
         toTile.setRobot(robot);
         fromTile.setRobot(null);

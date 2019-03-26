@@ -4,7 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.skeleton.app.core.board.BoardLoader;
+import inf112.skeleton.app.core.board.Board;
+import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.core.position.Position;
+import inf112.skeleton.app.core.tiles.Tile;
+import inf112.skeleton.app.core.tiles.TileAssemblyLine;
+import inf112.skeleton.app.core.tiles.TileGear;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,19 +19,21 @@ import java.util.Map;
 public class VisualBoardLoader {
     private Map<Integer, String> tilePathNameToNumber;
     private Texture[] tileTextures;
-    private int[][] tiles;
     private int tileWidthHeight;
+    private Board board;
+    private int boardHeight;
+    private int boardWidth;
 
-    public VisualBoardLoader(String filepath) throws IOException {
+    public VisualBoardLoader(Board board) throws IOException {
+        this.board = board;
+        boardHeight = board.getHeight();
+        boardWidth = board.getWidth();
         tileTextures = new Texture[15];
         tilePathNameToNumber = new HashMap<>();
-        BoardLoader boardloader = new BoardLoader();
         tileWidthHeight = 64;
 
         makeMap();
         initializeTextures();
-
-        tiles = boardloader.loadFile(filepath);
     }
 
     public int getTileWidthHeight() {
@@ -46,16 +53,61 @@ public class VisualBoardLoader {
 
     public void renderBoardCustomSize(SpriteBatch sb, int xStart, int yStart, int width, int height) {
         initializeCustomSizeTextures(width, height);
-        for (int y = 0; y < tiles.length; y++)
-            for (int x = 0; x < tiles[y].length; x++)
-                sb.draw(tileTextures[tiles[x][y]], (x * width) + xStart, (y * height) + yStart);
+        for (int y = 0; y < boardHeight; y++)
+            for (int x = 0; x < boardWidth; x++)
+                drawCorrsepnndingTiles(getTile(x, y), sb, (x * width) + xStart, (y * height) + yStart);
     }
 
     //The SpriteBatch should be started prior calling this method
     public void renderBoard(SpriteBatch sb, int xStart, int yStart) {
-        for (int y = 0; y < tiles.length; y++)
-            for (int x = 0; x < tiles[y].length; x++)
-                sb.draw(tileTextures[tiles[x][y]], (x * 64) + xStart, (y * 64) + yStart);
+        for (int y = 0; y < boardHeight; y++)
+            for (int x = 0; x < boardWidth; x++) {
+                drawCorrsepnndingTiles(getTile(x, y), sb, (x * 64) + xStart, (y * 64) + yStart);
+            }
+    }
+
+    //Cases will need to be changed accordingly to the new implementation of  getTexture method
+    private void drawCorrsepnndingTiles(Tile tile, SpriteBatch sb, int x, int y) {
+        if (tile instanceof TileAssemblyLine) {
+            TileAssemblyLine tileAssemblyLine = (TileAssemblyLine) tile;
+            switch (tileAssemblyLine.getDirection()) {
+                case NORTH:
+                    sb.draw(getTexture(tile, false, true, Direction.NORTH), x, y);
+                case SOUTH:
+                    sb.draw(getTexture(tile, false, true, Direction.SOUTH), x, y);
+                case EAST:
+                    sb.draw(getTexture(tile, false, true, Direction.EAST), x, y);
+                case WEST:
+                    sb.draw(getTexture(tile, false, true, Direction.WEST), x, y);
+            }
+        } else if (tile instanceof TileGear) {
+            TileGear tileGear = (TileGear) tile;
+            switch (tileGear.getAngle()) {
+                case NORTH:
+                    sb.draw(getTexture(tile, true, false, Direction.NORTH), x, y);
+                case SOUTH:
+                    sb.draw(getTexture(tile, true, false, Direction.SOUTH), x, y);
+                case EAST:
+                    sb.draw(getTexture(tile, true, false, Direction.EAST), x, y);
+                case WEST:
+                    sb.draw(getTexture(tile, true, false, Direction.WEST), x, y);
+            }
+        } else {
+            sb.draw(getEmptyTexture(), x, y);
+        }
+    }
+
+    private Tile getTile(int x, int y) {
+        return (Tile) board.getTile(x, y);
+    }
+
+    //TODO
+    private Texture getTexture(Tile tile, boolean isTIleGear, boolean isTileAssemblyLine, Direction dir) {
+        return tileTextures[2];
+    }
+
+    private Texture getEmptyTexture() {
+        return tileTextures[0];
     }
 
     private Texture resizeTexture(int newWidth, int newHeight, String path) {
@@ -65,9 +117,30 @@ public class VisualBoardLoader {
                 0, 0, pixmapOld.getWidth(), pixmapOld.getHeight(),
                 0, 0, pixmapNew.getWidth(), pixmapNew.getHeight()
         );
-//        pixmapOld.dispose();
-//        pixmapNew.dispose();
+
         return new Texture(pixmapNew);
+    }
+
+    public void updateBoard(Board board) {
+        this.board = board;
+    }
+
+    public void renderRobot(SpriteBatch sb, int xStart, int yStart, Position pos, boolean roundState) {
+        int height = (RobotDemo.HEIGHT - 200) / 10;
+        if (roundState)
+            sb.draw(tileTextures[2], (pos.getX() * height) + xStart, (pos.getY() * height) + yStart);
+        else
+            sb.draw(tileTextures[2], (pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);
+    }
+
+    public Position getRobotPos() {
+        for (int x = 0; x < board.getWidth(); x++) {
+            for (int y = 0; y < board.getHeight(); y++) {
+                if (board.hasRobot(new Position(x, y)))
+                    return new Position(x, y);
+            }
+        }
+        return null;
     }
 
     private void makeMap() {
