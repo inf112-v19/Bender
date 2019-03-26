@@ -9,7 +9,7 @@ public class TileAssemblyLineTest {
     private TileAssemblyLine tile;
 
     @Test
-    public void getStrengthTest() {
+    public void setStrength5AndGetSameStrengthBackTest() {
         int strength = 5;
         this.tile = new TileAssemblyLine(null, null, strength, Direction.NORTH);
 
@@ -17,22 +17,12 @@ public class TileAssemblyLineTest {
     }
 
     @Test
-    public void setStrengthTest() {
+    public void changeStrengthFromZeroToTenTest() {
         this.tile = new TileAssemblyLine(null, null, 0, Direction.NORTH);
 
         int strength = 10;
         this.tile.setStrength(strength);
 
         assertEquals(this.tile.getStrength(), strength);
-    }
-
-    @Test
-    public void moveRobotTest() {
-        // TODO: implement
-    }
-
-    @Test
-    public void execTest() {
-        // TODO: implement
     }
 }

@@ -44,9 +44,4 @@ public class TileTest {
 
         assertEquals(this.tile.getFlag().compareTo(flag), 0);
     }
-
-    @Test
-    public void execTest() {
-        // TODO: implement
-    }
 }
