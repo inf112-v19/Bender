@@ -16,12 +16,12 @@ import inf112.skeleton.app.libgdx.RobotDemo;
 import java.io.IOException;
 
 public class MenuState extends State {
+
     private CustomImageButton myButton;
     private ImageButton button;
     private Texture background;
     private BitmapFont font;
     private GlyphLayout layout;
-
 
     private boolean touched;
     private Stage stage;
@@ -42,8 +42,6 @@ public class MenuState extends State {
     }
 
     private void makeTitle() {
-        FileHandle f = Gdx.files.internal("fonts/font.fnt");
-        FileHandle f2 = Gdx.files.internal("fonts/font.png");
         font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
         String text = "R O B O R A L L Y";
         font.getData().setScale(2f, 2f);
