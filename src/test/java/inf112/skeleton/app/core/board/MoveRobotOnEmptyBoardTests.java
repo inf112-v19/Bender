@@ -21,14 +21,14 @@ public class MoveRobotOnEmptyBoardTests {
     }
 
     @Test
-    public void moveOne() {
+    public void moveOneRobotAndFindRobotOnNewPosition() {
         board.moveRobot(robot, Direction.NORTH, 1);
         assertTrue(!board.getTile(new Position(5, 5)).hasRobot());
         assertTrue(board.getTile(new Position(5, 6)).hasRobot());
     }
 
     @Test
-    public void moveTwo() {
+    public void moveTwoRobotsAndFindRobotOnNewPosition() {
         board.moveRobot(robot, Direction.NORTH, 2);
         assertTrue(!board.getTile(new Position(5, 5)).hasRobot());
         assertTrue(!board.getTile(new Position(5, 6)).hasRobot());
@@ -36,7 +36,7 @@ public class MoveRobotOnEmptyBoardTests {
     }
 
     @Test
-    public void tryToMoveOutsideBoard() {
+    public void tryToMoveRobotOutsideBoard() {
         board.moveRobot(robot, Direction.NORTH, 100);
         assertTrue(!board.getTile(new Position(5, 5)).hasRobot());
         assertTrue(board.getTile(new Position(5, 9)).hasRobot());

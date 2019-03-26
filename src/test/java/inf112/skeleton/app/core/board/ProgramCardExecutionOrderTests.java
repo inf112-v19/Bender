@@ -29,7 +29,7 @@ public class ProgramCardExecutionOrderTests {
     }
 
     @Test
-    public void threeRobotsTest() {
+    public void giveCardToThreeRobotsAndTestForCorrectPriority() {
         this.robot1.addCard(new MoveCard(10, false, 1));
         this.robot2.addCard(new MoveCard(9, false, 1));
         this.robot3.addCard(new MoveCard(8, false, 2));

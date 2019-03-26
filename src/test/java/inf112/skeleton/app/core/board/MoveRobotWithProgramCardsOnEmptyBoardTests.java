@@ -23,7 +23,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void rotateRightTest() {
+    public void giveRotateRightCardToRobotGivesCorrectDirectionTest() {
         IProgramCard card = new RotateCard(0, RotateCard.DirectionChange.RIGHT);
         Direction currentDir = robot.getDirection();
         board.moveRobot(robot, card);
@@ -31,7 +31,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void rotateLeftTest() {
+    public void giveRotateLeftCardToRobotGivesCorrectDirectionTest() {
         IProgramCard card = new RotateCard(0, RotateCard.DirectionChange.LEFT);
         Direction currentDir = robot.getDirection();
         board.moveRobot(robot, card);
@@ -39,7 +39,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void moveOneForwardTest() {
+    public void giveMoveOneForwardCardToRobotAndTestForCorrectPosition() {
         IProgramCard card = new MoveCard(0, false, 1);
         board.moveRobot(robot, card);
         assertTrue(board.hasRobot(new Position(5, 6)));
@@ -47,7 +47,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void moveThreeForwardTest() {
+    public void giveMoveThreeForwardCardToRobotAndTestForCorrectPosition() {
         IProgramCard card  = new MoveCard(0, false, 3);
         board.moveRobot(robot, card);
         assertTrue(board.hasRobot(new Position(5, 8)));
@@ -57,7 +57,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void moveBackwardsTwoTest() {
+    public void giveMoveBackwardsTwoCardToRobotAndTestForCorrectPosition() {
         IProgramCard card = new MoveCard(0, true, 2);
         board.moveRobot(robot, card);
         assertTrue(board.hasRobot(new Position(5, 3)));
