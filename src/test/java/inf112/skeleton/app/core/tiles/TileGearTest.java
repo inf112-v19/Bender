@@ -17,14 +17,4 @@ public class TileGearTest {
 
         assertEquals(this.tile.getAngle(), dir);
     }
-
-    @Test
-    public void rotateTest() {
-        // TODO: implement
-    }
-
-    @Test
-    public void execTest() {
-        // TODO: implement
-    }
 }
