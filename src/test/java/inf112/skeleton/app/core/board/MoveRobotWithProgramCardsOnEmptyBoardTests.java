@@ -24,7 +24,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void rotateRightTest() {
+    public void moveRobotWithRotateRightCardAndCheckDirection() {
         IProgramCard card = new RotateCard(0, DirectionChange.RIGHT);
         Direction currentDir = robot.getDirection();
         board.moveRobot(robot, card);
@@ -32,7 +32,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void rotateLeftTest() {
+    public void rotateRobotWitRotateLeftCardAndCheckDirection() {
         IProgramCard card = new RotateCard(0, DirectionChange.LEFT);
         Direction currentDir = robot.getDirection();
         board.moveRobot(robot, card);
@@ -40,7 +40,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void moveOneForwardTest() {
+    public void moveOneRobotForwardWithCardAndCheckPositon() {
         IProgramCard card = new MoveCard(0, false, 1);
         board.moveRobot(robot, card);
         assertTrue(board.hasRobot(new Position(5, 6)));
@@ -48,7 +48,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void moveThreeForwardTest() {
+    public void moveThreeRobotsForwardWithCardAndCheckPositont() {
         IProgramCard card  = new MoveCard(0, false, 3);
         board.moveRobot(robot, card);
         assertTrue(board.hasRobot(new Position(5, 8)));
@@ -58,7 +58,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void moveBackwardsTwoTest() {
+    public void moveRobotBackwardsTwoAndCheckPotitions() {
         IProgramCard card = new MoveCard(0, true, 2);
         board.moveRobot(robot, card);
         assertTrue(board.hasRobot(new Position(5, 3)));
@@ -67,7 +67,7 @@ public class MoveRobotWithProgramCardsOnEmptyBoardTests {
     }
 
     @Test
-    public void moveIntoOtherRobot() {
+    public void moveOneRobotWithThreeForwardCardIntoOtherRobotAndCheckPositions() {
         board.addRobot(new Robot(Direction.NORTH), new Position(5, 6));
         IProgramCard card = new MoveCard(0, false, 3);
         board.moveRobot(robot, card);

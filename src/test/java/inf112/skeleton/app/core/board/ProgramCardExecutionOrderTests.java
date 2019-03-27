@@ -29,7 +29,7 @@ public class ProgramCardExecutionOrderTests {
     }
 
     @Test
-    public void threeRobotsTest() {
+    public void threeRobotsSetBackwardsCardsDoStep_robotAndCheckPosisions() {
         this.robot1.addCard(new MoveCard(10, false, 1));
         this.robot2.addCard(new MoveCard(9, false, 1));
         this.robot3.addCard(new MoveCard(8, false, 2));
@@ -39,4 +39,8 @@ public class ProgramCardExecutionOrderTests {
         assertTrue(board.getRobot(new Position(3, 5)) == robot2);
         assertTrue(board.getRobot(new Position(5, 9)) == robot3);
     }
+
+    // NEW TEST: Set robots on board next to eachother
+    // Addcard to three robots so first push the others, next push first, and last push the others
+    // move according to priority
 }
