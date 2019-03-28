@@ -141,12 +141,8 @@ public class RoundState extends State {
         if (chosenCards.size() == numberOfCards && confirmed) {
             for (int i = 0; i < numberOfCards; i++)
                 player.giveCardToRobot(chosenCards.removeLast());
-            try {
-                gsm.push(new PhaseState(gsm, board, player));
-                // gsm.set(new PhaseState(gsm, board, player));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            gsm.push(new PhaseState(gsm, board, player));
+
         }
     }
 
