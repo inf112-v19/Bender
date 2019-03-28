@@ -48,6 +48,10 @@ public class SpriteLoaderDemo extends ApplicationAdapter {
 
     private class SpriteLoaderDemoState extends State {
 
+        public void reInitialize() {
+
+        }
+
         private SpriteLoader spriteLoader;
 
         public int robotX = 0;

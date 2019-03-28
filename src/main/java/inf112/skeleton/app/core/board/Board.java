@@ -182,4 +182,8 @@ public class Board implements IBoard {
         if (hasRobot(position)) return this.getTile(position).getRobot();
         return null;
     }
+
+    public Position getRobotPosition(IRobot robot) {
+        return robots.get(robot);
+    }
 }

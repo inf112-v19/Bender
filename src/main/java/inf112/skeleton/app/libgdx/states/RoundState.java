@@ -46,6 +46,8 @@ public class RoundState extends State {
     private CardTextureGenerator cardTextureGenerator;
 
 
+    private int numberOfCards = 5;
+
     private CustomImageButton confirm;
     private CustomImageButton reset;
     private Texture boardBackground;
@@ -136,11 +138,12 @@ public class RoundState extends State {
 
     // Handles criteria necessary for proceeding to the next stage
     public void handleNextStage() {
-        if (chosenCards.size() == 2 && confirmed) {
-            for (int i = 0; i < 2; i++)
+        if (chosenCards.size() == numberOfCards && confirmed) {
+            for (int i = 0; i < numberOfCards; i++)
                 player.giveCardToRobot(chosenCards.removeLast());
             try {
-                gsm.set(new PhaseState(gsm, board, player));
+                gsm.push(new PhaseState(gsm, board, player));
+                // gsm.set(new PhaseState(gsm, board, player));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -151,7 +154,7 @@ public class RoundState extends State {
     //TODO adjusting for duplicates
     //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
     public void handleVisualSelection() {
-        if (chosenCards.size() > 0 && chosenCards.size() < 3)
+        if (chosenCards.size() > 0 && chosenCards.size() <= numberOfCards)
             for (int i = 0; i < chosenCards.size(); i++) {
                 drawSelectedNumber(chosenCards.size() - 1);
             }
@@ -179,10 +182,11 @@ public class RoundState extends State {
     public void makeConfirmationButtons() {
         confirm = new CustomImageButton("buttons/Confirm.png", "buttons/Confirm.png", RobotDemo.WIDTH - 250, CARD_WIDTH / 2 + 50, 100, 50);
         reset = new CustomImageButton("buttons/Reset.png", "buttons/Reset.png", RobotDemo.WIDTH - 250, 30, 100, 50);
+        confirmed = false;
         confirm.getButton().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (chosenCards.size() == 2)
+                if (chosenCards.size() == numberOfCards)
                     confirmed = true;
                 return true;
             }
@@ -220,7 +224,7 @@ public class RoundState extends State {
             cards[i].getButton().addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if (!chosenCards.contains(availableRoundCard[finalI]) && chosenCards.size() < 2) {
+                    if (!chosenCards.contains(availableRoundCard[finalI]) && chosenCards.size() <= numberOfCards) {
                         chosenCards.add(availableRoundCard[finalI]);
                         selectedCardPosX.add(finalI);
                     }
@@ -265,9 +269,18 @@ public class RoundState extends State {
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoardCustomSize(sb, RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
-        visualBoardLoader.renderRobot(sb, RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
+        visualBoardLoader.renderRobot(sb, player.getRobot(), RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
         stage.getBatch().draw(cardBackground, 0, 0);
 
+    }
+
+    public void reInitialize() {
+        chosenCards = new ArrayDeque();
+        selectedCardPosX = new ArrayList();
+        initializeTextures();
+        makeDeck();
+        makeCardButtons();
+        makeConfirmationButtons();
     }
 
     @Override

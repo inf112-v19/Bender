@@ -49,23 +49,23 @@ public class SpriteLoader {
         Texture tiles = new Texture(Gdx.files.internal("tiles/tiles.png"));
         int tileSize = 96;
 
-        Sprite empty                    = new Sprite(new TextureRegion(tiles, 4 * tileSize, 0  * tileSize, tileSize, tileSize));
-        Sprite blackHole                = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0  * tileSize, tileSize, tileSize));
-        Sprite fastAssemblyForward      = new Sprite(new TextureRegion(tiles, 4 * tileSize, 1  * tileSize, tileSize, tileSize)); // rotate
-        Sprite fastAssemblyTurnLeft     = new Sprite(new TextureRegion(tiles, 0 * tileSize, 2  * tileSize, tileSize, tileSize)); // rotate
-        Sprite fastAssemblyTurnRight    = new Sprite(new TextureRegion(tiles, 4 * tileSize, 2  * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyTurnLeft         = new Sprite(new TextureRegion(tiles, 0 * tileSize, 4  * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyTurnRight        = new Sprite(new TextureRegion(tiles, 2 * tileSize, 4  * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyLineForward      = new Sprite(new TextureRegion(tiles, 0 * tileSize, 6  * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyFromRight        = new Sprite(new TextureRegion(tiles, 0 * tileSize, 8  * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyFromLeft         = new Sprite(new TextureRegion(tiles, 0 * tileSize, 7  * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyFromBoth         = new Sprite(new TextureRegion(tiles, 0 * tileSize, 5  * tileSize, tileSize, tileSize)); // rotate
-        Sprite fastAssemblyFromRight    = new Sprite(new TextureRegion(tiles, 4 * tileSize, 9  * tileSize, tileSize, tileSize)); // rotate
-        Sprite fastAssemblyFromLeft     = new Sprite(new TextureRegion(tiles, 0 * tileSize, 9  * tileSize, tileSize, tileSize)); // rotate
-        Sprite fastAssemblyFromBoth     = new Sprite(new TextureRegion(tiles, 0 * tileSize, 10 * tileSize, tileSize, tileSize)); // rotate
-        Sprite rotateLeft               = new Sprite(new TextureRegion(tiles, 4 * tileSize, 6  * tileSize, tileSize, tileSize));
-        Sprite rotateRight              = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0  * tileSize, tileSize, tileSize));
-        Sprite wall                     = new Sprite(new TextureRegion(tiles, 4 * tileSize, 3  * tileSize, tileSize, tileSize)); // rotate
+        Sprite empty = new Sprite(new TextureRegion(tiles, 4 * tileSize, 0 * tileSize, tileSize, tileSize));
+        Sprite blackHole = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0 * tileSize, tileSize, tileSize));
+        Sprite fastAssemblyForward = new Sprite(new TextureRegion(tiles, 4 * tileSize, 1 * tileSize, tileSize, tileSize)); // rotate
+        Sprite fastAssemblyTurnLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 2 * tileSize, tileSize, tileSize)); // rotate
+        Sprite fastAssemblyTurnRight = new Sprite(new TextureRegion(tiles, 4 * tileSize, 2 * tileSize, tileSize, tileSize)); // rotate
+        Sprite assemblyTurnLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 4 * tileSize, tileSize, tileSize)); // rotate
+        Sprite assemblyTurnRight = new Sprite(new TextureRegion(tiles, 2 * tileSize, 4 * tileSize, tileSize, tileSize)); // rotate
+        Sprite assemblyLineForward = new Sprite(new TextureRegion(tiles, 0 * tileSize, 6 * tileSize, tileSize, tileSize)); // rotate
+        Sprite assemblyFromRight = new Sprite(new TextureRegion(tiles, 0 * tileSize, 8 * tileSize, tileSize, tileSize)); // rotate
+        Sprite assemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 7 * tileSize, tileSize, tileSize)); // rotate
+        Sprite assemblyFromBoth = new Sprite(new TextureRegion(tiles, 0 * tileSize, 5 * tileSize, tileSize, tileSize)); // rotate
+        Sprite fastAssemblyFromRight = new Sprite(new TextureRegion(tiles, 4 * tileSize, 9 * tileSize, tileSize, tileSize)); // rotate
+        Sprite fastAssemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 9 * tileSize, tileSize, tileSize)); // rotate
+        Sprite fastAssemblyFromBoth = new Sprite(new TextureRegion(tiles, 0 * tileSize, 10 * tileSize, tileSize, tileSize)); // rotate
+        Sprite rotateLeft = new Sprite(new TextureRegion(tiles, 4 * tileSize, 6 * tileSize, tileSize, tileSize));
+        Sprite rotateRight = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0 * tileSize, tileSize, tileSize));
+        Sprite wall = new Sprite(new TextureRegion(tiles, 4 * tileSize, 3 * tileSize, tileSize, tileSize)); // rotate
 
         sprites.put("empty", empty);
         sprites.put("blackHole", blackHole);
@@ -99,7 +99,6 @@ public class SpriteLoader {
     private Sprite getSprite(String name) {
         Sprite sprite = sprites.get(name);
         sprite.setRotation(0);
-        // sprite.setSize(tileSize, tileSize);
         return sprites.get(name);
     }
 
@@ -110,8 +109,8 @@ public class SpriteLoader {
         sprite.draw(sb);
     }
 
-    public void drawRobot(SpriteBatch sb, int x, int y) {
-        Sprite sprite = getRobotSprite(null);
+    public void drawRobot(SpriteBatch sb, IRobot robot, float x, float y) {
+        Sprite sprite = getRobotSprite(robot);
         sprite.setBounds(x, y, this.tileSize, this.tileSize);
         sprite.setSize(this.tileSize, this.tileSize);
         sprite.draw(sb);
@@ -119,6 +118,7 @@ public class SpriteLoader {
 
     /**
      * TODO: finish when tiles are finished
+     *
      * @param tile
      * @return
      */
@@ -161,7 +161,21 @@ public class SpriteLoader {
 
     public Sprite getRobotSprite(IRobot robot) {
         Sprite robotSprite = sprites.get("robot");
-        robotSprite.setSize(tileSize, tileSize);
+        robotSprite.setOrigin(tileSize / 2, tileSize / 2);
+        robotSprite.setRotation(0);
+        switch (robot.getDirection()) {
+            case NORTH:
+                robotSprite.rotate(180);
+                break;
+            case WEST:
+                robotSprite.rotate(270);
+                break;
+            case EAST:
+                robotSprite.rotate(90);
+                break;
+            default:
+                break;
+        }
         return robotSprite;
     }
 
