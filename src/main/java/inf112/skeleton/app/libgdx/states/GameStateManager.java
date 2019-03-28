@@ -1,5 +1,6 @@
 package inf112.skeleton.app.libgdx.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.Stack;
@@ -17,6 +18,7 @@ public class GameStateManager {
 
     public void pop() {
         states.pop();
+        states.peek().reInitialize();
     }
 
     public void set(State state) {

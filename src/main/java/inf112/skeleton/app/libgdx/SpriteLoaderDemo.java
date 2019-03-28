@@ -48,6 +48,10 @@ public class SpriteLoaderDemo extends ApplicationAdapter {
 
     private class SpriteLoaderDemoState extends State {
 
+        public void reInitialize() {
+
+        }
+
         private SpriteLoader spriteLoader;
 
         public int robotX = 0;
@@ -85,6 +89,7 @@ public class SpriteLoaderDemo extends ApplicationAdapter {
 
             sb.begin();
             Sprite empty = spriteLoader.getTileSprite(null);
+            empty.setScale(0.5f);
             int tileSize = spriteLoader.getTileSize();
 
             for (int i = 0; i < width; i++) {

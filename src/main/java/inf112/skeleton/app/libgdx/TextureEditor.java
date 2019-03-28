@@ -33,45 +33,6 @@ public class TextureEditor {
         return new Texture(pixmap);
     }
 
-    //Iterates through each pixel in a given texture, darkening it by given percentage
-    public Texture darkenTexture(Texture texture, float percentage) {
-        TextureData textureData = texture.getTextureData();
-        Pixmap pixmap = textureData.consumePixmap();
-        Color color = new Color();
-        final int height = pixmap.getHeight();
-        final int width = pixmap.getWidth();
-        Pixmap newPixamp = new Pixmap(height, width, Pixmap.Format.RGBA8888);
-        float truePercentage = 1 - percentage;
-        Color newColor = new Color();
-//        int R = 0, G = 0, B = 0, A = 0;
-//        int newR = 0, newG = 0, newB = 0;
-        newPixamp.setBlending(Pixmap.Blending.None);
-        for (int x = 0; x < height; x++)
-            for (int y = 0; y < width; y++) {
-                int val = pixmap.getPixel(x, y);
-                Color.rgba8888ToColor(color, val);
-
-                int R = Math.round(color.r * 255f);
-                int newR = Math.round(truePercentage * R);
-                int G = Math.round(color.g * 255f);
-                int newG = Math.round(truePercentage * G);
-                int B = Math.round(color.b * 255f);
-                int newB = Math.round(truePercentage * B);
-                int A = Math.round(color.a * 255f);
-
-//                newPixamp.setColor(newR, newG, newB, A-50);
-                newColor.set(newR, newG, newB, A);
-                //ARGB -- > RGBA
-                newPixamp.drawPixel(x, y, newColor.toIntBits());
-
-            }
-//        System.out.println("R: " + R + " newR: " + newR);
-//        System.out.println("G: " + G + " newG: " + newG);
-//        System.out.println("B: " + B + " newB: " + newB);
-
-        return new Texture(newPixamp);
-
-    }
 
     //Currently assumes that the textures have same dimensions
     public Texture mergeTextures(Texture frontTexture, Texture backTexture, int xPos, int yPos, int newFrontTextureHeight, int newFrontTextureWidth) {
@@ -95,14 +56,6 @@ public class TextureEditor {
             }
         return new Texture(backPixmap);
 
-    }
-
-    public Texture changeToColourRed(Texture texture) {
-        return changeColour(texture, 90f / 255f, 14f / 255f, 14f / 255f, 255f / 255f);
-    }
-
-    public Texture colourBlue(Texture texture) {
-        return changeColour(texture, 25f / 255f, 25f / 255f, 112f / 255f, 255f / 255f);
     }
 
     public Texture flip(Texture t, boolean x, boolean y) {

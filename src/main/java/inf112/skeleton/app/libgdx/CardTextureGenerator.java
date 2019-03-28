@@ -1,6 +1,7 @@
 package inf112.skeleton.app.libgdx;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -10,18 +11,22 @@ import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.RotateCard;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
+import inf112.skeleton.app.libgdx.utils.SpriteLoader;
 
 public class CardTextureGenerator {
     private TextureEditor textureEditor;
     private Texture straightArrow;
     private Texture rotateLeft;
     private Texture basicCard;
+    private SpriteLoader spriteLoader;
 
     public CardTextureGenerator() {
         textureEditor = new TextureEditor();
         straightArrow = new Texture(Gdx.files.internal("cards/arrow_forward.png"));
         rotateLeft = new Texture(Gdx.files.internal("cards/arrow_rotate_90_left.png"));
         basicCard = new Texture(Gdx.files.internal("cards/card.png"));
+
+        spriteLoader = new SpriteLoader();
     }
 
     public Texture generateTexture(IProgramCard card) {
@@ -72,8 +77,9 @@ public class CardTextureGenerator {
 
     //Draws the amount a card is supposed to move the player forwards.
     public void drawCardMoveAmount(MoveCard card, float xPos, float yPos, Stage stage) {
-        BitmapFont font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
-        BitmapFontCache bc = new BitmapFontCache(font);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        BitmapFont font = spriteLoader.getFont();
+        BitmapFontCache bc = spriteLoader.getFontCache();
 
         font.getData().setScale(0.9f, 0.8f);
         font.setColor(90f / 255f, 14f / 255f, 14f / 255f, 255f / 255f);
@@ -83,5 +89,9 @@ public class CardTextureGenerator {
         stage.getBatch().begin();
         bc.draw(stage.getBatch());
         stage.getBatch().end();
+    }
+
+    public void dispose() {
+
     }
 }

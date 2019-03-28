@@ -65,4 +65,11 @@ public interface IBoard extends java.io.Serializable {
      * prioritized order
      */
     void stepRobots();
+
+    /**
+     *
+     * @param robot
+     * @return
+     */
+    Position getRobotPosition(IRobot robot);
 }
