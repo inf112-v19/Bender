@@ -3,11 +3,9 @@ package inf112.skeleton.app.libgdx;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.enums.Direction;
-import inf112.skeleton.app.core.enums.DirectionChange;
 import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.tiles.Tile;
 import inf112.skeleton.app.core.tiles.TileAssemblyLine;
@@ -57,26 +55,17 @@ public class VisualBoardLoader {
     }
 
     public void renderBoardCustomSize(SpriteBatch sb, int xStart, int yStart, int width, int height) {
-        // initializeCustomSizeTextures(width, height);
         spriteLoader.setTileSize(width);
         for (int y = 0; y < boardHeight; y++)
             for (int x = 0; x < boardWidth; x++) {
-                Sprite sprite = spriteLoader.getTileSprite(getTile(x, y));
-                sprite.setSize(width, height);
-                sprite.setSize(1000, 1000);
-                //drawCorrsepnndingTiles(getTile(x, y), sb, (x * width) + xStart, (y * height) + yStart);
-                sb.draw(sprite, (x * width) + xStart, (y * height) + yStart);
+                spriteLoader.setTileSize(width);
+                spriteLoader.drawTile(sb, getTile(x, y), (x * width) + xStart, (y * height) + yStart);
             }
     }
 
     //The SpriteBatch should be started prior calling this method
     public void renderBoard(SpriteBatch sb, int xStart, int yStart) {
         renderBoardCustomSize(sb, xStart, yStart, 64, 64);
-        /*for (int y = 0; y < boardHeight; y++)
-            for (int x = 0; x < boardWidth; x++) {
-                // drawCorrsepnndingTiles(getTile(x, y), sb, (x * 64) + xStart, (y * 64) + yStart);
-                sb.draw(spriteLoader.getTileSprite(getTile(x, y)), (x * 64) + xStart, (y * 64) + yStart);
-            }*/
     }
 
     //Cases will need to be changed accordingly to the new implementation of  getTexture method
@@ -142,10 +131,15 @@ public class VisualBoardLoader {
 
     public void renderRobot(SpriteBatch sb, int xStart, int yStart, Position pos, boolean roundState) {
         int height = (RobotDemo.HEIGHT - 200) / 10;
-        if (roundState)
-            sb.draw(tileTextures[2], (pos.getX() * height) + xStart, (pos.getY() * height) + yStart);
-        else
-            sb.draw(tileTextures[2], (pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);
+        if (roundState) {
+            spriteLoader.setTileSize(height);
+            spriteLoader.drawRobot(sb, (pos.getX() * height) + xStart, (pos.getY() * height) + yStart);
+            // sb.draw(tileTextures[2], (pos.getX() * height) + xStart, (pos.getY() * height) + yStart);
+        } else {
+            spriteLoader.setTileSize(64);
+            spriteLoader.drawRobot(sb, (pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);
+            // sb.draw(tileTextures[2], (pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);
+        }
     }
 
     public Position getRobotPos() {

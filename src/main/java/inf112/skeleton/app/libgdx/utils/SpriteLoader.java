@@ -2,10 +2,7 @@ package inf112.skeleton.app.libgdx.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.ITile;
 import inf112.skeleton.app.core.tiles.TileAssemblyLine;
@@ -104,6 +101,20 @@ public class SpriteLoader {
         sprite.setRotation(0);
         // sprite.setSize(tileSize, tileSize);
         return sprites.get(name);
+    }
+
+    public void drawTile(SpriteBatch sb, ITile tile, int x, int y) {
+        Sprite sprite = getTileSprite(tile);
+        sprite.setBounds(x, y, this.tileSize, this.tileSize);
+        sprite.setSize(this.tileSize, this.tileSize);
+        sprite.draw(sb);
+    }
+
+    public void drawRobot(SpriteBatch sb, int x, int y) {
+        Sprite sprite = getRobotSprite(null);
+        sprite.setBounds(x, y, this.tileSize, this.tileSize);
+        sprite.setSize(this.tileSize, this.tileSize);
+        sprite.draw(sb);
     }
 
     /**
