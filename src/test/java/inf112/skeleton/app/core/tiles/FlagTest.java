@@ -16,7 +16,7 @@ public class FlagTest {
     }
 
     @Test
-    public void setOrdinalTest() {
+    public void setOrdinalToFlagAndCompare() {
         this.flag = new Flag(0);
 
         int ord = 5;
