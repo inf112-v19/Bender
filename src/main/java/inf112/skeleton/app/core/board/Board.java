@@ -6,8 +6,7 @@ import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
-import inf112.skeleton.app.core.tiles.ITile;
-import inf112.skeleton.app.core.tiles.Tile;
+import inf112.skeleton.app.core.tiles.*;
 import java.util.*;
 
 public class Board implements IBoard {
@@ -79,10 +78,49 @@ public class Board implements IBoard {
     public void stepTiles() {
         // TODO: Call exec method on all tiles on board
         /*
-            NOTE:
-            it is important that all tiles are executed 'at the same time'
-            such that if one tile moves a robot to another, that tile can't move it again
-         */
+           NOTE:
+           it is important that all tiles are executed 'at the same time'
+           such that if one tile moves a robot to another, that tile can't move it again
+        */
+
+        this.robots.forEach((robot, pos) -> {
+            ITile tile = this.getTile(pos);
+            if(tile instanceof TileAssemblyLine) {
+
+                TileAssemblyLine amsTile = (TileAssemblyLine) tile;
+                this.moveRobot(robot, amsTile.getDirection(), amsTile.getStrength());
+
+            }else if(tile instanceof TileBlackhole) {
+
+                // Removed robot from board
+                this.robots.remove(robot);
+
+            }else if(tile instanceof TileGear) {
+
+                TileGear grTile = (TileGear) tile;
+                switch (grTile.getAngle()) {
+                    case RIGHT:
+                        robot.setDirection(robot.getDirection().getRight());
+                        break;
+                    case LEFT:
+                        robot.setDirection(robot.getDirection().getLeft());
+                        break;
+                    case UTURN:
+                        robot.setDirection(robot.getDirection().getOpposite());
+                        break;
+                    default:
+                        throw new Error("TYPE ERROR: Tile angle is not valid");
+                }
+
+            }else if(tile instanceof Tile) {
+
+                return;
+
+            }else{
+                throw new Error("TYPE ERROR: Tile instance is not valid");
+            }
+        });
+
     }
 
     @Override
