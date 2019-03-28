@@ -109,7 +109,7 @@ public class Board implements IBoard {
                         robot.setDirection(robot.getDirection().getOpposite());
                         break;
                     default:
-                        throw new Error();
+                        throw new Error("TYPE ERROR: Tile angle is not valid");
                 }
 
             }else if(tile instanceof Tile) {
@@ -117,7 +117,7 @@ public class Board implements IBoard {
                 return;
 
             }else{
-                throw new Error("");
+                throw new Error("TYPE ERROR: Tile instance is not valid");
             }
         });
 
