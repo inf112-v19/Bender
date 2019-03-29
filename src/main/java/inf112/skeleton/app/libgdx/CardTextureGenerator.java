@@ -16,6 +16,7 @@ public class CardTextureGenerator {
     private Texture straightArrow;
     private Texture rotateLeft;
     private Texture basicCard;
+    private Texture uTurn;
     private SpriteLoader spriteLoader;
 
     public CardTextureGenerator() {
@@ -23,6 +24,7 @@ public class CardTextureGenerator {
         straightArrow = new Texture(Gdx.files.internal("cards/arrow_forward.png"));
         rotateLeft = new Texture(Gdx.files.internal("cards/arrow_rotate_90_left.png"));
         basicCard = new Texture(Gdx.files.internal("cards/card.png"));
+        uTurn = new Texture(Gdx.files.internal("cards/uturn.png"));
         spriteLoader = new SpriteLoader();
     }
 
@@ -45,7 +47,7 @@ public class CardTextureGenerator {
     }
 
     private Texture makeUTurn() {
-        return textureEditor.mergeTextures(textureEditor.rotate180(rotateLeft), basicCard, 20, 94, 140, 140);
+        return textureEditor.mergeTextures(uTurn, basicCard, 20, 94, 140, 140);
     }
 
     private Texture makeLeftTurn() {
