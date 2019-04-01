@@ -3,10 +3,7 @@ package inf112.skeleton.app.libgdx.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -73,28 +70,6 @@ public class RoundState extends State {
         makeDeck();
         makeCardButtons();
         makeConfirmationButtons();
-    }
-
-    public RoundState(GameStateManager gsm, Board board, Player player, VisualBoardLoader visualBoardLoader) throws IOException {
-        super(gsm);
-
-        this.board = board;
-        this.player = player;
-        textureEditor = new TextureEditor();
-        cardTextureGenerator = new CardTextureGenerator();
-        chosenCards = new ArrayDeque();
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-        selectedCardPosX = new ArrayList();
-        this.visualBoardLoader = visualBoardLoader;
-//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
-
-//        board.addRobot(player.getRobot(), new Position(0, 0));
-        initializeTextures();
-        makeDeck();
-        makeCardButtons();
-        makeConfirmationButtons();
-
     }
 
     //Creates unique glyph layouts for each card
@@ -214,7 +189,7 @@ public class RoundState extends State {
             int width = CARD_WIDTH - 30;
             int height = CARD_HEIGHT - 60;
             Texture cardTexture = cardTextureGenerator.generateTexture(availableRoundCard[i]);
-            cards[i] = new CustomImageButton(cardTexture, "tiles/empty_tile.png", x, y, width, height);
+            cards[i] = new CustomImageButton(cardTexture, "cards/card.png", x, y, width, height);
 
             final int finalI = i;
             cards[i].getButton().addListener(new InputListener() {
@@ -236,7 +211,7 @@ public class RoundState extends State {
         for (int i = 0; i < 9; i++) {
             if (availableRoundCard[i] instanceof MoveCard) {
                 float yPos = 73;
-                float xPos = ((CARD_WIDTH * (i+1) + CARD_WIDTH / 4) + 171 / 2 - CARD_WIDTH / 2) - 110;
+                float xPos = ((CARD_WIDTH * (i + 1) + CARD_WIDTH / 4) + 171 / 2 - CARD_WIDTH / 2) - 110;
                 MoveCard card = (MoveCard) availableRoundCard[i];
                 cardTextureGenerator.drawCardMoveAmount(card, xPos, yPos, stage);
             }
@@ -281,11 +256,9 @@ public class RoundState extends State {
 
     @Override
     public void dispose() {
-
         confirm.getTexture().dispose();
         reset.getTexture().dispose();
         cardBackground.dispose();
         tileTexture.dispose();
-
     }
 }
