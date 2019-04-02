@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Robot implements IRobot, Comparable<IRobot> {
 
-    private int robotEnergy = 100;
+    private int robotEnergy = 8;
     private Direction robotDirection;
     private ArrayList<IProgramCard> cards = new ArrayList<>();
 
