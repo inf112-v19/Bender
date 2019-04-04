@@ -8,17 +8,21 @@ public class Tile implements ITile {
 
     private IRobot robot;
     private IFlag flag;
-    private boolean[] walls;
+    private boolean[] walls = new boolean[4];
 
     public Tile() {
         this.robot = null;
         this.flag = null;
-        this.walls = new boolean[4];
     }
 
-    public Tile(IRobot robot, IFlag flag) {
+    public Tile(IRobot robot, IFlag flag, boolean[] walls) {
         this.robot = robot;
         this.flag = flag;
+
+        if(walls.length == 4)
+            this.walls = walls;
+        else
+            throw new IllegalArgumentException("Wall array must be of length 4");
     }
 
     public boolean hasRobot() {

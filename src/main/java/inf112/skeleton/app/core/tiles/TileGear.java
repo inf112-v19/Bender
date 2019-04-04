@@ -7,8 +7,8 @@ import inf112.skeleton.app.core.robot.IRobot;
 public class TileGear extends Tile {
     private DirectionChange angle;
 
-    public TileGear(IRobot robot, Flag flag, DirectionChange angle) {
-        super(robot, flag);
+    public TileGear(IRobot robot, Flag flag, boolean[] walls, DirectionChange angle) {
+        super(robot, flag, walls);
         this.angle = angle;
     }
 

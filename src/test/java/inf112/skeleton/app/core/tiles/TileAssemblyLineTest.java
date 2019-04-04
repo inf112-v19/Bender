@@ -10,19 +10,21 @@ public class TileAssemblyLineTest {
 
     @Test
     public void setStrengthGetBackAndCompare() {
-        int strength = 5;
-        this.tile = new TileAssemblyLine(null, null, strength, Direction.NORTH);
+        boolean isExpress = true;
+        boolean[] walls = new boolean[4];
+        this.tile = new TileAssemblyLine(null, null, walls, isExpress, Direction.NORTH);
 
-        assertEquals(this.tile.getStrength(), strength);
+        assertEquals(this.tile.getExpress(), isExpress);
     }
 
     @Test
     public void makeNewTileAndChangeStrengthAndCompare() {
-        this.tile = new TileAssemblyLine(null, null, 0, Direction.NORTH);
+        boolean[] walls = new boolean[4];
+        this.tile = new TileAssemblyLine(null, null, walls, true, Direction.NORTH);
 
-        int strength = 10;
-        this.tile.setStrength(strength);
+        boolean state = this.tile.getExpress();
+        this.tile.switchExpress();
 
-        assertEquals(this.tile.getStrength(), strength);
+        assertEquals(this.tile.getExpress(), !state);
     }
 }

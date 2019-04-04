@@ -6,17 +6,17 @@ import inf112.skeleton.app.core.robot.IRobot;
 
 public class TileAssemblyLine extends Tile {
 
-    private int strength;
+    private boolean isExpress;
     private Direction lineDir;
 
-    public TileAssemblyLine(IRobot robot, Flag flag, int strength, Direction dir) {
-        super(robot, flag);
-        this.strength = strength;
+    public TileAssemblyLine(IRobot robot, Flag flag, boolean[] walls, boolean isExpress, Direction dir) {
+        super(robot, flag, walls);
+        this.isExpress = isExpress;
         this.lineDir = dir;
     }
 
-    public int getStrength() { return this.strength; }
-    public void setStrength(int strength) { this.strength = strength; }
+    public boolean getExpress() { return this.isExpress; }
+    public void switchExpress() { this.isExpress = !this.isExpress; }
 
 
     public Direction getDirection() { return this.lineDir; }

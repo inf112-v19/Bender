@@ -14,14 +14,16 @@ public class TileTest {
     @Test
     public void putNewRobotOnTileandGetRobotBackAndCompare() {
         IRobot robot = new Robot(Direction.NORTH);
-        this.tile = new Tile(robot, null);
+        boolean[] walls = new boolean[4];
+        this.tile = new Tile(robot, null, walls);
 
         assertEquals(this.tile.getRobot().compareTo(robot), 0);
     }
 
     @Test
     public void setRobotOnTileAndCompareWithRobot() {
-        this.tile = new Tile(new Robot(Direction.NORTH), null);
+        boolean[] walls = new boolean[4];
+        this.tile = new Tile(new Robot(Direction.NORTH), null, walls);
 
         IRobot robot = new Robot(Direction.EAST);
         this.tile.setRobot(robot);
@@ -31,16 +33,18 @@ public class TileTest {
 
     @Test
     public void setFlagOnTileAndTestIfItHasFlag() {
+        boolean[] walls = new boolean[4];
         IFlag flag = new Flag(0);
-        this.tile = new Tile(null, flag);
+        this.tile = new Tile(null, flag, walls);
 
         assertTrue(this.tile.hasFlag());
     }
 
     @Test
     public void makeTileWithFlagAndGetFlagAndCompare() {
+        boolean[] walls = new boolean[4];
         Flag flag = new Flag(0);
-        this.tile = new Tile(null, flag);
+        this.tile = new Tile(null, flag, walls);
 
         assertEquals(this.tile.getFlag().compareTo(flag), 0);
     }
