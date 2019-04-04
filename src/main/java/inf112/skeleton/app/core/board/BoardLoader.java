@@ -6,68 +6,124 @@ import java.io.*;
 
 public class BoardLoader {
 
-    public static final int EMPTY = 0;
+    private static final int EMPTY = 0;
 
-    public static final int ROTATE_LEFT = 1;
-    public static final int ROTATE_RIGHT = 2;
+    private static final int ROTATE_LEFT = 1;
+    private static final int ROTATE_RIGHT = 2;
 
-    public static final int ASSEMBLY_ORANGE_STRAIGHT_DOWN = 3;
-    public static final int ASSEMBLY_ORANGE_STRAIGHT_UP = 4;
-    public static final int ASSEMBLY_ORANGE_STRAIGHT_RIGHT = 5;
-    public static final int ASSEMBLY_ORANGE_STRAIGHT_LEFT = 6;
+    private static final int ASSEMBLY_ORANGE_STRAIGHT_DOWN = 3;
+    private static final int ASSEMBLY_ORANGE_STRAIGHT_UP = 4;
+    private static final int ASSEMBLY_ORANGE_STRAIGHT_RIGHT = 5;
+    private static final int ASSEMBLY_ORANGE_STRAIGHT_LEFT = 6;
 
-    public static final int ASSEMBLY_ORANGE_TURN_LEFT_UP = 7;
-    public static final int ASSEMBLY_ORANGE_TURN_LEFT_DOWN = 8;
-    public static final int ASSEMBLY_ORANGE_TURN_RIGHT_UP = 9;
-    public static final int ASSEMBLY_ORANGE_TURN_RIGHT_DOWN = 10;
-    public static final int ASSEMBLY_ORANGE_TURN_DOWN_RIGHT = 11;
-    public static final int ASSEMBLY_ORANGE_TURN_DOWN_LEFT = 12;
-    public static final int ASSEMBLY_ORANGE_TURN_UP_LEFT = 13;
-    public static final int ASSEMBLY_ORANGE_TURN_UP_RIGHT = 14;
+    private static final int ASSEMBLY_ORANGE_TURN_LEFT_UP = 7;
+    private static final int ASSEMBLY_ORANGE_TURN_LEFT_DOWN = 8;
+    private static final int ASSEMBLY_ORANGE_TURN_RIGHT_UP = 9;
+    private static final int ASSEMBLY_ORANGE_TURN_RIGHT_DOWN = 10;
+    private static final int ASSEMBLY_ORANGE_TURN_DOWN_RIGHT = 11;
+    private static final int ASSEMBLY_ORANGE_TURN_DOWN_LEFT = 12;
+    private static final int ASSEMBLY_ORANGE_TURN_UP_LEFT = 13;
+    private static final int ASSEMBLY_ORANGE_TURN_UP_RIGHT = 14;
+
+    public static void main(String[] args) {
+        BoardLoader bl = new BoardLoader();
+        File fl = new File("Testboard 28mars.csv");
+
+        try {
+            ITile[][] board = bl.loadBoard(fl);
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     /**
-     * Creates an ITile based on a text file on the format:
-     * (where w, h and n are integers)
+     * Creates an ITile based on a text file on the CSV format:
+     * https://docs.google.com/spreadsheets/d/16Zcec6W2YBtkaVKUAjNydJ6Xspv5uP9LYe6uhFLXc_c/
      *
-     * w h
-     * n n n n n
-     * n n n n n
-     * n n n n n
-     * n n n n n
-     * n n n n n
-     *
-     * @param fileName
+     * @param fl
      * @return
      * @throws IOException
      */
-    public static ITile[][] loadBoard(String fileName) throws IOException {
-        int[][] file = loadFile(fileName);
-        ITile[][] tiles = new Tile[file.length][file[0].length];
-        for (int i = 0; i < file.length; i++) {
-            for (int j = 0; j < file[i].length; j++) {
-                tiles[i][j] = getTile(file[i][j]);
+    public static ITile[][] loadBoard(File fl) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(fl));
+
+        String line = reader.readLine();
+        String[] dimensions = line.split(",");
+
+        int w = Integer.parseInt(dimensions[0]);
+        int h = Integer.parseInt(dimensions[1]);
+        ITile[][] result = new ITile[w][h];
+
+        for (int i = 0; i < h; i++) {
+            String[] rLine = reader.readLine().split(",");
+            for (int j = 0; j < w; j++) {
+                String[] params = rLine[j].split("|");
+
+                switch (params[0].charAt(0)) {
+                    case 'N':
+                        break;
+
+                    case 'A':
+                        break;
+
+                    case 'B':
+                        break;
+
+                    case 'G':
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
-        return tiles;
+
+        return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Reads a file that starts with 2 integers on the first line: width and height.
      * Reads a grid of numbers.
      *
-     * @param fileName
+     * @param file
      * @return an integer array from a text file
      * @throws IOException
      */
-    public static int[][] loadFile(String fileName) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    public static int[][] loadFile(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
         String line = reader.readLine();
-        String[] dimensions = line.split(" ");
+        String[] dimensions = line.split(",");
         int w = Integer.parseInt(dimensions[0]);
         int h = Integer.parseInt(dimensions[1]);
         int[][] result = new int[w][h];
         for (int i = 0; i < h; i++) {
-            String[] numbers = reader.readLine().split(" ");
+            String[] numbers = reader.readLine().split(",");
             for (int j = 0; j < w; j++) {
                 result[i][j] = Integer.parseInt(numbers[j]);
             }
