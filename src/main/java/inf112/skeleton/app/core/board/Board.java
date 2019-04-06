@@ -88,7 +88,7 @@ public class Board implements IBoard {
             if(tile instanceof TileAssemblyLine) {
 
                 TileAssemblyLine amsTile = (TileAssemblyLine) tile;
-                this.moveRobot(robot, amsTile.getDirection(), amsTile.getStrength());
+                this.moveRobot(robot, amsTile.getDirection(), amsTile.getExpress() ? 1 : 2);
 
             }else if(tile instanceof TileBlackhole) {
 

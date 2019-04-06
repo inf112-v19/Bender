@@ -12,7 +12,7 @@ public class BoardLoader {
     /*
     public static void main(String[] args) {
         BoardLoader bl = new BoardLoader();
-        File fl = new File("Testboard 28mars.csv");
+        File fl = new File("NewBoard5april.csv");
 
         try {
             ITile[][] board = bl.loadBoard(fl);
