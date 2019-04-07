@@ -45,4 +45,14 @@ public enum Direction {
             default: return null;
         }
     }
+
+    public static Direction getFromString(String str) {
+        switch (str) {
+            case "NORTH": return NORTH;
+            case "SOUTH": return SOUTH;
+            case "EAST": return EAST;
+            case "WEST": return WEST;
+            default: return null;
+        }
+    }
 }

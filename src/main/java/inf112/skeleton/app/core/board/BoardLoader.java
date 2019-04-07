@@ -1,104 +1,113 @@
 package inf112.skeleton.app.core.board;
 
-import inf112.skeleton.app.core.tiles.ITile;
-import inf112.skeleton.app.core.tiles.Tile;
+import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.core.enums.DirectionChange;
+import inf112.skeleton.app.core.tiles.*;
+import inf112.skeleton.app.core.flag.Flag;
+
 import java.io.*;
 
 public class BoardLoader {
 
-    public static final int EMPTY = 0;
+    /*
+    public static void main(String[] args) {
+        BoardLoader bl = new BoardLoader();
+        File fl = new File("NewBoard5april.csv");
 
-    public static final int ROTATE_LEFT = 1;
-    public static final int ROTATE_RIGHT = 2;
-
-    public static final int ASSEMBLY_ORANGE_STRAIGHT_DOWN = 3;
-    public static final int ASSEMBLY_ORANGE_STRAIGHT_UP = 4;
-    public static final int ASSEMBLY_ORANGE_STRAIGHT_RIGHT = 5;
-    public static final int ASSEMBLY_ORANGE_STRAIGHT_LEFT = 6;
-
-    public static final int ASSEMBLY_ORANGE_TURN_LEFT_UP = 7;
-    public static final int ASSEMBLY_ORANGE_TURN_LEFT_DOWN = 8;
-    public static final int ASSEMBLY_ORANGE_TURN_RIGHT_UP = 9;
-    public static final int ASSEMBLY_ORANGE_TURN_RIGHT_DOWN = 10;
-    public static final int ASSEMBLY_ORANGE_TURN_DOWN_RIGHT = 11;
-    public static final int ASSEMBLY_ORANGE_TURN_DOWN_LEFT = 12;
-    public static final int ASSEMBLY_ORANGE_TURN_UP_LEFT = 13;
-    public static final int ASSEMBLY_ORANGE_TURN_UP_RIGHT = 14;
+        try {
+            ITile[][] board = bl.loadBoard(fl);
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    */
 
     /**
-     * Creates an ITile based on a text file on the format:
-     * (where w, h and n are integers)
+     * Creates an ITile based on a text file on the CSV format:
+     * https://docs.google.com/spreadsheets/d/16Zcec6W2YBtkaVKUAjNydJ6Xspv5uP9LYe6uhFLXc_c/
      *
-     * w h
-     * n n n n n
-     * n n n n n
-     * n n n n n
-     * n n n n n
-     * n n n n n
-     *
-     * @param fileName
+     * @param fl
      * @return
      * @throws IOException
      */
-    public static ITile[][] loadBoard(String fileName) throws IOException {
-        int[][] file = loadFile(fileName);
-        ITile[][] tiles = new Tile[file.length][file[0].length];
-        for (int i = 0; i < file.length; i++) {
-            for (int j = 0; j < file[i].length; j++) {
-                tiles[i][j] = getTile(file[i][j]);
-            }
-        }
-        return tiles;
-    }
+    public static ITile[][] loadBoard(File fl) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(fl));
 
-    /**
-     * Reads a file that starts with 2 integers on the first line: width and height.
-     * Reads a grid of numbers.
-     *
-     * @param fileName
-     * @return an integer array from a text file
-     * @throws IOException
-     */
-    public static int[][] loadFile(String fileName) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String line = reader.readLine();
-        String[] dimensions = line.split(" ");
+        String[] dimensions = line.split(",");
+
         int w = Integer.parseInt(dimensions[0]);
         int h = Integer.parseInt(dimensions[1]);
-        int[][] result = new int[w][h];
+        ITile[][] result = new ITile[w][h];
+
+        ITile tile;
         for (int i = 0; i < h; i++) {
-            String[] numbers = reader.readLine().split(" ");
+            String[] rLine = reader.readLine().split(",");
             for (int j = 0; j < w; j++) {
-                result[i][j] = Integer.parseInt(numbers[j]);
+                String[] params = rLine[j].split("|");
+
+                switch (params[0].charAt(0)) {
+                    case 'N':
+                        tile = new Tile(null, getFlag(params[2]), getWalls(params[1]));
+                        break;
+
+                    case 'A':
+                        if(params[4].equals("MOVE"))
+                            tile = new TileAssemblyLine(null, getFlag(params[2]), getWalls(params[1]), params[5].equals("EXPRESS"), Direction.getFromString(params[3]));
+
+                        else if(params[4].equals("TURN"))
+                            tile = new TileAssemblyLineTurn(null, getFlag(params[2]), getWalls(params[1]), params[5].equals("EXPRESS"), Direction.getFromString(params[3]), DirectionChange.getFromString(params[6]));
+
+                        else if(params[4].equals("SPLIT"))
+                            tile = new TileAssemblyLineSplit(null, getFlag(params[2]), getWalls(params[1]), params[5].equals("EXPRESS"), Direction.getFromString(params[3]));
+
+                        else if(params[4].equals("MERGE"))
+                            tile = new TileAssemblyLineMerge(null, getFlag(params[2]), getWalls(params[1]), params[5].equals("EXPRESS"), Direction.getFromString(params[3]));
+
+                        else
+                            throw new IllegalArgumentException("Tile of type AssemblyLine did not have a valid type");
+
+                        break;
+
+                    case 'B':
+                        tile = new TileBlackhole(null, getFlag(params[2]), getWalls(params[1]));
+                        break;
+
+                    case 'G':
+                        tile = new TileGear(null, getFlag(params[2]), getWalls(params[1]), DirectionChange.getFromString(params[3]));
+                        break;
+
+                    default:
+                        throw new IllegalArgumentException("Tile type is not valid");
+                }
+
+                result[i][j] = tile;
             }
         }
+
         return result;
     }
 
     /**
-     * TODO: add correct return types
+     * Returns a list of booleans, indicating wall position
      *
-     * @param type
+     * @param st
      * @return
      */
-    private static ITile getTile(int type) {
-        switch (type) {
-            case EMPTY: return null;
-            case ROTATE_LEFT: return null;
-            case ROTATE_RIGHT: return null;
-            case ASSEMBLY_ORANGE_STRAIGHT_DOWN: return null;
-            case ASSEMBLY_ORANGE_STRAIGHT_UP: return null;
-            case ASSEMBLY_ORANGE_STRAIGHT_RIGHT: return null;
-            case ASSEMBLY_ORANGE_STRAIGHT_LEFT: return null;
-            case ASSEMBLY_ORANGE_TURN_LEFT_UP: return null;
-            case ASSEMBLY_ORANGE_TURN_LEFT_DOWN: return null;
-            case ASSEMBLY_ORANGE_TURN_RIGHT_UP: return null;
-            case ASSEMBLY_ORANGE_TURN_RIGHT_DOWN: return null;
-            case ASSEMBLY_ORANGE_TURN_DOWN_RIGHT: return null;
-            case ASSEMBLY_ORANGE_TURN_DOWN_LEFT: return null;
-            case ASSEMBLY_ORANGE_TURN_UP_LEFT: return null;
-            case ASSEMBLY_ORANGE_TURN_UP_RIGHT: return null;
-            default: throw new IllegalArgumentException("tile-type does not exist");
-        }
+    public static boolean[] getWalls(String st) {
+        boolean[] res = new boolean[st.length()];
+        for(int i = 0; i < st.length(); i++)
+            res[i] = st.charAt(i) == '1';
+        return res;
+    }
+
+    /**
+     * Returns a list of booleans, indicating wall position
+     *
+     * @param st
+     * @return
+     */
+    public static Flag getFlag(String st) {
+        return new Flag(Integer.parseInt(st));
     }
 }

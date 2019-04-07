@@ -5,5 +5,5 @@ import inf112.skeleton.app.core.robot.IRobot;
 
 public class TileBlackhole extends Tile {
 
-    public TileBlackhole(IRobot robot, Flag flag) { super(robot, flag); }
+    public TileBlackhole(IRobot robot, Flag flag, boolean[] walls) { super(robot, flag, walls); }
 }
