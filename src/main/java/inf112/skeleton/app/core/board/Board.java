@@ -7,6 +7,8 @@ import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.*;
+import inf112.skeleton.app.libgdx.Move;
+
 import java.util.*;
 
 public class Board implements IBoard {
@@ -147,15 +149,25 @@ public class Board implements IBoard {
         Position newPosition = dir.getNewPosition(currentPosition);
 
         if (withinBounds(newPosition)) {
+
             ITile nextTile = getTile(newPosition);
+
             if (nextTile.canEnter(dir)) { // if there are no walls
+
                 if (nextTile.hasRobot()) {
+
                     if (moveRobot(nextTile.getRobot(), dir, 1)) {
+
                         moveRobotToNewTile(currentPosition, newPosition);
+
                         return moveRobot(robot, dir, amount - 1);
+
                     }
+
                 } else {
+
                     // if the new tile is empty and has no walls
+                    // Move move = new Move(robot, currentPosition, newPosition);
                     moveRobotToNewTile(currentPosition, newPosition);
                     return moveRobot(robot, dir, amount - 1);
                 }
@@ -178,7 +190,7 @@ public class Board implements IBoard {
      * HELPER METHODS
      */
 
-    private void moveRobotToNewTile(Position from, Position to) {
+    public void moveRobotToNewTile(Position from, Position to) {
         ITile fromTile = getTile(from);
         ITile toTile = getTile(to);
         if (!fromTile.hasRobot())
@@ -223,5 +235,9 @@ public class Board implements IBoard {
 
     public Position getRobotPosition(IRobot robot) {
         return robots.get(robot);
+    }
+
+    public Iterable<IRobot> getRobots() {
+        return robots.keySet();
     }
 }

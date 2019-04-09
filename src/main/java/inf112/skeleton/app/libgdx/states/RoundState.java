@@ -11,61 +11,62 @@ import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
+import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.core.position.Position;
-import inf112.skeleton.app.libgdx.CardTextureGenerator;
-import inf112.skeleton.app.libgdx.RobotDemo;
-import inf112.skeleton.app.libgdx.TextureEditor;
-import inf112.skeleton.app.libgdx.VisualBoardLoader;
+import inf112.skeleton.app.core.robot.IRobot;
+import inf112.skeleton.app.core.robot.Robot;
+import inf112.skeleton.app.libgdx.*;
 
 
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class RoundState extends State {
-    //    private final List<Player> players;
-    private TextureEditor textureEditor;
+
     private ProgramDeck deck;
-    private boolean confirmed;
+    private Board board;
+    private IProgramCard[] availableRoundCard;
+    private int numberOfCards = 5;
+    private Player player;
+    private Robot otherRobot;
+
+    private CardTextureGenerator cardTextureGenerator;
     private Stage stage;
+    private BitmapFont font;
+    private boolean confirmed;
+    private TextureEditor textureEditor;
     private Texture tileTexture;
     private Texture cardBackground;
-    private IProgramCard[] availableRoundCard;
     private ArrayDeque<IProgramCard> chosenCards;
-    private BitmapFont font;
     private GlyphLayout[] visualCardSequencing;
     private ArrayList<Integer> selectedCardPosX;
     private VisualBoardLoader visualBoardLoader;
-    private Board board;
-    private Player player;
-    private CardTextureGenerator cardTextureGenerator;
-
-
-    private int numberOfCards = 5;
-
     private CustomImageButton confirm;
     private CustomImageButton reset;
     private Texture boardBackground;
     public static final int CARD_WIDTH = 110;
     public static final int CARD_HEIGHT = 220;
 
-    //TODO code quality, remove unnecessary stuff
-    public RoundState(GameStateManager gsm) throws IOException {
+    public RoundState(GameStateManager gsm) {
         super(gsm);
+
+        player = new Player("username");
+        otherRobot = new Robot(Direction.NORTH);
+        board = new Board("empty", 10, 10);
+        board.addRobot(otherRobot, new Position(6, 6));
+        board.addRobot(player.getRobot(), new Position(5, 5));
+        chosenCards = new ArrayDeque();
+
         textureEditor = new TextureEditor();
         cardTextureGenerator = new CardTextureGenerator();
-        player = new Player("test");
-        board = new Board("empty", 10, 10);
-        chosenCards = new ArrayDeque();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         selectedCardPosX = new ArrayList();
         visualBoardLoader = new VisualBoardLoader(board);
-//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
-
-        board.addRobot(player.getRobot(), new Position(0, 0));
         initializeTextures();
         makeDeck();
         makeCardButtons();
@@ -114,10 +115,18 @@ public class RoundState extends State {
     // Handles criteria necessary for proceeding to the next stage
     public void handleNextStage() {
         if (chosenCards.size() == numberOfCards && confirmed) {
+            Queue<List<Move>> moves = new ArrayDeque<>();
+            List<Move> moveList = new ArrayList<>();
+            Position start = new Position(5, 5);
+            Position end = new Position(5, 4);
+            Move move = new Move(player.getRobot(), start, end);
+            Move move2 = new Move(otherRobot, new Position(6, 6), new Position(5, 6));
+            moveList.add(move);
+            moveList.add(move2);
+            moves.add(moveList);
             for (int i = 0; i < numberOfCards; i++)
                 player.giveCardToRobot(chosenCards.removeLast());
-            gsm.push(new PhaseState(gsm, board, player));
-
+            gsm.push(new PhaseState(gsm, board, moves));
         }
     }
 

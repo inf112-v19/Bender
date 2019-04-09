@@ -7,6 +7,9 @@ import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.Tile;
 import inf112.skeleton.app.libgdx.utils.SpriteLoader;
 
+import java.util.HashSet;
+import java.util.List;
+
 public class VisualBoardLoader {
 
     private int tileWidthHeight;
@@ -56,6 +59,20 @@ public class VisualBoardLoader {
         } else {
             spriteLoader.setTileSize(64);
             spriteLoader.drawRobot(sb, robot,(pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);
+        }
+    }
+
+    public void renderRobots(SpriteBatch sb, Board board, List<Move> currentlyMoving, float progress, int xStart, int yStart) {
+        HashSet<IRobot> renderedRobots = new HashSet<>();
+        for (Move move : currentlyMoving) {
+            renderedRobots.add(move.getRobot());
+            renderRobotSlowly(sb, move.getRobot(), xStart, yStart, move.getFrom(), move.getEnd(), progress);
+        }
+
+        for (IRobot robot : board.getRobots()) {
+            if (renderedRobots.contains(robot)) continue;
+            Position position = board.getRobotPosition(robot);
+            renderRobotSlowly(sb, robot, xStart, yStart, position, position, 0);
         }
     }
 
