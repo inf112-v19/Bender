@@ -38,7 +38,6 @@ public class RoundState extends State {
     private Stage stage;
     private BitmapFont font;
     private boolean confirmed;
-    private TextureEditor textureEditor;
     private Texture tileTexture;
     private Texture cardBackground;
     private ArrayDeque<IProgramCard> chosenCards;
@@ -51,17 +50,13 @@ public class RoundState extends State {
     public static final int CARD_WIDTH = 110;
     public static final int CARD_HEIGHT = 220;
 
-    public RoundState(GameStateManager gsm) {
+    public RoundState(GameStateManager gsm, Board board, Player player) {
         super(gsm);
+        this.board = board;
+        this.player = player;
 
-        player = new Player("username");
-        otherRobot = new Robot(Direction.NORTH);
-        board = new Board("empty", 10, 10);
-        board.addRobot(otherRobot, new Position(6, 6));
-        board.addRobot(player.getRobot(), new Position(5, 5));
         chosenCards = new ArrayDeque();
 
-        textureEditor = new TextureEditor();
         cardTextureGenerator = new CardTextureGenerator();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -73,21 +68,24 @@ public class RoundState extends State {
         makeConfirmationButtons();
     }
 
-    //Creates unique glyph layouts for each card
+    /**
+     * Creates unique glyph layouts for each card
+     */
     public void createVisualCardSequencing() {
         visualCardSequencing = new GlyphLayout[5];
         for (int i = 0; i < 5; i++) {
+            // TODO : move Gdx.files.internal to SpriteLoader
             font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
             font.getData().setScale(0.5f, 0.5f);
             font.setColor(90f / 255f, 14f / 255f, 14f / 255f, 255f / 255f);
             String text = "" + (i + 1);
             visualCardSequencing[i] = new GlyphLayout(font, text);
-
         }
     }
 
     public void initializeTextures() {
         createVisualCardSequencing();
+        // TODO : move Gdx.files.internal to SpriteLoader
         cardBackground = new Texture(Gdx.files.internal("cards/Card_background1.png"));
         tileTexture = new Texture(Gdx.files.internal("tiles/empty_tile.png"));
         boardBackground = new Texture(Gdx.files.internal("boards/board_background_round.png"));
@@ -99,7 +97,9 @@ public class RoundState extends State {
         this.drawForRound();
     }
 
-    //Draw as in draw deck
+    /**
+     * Draw as in draw deck
+     */
     public void drawForRound() {
         availableRoundCard = new IProgramCard[9];
         for (int i = 0; i < 9; i++) {
