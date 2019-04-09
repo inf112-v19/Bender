@@ -108,7 +108,7 @@ public class RoundState extends State {
     }
 
     @Override
-    protected void handleInput() {
+    public void handleInput() {
         handleNextStage();
     }
 

@@ -65,10 +65,6 @@ public class SpriteLoaderDemo extends ApplicationAdapter {
             this.spriteLoader = spriteLoader;
         }
 
-        @Override
-        protected void handleInput() {
-
-        }
 
         @Override
         public void update(float dt) {

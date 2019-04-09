@@ -64,9 +64,12 @@ public class VisualBoardLoader {
 
     public void renderRobots(SpriteBatch sb, Board board, List<Move> currentlyMoving, float progress, int xStart, int yStart) {
         HashSet<IRobot> renderedRobots = new HashSet<>();
-        for (Move move : currentlyMoving) {
-            renderedRobots.add(move.getRobot());
-            renderRobotSlowly(sb, move.getRobot(), xStart, yStart, move.getFrom(), move.getEnd(), progress);
+
+        if (currentlyMoving != null) {
+            for (Move move : currentlyMoving) {
+                renderedRobots.add(move.getRobot());
+                renderRobotSlowly(sb, move.getRobot(), xStart, yStart, move.getFrom(), move.getEnd(), progress);
+            }
         }
 
         for (IRobot robot : board.getRobots()) {
