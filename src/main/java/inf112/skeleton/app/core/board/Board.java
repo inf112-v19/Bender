@@ -53,7 +53,7 @@ public class Board implements IBoard {
         return grid;
     }
 
-    public void mainStep() {
+    public void  mainStep() {
         this.stepTiles();
         this.stepRobots();
     }

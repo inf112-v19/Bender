@@ -38,6 +38,8 @@ public abstract class API {
     public abstract void drawCard();
 
     public abstract void createRoom();
+    public abstract void getDeck();
+    public abstract void chooseCards(int[] cardIndices);
     public abstract void joinRoom(String id);
 
     public abstract void connect() throws InterruptedException;

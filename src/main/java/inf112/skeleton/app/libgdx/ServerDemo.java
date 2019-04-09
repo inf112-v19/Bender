@@ -14,6 +14,9 @@ import inf112.skeleton.app.libgdx.states.MainMenuState;
 import inf112.skeleton.app.server.API;
 import inf112.skeleton.app.server.RemoteServerHandler;
 
+import java.util.List;
+import java.util.Queue;
+
 public class ServerDemo extends ApplicationAdapter {
 
     private SpriteBatch batch;
@@ -66,6 +69,16 @@ public class ServerDemo extends ApplicationAdapter {
         }
 
         @Override
+        public void handleCards(List<IProgramCard> cards) {
+
+        }
+
+        @Override
+        public void handleMoves(Queue<List<Move>> moves) {
+
+        }
+
+        @Override
         public void handleWARNING(String message) {
 
         }
@@ -76,12 +89,7 @@ public class ServerDemo extends ApplicationAdapter {
         }
 
         @Override
-        public void handleBOARD(IBoard board) {
-
-        }
-
-        @Override
-        public void handleCardDraw(IProgramCard card) {
+        public void handleBoard(IBoard board) {
 
         }
 
