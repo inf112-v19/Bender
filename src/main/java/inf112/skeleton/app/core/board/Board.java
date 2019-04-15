@@ -56,11 +56,11 @@ public class Board implements IBoard {
 
     public void  mainStep() {
         this.stepTiles();
-        this.stepRobots();
+        this.stepProgramCards();
     }
 
     @Override
-    public void stepRobots() {
+    public void stepProgramCards() {
         // Order the robots by their program card priorities
         List<IRobot> executionOrder = new ArrayList<>();
         executionOrder.addAll(robots.keySet());
