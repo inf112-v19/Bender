@@ -6,7 +6,6 @@ import java.nio.ByteBuffer;
 import java.util.*;
 
 import com.google.gson.*;
-import inf112.skeleton.app.core.tiles.TileAssemblyLine;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;

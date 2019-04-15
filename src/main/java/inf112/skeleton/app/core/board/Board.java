@@ -1,5 +1,7 @@
 package inf112.skeleton.app.core.board;
 
+import inf112.skeleton.app.core.board.events.Event;
+import inf112.skeleton.app.core.board.events.MoveEvent;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.RotateCard;
 import inf112.skeleton.app.core.position.Position;
@@ -7,7 +9,6 @@ import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.*;
-import inf112.skeleton.app.libgdx.Move;
 
 import java.util.*;
 
@@ -142,34 +143,34 @@ public class Board implements IBoard {
     }
 
     @Override
-    public boolean moveRobot(IRobot robot, Direction dir, int amount) {
+    public Queue<List<Event>> moveRobot(IRobot robot, Direction dir, int ammount) {
+        Queue<List<Event>> events = new ArrayDeque<>();
+        moveRobot(robot, dir, ammount, events);
+        return events;
+    }
+
+    private boolean moveRobot(IRobot robot, Direction dir, int amount, Queue<List<Event>> queue) {
         if (amount == 0) return true;
 
         Position currentPosition = robots.get(robot);
         Position newPosition = dir.getNewPosition(currentPosition);
 
         if (withinBounds(newPosition)) {
-
             ITile nextTile = getTile(newPosition);
-
-            if (nextTile.canEnter(dir)) { // if there are no walls
-
+            if (nextTile.canEnter(dir)) {
                 if (nextTile.hasRobot()) {
-
-                    if (moveRobot(nextTile.getRobot(), dir, 1)) {
-
-                        moveRobotToNewTile(currentPosition, newPosition);
-
-                        return moveRobot(robot, dir, amount - 1);
+                    if (moveRobot(nextTile.getRobot(), dir, 1, queue)) {
+                        Event event = moveRobotToNewTile(currentPosition, newPosition);
+                        queue.peek().add(event);
+                        return moveRobot(robot, dir, amount - 1, queue);
 
                     }
-
                 } else {
-
-                    // if the new tile is empty and has no walls
-                    // Move move = new Move(robot, currentPosition, newPosition);
-                    moveRobotToNewTile(currentPosition, newPosition);
-                    return moveRobot(robot, dir, amount - 1);
+                    Event event = moveRobotToNewTile(currentPosition, newPosition);
+                    List<Event> events = new ArrayList<>();
+                    events.add(event);
+                    queue.add(events);
+                    return moveRobot(robot, dir, amount - 1, queue);
                 }
             }
         } else {
@@ -190,7 +191,7 @@ public class Board implements IBoard {
      * HELPER METHODS
      */
 
-    public void moveRobotToNewTile(Position from, Position to) {
+    public Event moveRobotToNewTile(Position from, Position to) {
         ITile fromTile = getTile(from);
         ITile toTile = getTile(to);
         if (!fromTile.hasRobot())
@@ -199,6 +200,7 @@ public class Board implements IBoard {
         toTile.setRobot(robot);
         fromTile.setRobot(null);
         robots.put(robot, to);
+        return new MoveEvent(from, to);
     }
 
     private boolean withinBounds(Position position) {

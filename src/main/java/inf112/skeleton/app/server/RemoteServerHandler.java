@@ -5,6 +5,7 @@ import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.interfaces.IAction;
+import inf112.skeleton.app.core.player.IPlayer;
 import inf112.skeleton.app.libgdx.Move;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -113,6 +114,11 @@ public class RemoteServerHandler extends API {
 
         @Override
         public void handleMoves(Queue<List<Move>> moves) {
+
+        }
+
+        @Override
+        public void handlePlayer(IPlayer player) {
 
         }
 

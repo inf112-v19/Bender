@@ -74,7 +74,7 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (touched) {
-                gsm.set(new RoundState(gsm));
+                gsm.set(new RoundState(gsm, null, null));
             dispose();
         }
     }

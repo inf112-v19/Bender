@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.interfaces.IAction;
+import inf112.skeleton.app.core.player.IPlayer;
 import inf112.skeleton.app.libgdx.states.GameStateManager;
 import inf112.skeleton.app.libgdx.states.MenuState;
 import inf112.skeleton.app.server.API;
@@ -54,6 +55,11 @@ public class RobotDemo extends ApplicationAdapter {
 
         @Override
         public void handleMoves(Queue<List<Move>> moves) {
+
+        }
+
+        @Override
+        public void handlePlayer(IPlayer player) {
 
         }
 

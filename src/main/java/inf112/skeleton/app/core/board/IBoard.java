@@ -1,10 +1,14 @@
 package inf112.skeleton.app.core.board;
 
+import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.ITile;
+
+import java.util.List;
+import java.util.Queue;
 
 public interface IBoard extends java.io.Serializable {
 
@@ -37,7 +41,7 @@ public interface IBoard extends java.io.Serializable {
      * @param amount
      * @return true if the robot moved
      */
-    boolean moveRobot(IRobot robot, Direction dir, int amount);
+    Queue<List<Event>> moveRobot(IRobot robot, Direction dir, int amount);
 
     /**
      * Add robot at position if legal
