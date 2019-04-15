@@ -18,18 +18,13 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Queue;
 
-public class RobotDemo extends ApplicationAdapter {
+public class RoboRally extends ApplicationAdapter {
 
     private SpriteBatch batch;
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
     public static final String TITLE = "RoboRally";
     private GameStateManager gsm = new GameStateManager();
-
-    private API serverHandler = new RemoteServerHandler(new Actions());
-
-    public RobotDemo() throws URISyntaxException {
-    }
 
     @Override
     public void create() {
@@ -44,48 +39,5 @@ public class RobotDemo extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // wipes the screen clear
         gsm.update(Gdx.graphics.getDeltaTime()); //Difference between the render times
         gsm.render(batch);
-    }
-
-    private class Actions implements IAction {
-
-        @Override
-        public void handleCards(List<IProgramCard> cards) {
-
-        }
-
-        @Override
-        public void handleMoves(Queue<List<Move>> moves) {
-
-        }
-
-        @Override
-        public void handlePlayer(IPlayer player) {
-
-        }
-
-        @Override
-        public void handleERROR(String message) {
-
-        }
-
-        @Override
-        public void handleWARNING(String message) {
-
-        }
-
-        @Override
-        public void handleINFO(String message) {
-
-        }
-
-        @Override
-        public void handleBoard(IBoard board) {
-
-        }
-
-        @Override
-        public void handleROOM(String roomId) {
-
-        }
     }
 }

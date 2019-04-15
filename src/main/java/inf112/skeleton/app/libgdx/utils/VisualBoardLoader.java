@@ -1,11 +1,12 @@
-package inf112.skeleton.app.libgdx;
+package inf112.skeleton.app.libgdx.utils;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.Tile;
-import inf112.skeleton.app.libgdx.utils.SpriteLoader;
+import inf112.skeleton.app.libgdx.Move;
+import inf112.skeleton.app.libgdx.RoboRally;
 
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +53,7 @@ public class VisualBoardLoader {
     }
 
     public void renderRobot(SpriteBatch sb, IRobot robot, int xStart, int yStart, Position pos, boolean roundState) {
-        int height = (RobotDemo.HEIGHT - 200) / 10;
+        int height = (RoboRally.HEIGHT - 200) / 10;
         if (roundState) {
             spriteLoader.setTileSize(height);
             spriteLoader.drawRobot(sb, robot,(pos.getX() * height) + xStart, (pos.getY() * height) + yStart);

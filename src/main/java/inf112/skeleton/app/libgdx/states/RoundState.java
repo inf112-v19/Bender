@@ -1,7 +1,6 @@
 package inf112.skeleton.app.libgdx.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,15 +10,14 @@ import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
-import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.core.position.Position;
-import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.robot.Robot;
 import inf112.skeleton.app.libgdx.*;
+import inf112.skeleton.app.libgdx.utils.CardTextureGenerator;
+import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
 
 
-import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -160,8 +158,8 @@ public class RoundState extends State {
     }
 
     public void makeConfirmationButtons() {
-        confirm = new CustomImageButton("buttons/Confirm.png", "buttons/Confirm.png", RobotDemo.WIDTH - 250, CARD_WIDTH / 2 + 50, 100, 50);
-        reset = new CustomImageButton("buttons/Reset.png", "buttons/Reset.png", RobotDemo.WIDTH - 250, 30, 100, 50);
+        confirm = new CustomImageButton("buttons/Confirm.png", "buttons/Confirm.png", RoboRally.WIDTH - 250, CARD_WIDTH / 2 + 50, 100, 50);
+        reset = new CustomImageButton("buttons/Reset.png", "buttons/Reset.png", RoboRally.WIDTH - 250, 30, 100, 50);
         confirmed = false;
         confirm.getButton().addListener(new InputListener() {
             @Override
@@ -245,11 +243,11 @@ public class RoundState extends State {
 
     public void renderBoard(SpriteBatch sb) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
-        int height = (RobotDemo.HEIGHT - cardBackground.getHeight()) / 10;
+        int height = (RoboRally.HEIGHT - cardBackground.getHeight()) / 10;
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
-        visualBoardLoader.renderBoardCustomSize(sb, RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
-        visualBoardLoader.renderRobot(sb, player.getRobot(), RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
+        visualBoardLoader.renderBoardCustomSize(sb, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
+        visualBoardLoader.renderRobot(sb, player.getRobot(), RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
         stage.getBatch().draw(cardBackground, 0, 0);
 
     }

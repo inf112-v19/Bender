@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.libgdx.Move;
-import inf112.skeleton.app.libgdx.RobotDemo;
-import inf112.skeleton.app.libgdx.VisualBoardLoader;
+import inf112.skeleton.app.libgdx.RoboRally;
+import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
 import java.util.List;
 import java.util.Queue;
 
@@ -62,8 +62,8 @@ public class PhaseState extends State {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         sb.begin();
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
-        int xStart = RobotDemo.WIDTH / 2 - temp;
-        int yStart = RobotDemo.HEIGHT / 2 - temp;
+        int xStart = RoboRally.WIDTH / 2 - temp;
+        int yStart = RoboRally.HEIGHT / 2 - temp;
 
         sb.draw(boardBackground, 0, 0);
         visualBoardLoader.renderBoard(sb, xStart, yStart);

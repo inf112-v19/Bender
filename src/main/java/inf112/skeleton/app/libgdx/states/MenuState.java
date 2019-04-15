@@ -1,7 +1,6 @@
 package inf112.skeleton.app.libgdx.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -11,9 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import inf112.skeleton.app.libgdx.RobotDemo;
-
-import java.io.IOException;
+import inf112.skeleton.app.libgdx.RoboRally;
 
 public class MenuState extends State {
 
@@ -50,8 +47,8 @@ public class MenuState extends State {
     }
 
     private void makeButton() {
-        int y = (RobotDemo.HEIGHT / 2) - 50;
-        int x = (RobotDemo.WIDTH / 2) - 100;
+        int y = (RoboRally.HEIGHT / 2) - 50;
+        int x = (RoboRally.WIDTH / 2) - 100;
         myButton = new CustomImageButton("buttons/new_game_button.png", "buttons/new_game_button_pressed.png", x, y, 150, 100);
 
 
@@ -88,8 +85,8 @@ public class MenuState extends State {
     public void render(SpriteBatch sb) {
         stage.act();
         stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0, RobotDemo.WIDTH, RobotDemo.HEIGHT);
-        font.draw(stage.getBatch(), layout, RobotDemo.WIDTH / 2 - (layout.width / 2), RobotDemo.HEIGHT - RobotDemo.HEIGHT / 4);
+        stage.getBatch().draw(background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
+        font.draw(stage.getBatch(), layout, RoboRally.WIDTH / 2 - (layout.width / 2), RoboRally.HEIGHT - RoboRally.HEIGHT / 4);
         stage.getBatch().end();
         stage.draw();
 
