@@ -2,6 +2,8 @@ package inf112.skeleton.app.core.board;
 
 import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.board.events.MoveEvent;
+import inf112.skeleton.app.core.board.events.RemoveRobotEvent;
+import inf112.skeleton.app.core.board.events.RotateEvent;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.RotateCard;
 import inf112.skeleton.app.core.position.Position;
@@ -54,13 +56,16 @@ public class Board implements IBoard {
         return grid;
     }
 
-    public void  mainStep() {
+    public Queue<List<Event>> step() {
         this.stepTiles();
         this.stepProgramCards();
+        return null;
     }
 
     @Override
-    public void stepProgramCards() {
+    public Queue<List<Event>> stepProgramCards() {
+        Queue<List<Event>> programCardEvents = new ArrayDeque<>();
+
         // Order the robots by their program card priorities
         List<IRobot> executionOrder = new ArrayList<>();
         executionOrder.addAll(robots.keySet());
@@ -74,33 +79,37 @@ public class Board implements IBoard {
 
         for (IRobot robot : executionOrder) {
             IProgramCard card = robot.drawCard();
-            if (card != null) moveRobot(robot, card);
+            if (card != null) {
+                Queue<List<Event>> events = moveRobot(robot, card);
+                programCardEvents.addAll(events);
+            }
         }
+
+        return programCardEvents;
     }
 
-    public void stepTiles() {
-        // TODO: Call exec method on all tiles on board
-        /*
-           NOTE:
-           it is important that all tiles are executed 'at the same time'
-           such that if one tile moves a robot to another, that tile can't move it again
-        */
+    public Queue<List<Event>> stepTiles() {
+        Queue<List<Event>> tilesEvents = new ArrayDeque<>();
 
         this.robots.forEach((robot, pos) -> {
             ITile tile = this.getTile(pos);
             if(tile instanceof TileAssemblyLine) {
 
                 TileAssemblyLine amsTile = (TileAssemblyLine) tile;
-                this.moveRobot(robot, amsTile.getDirection(), amsTile.getExpress() ? 1 : 2);
+                Queue<List<Event>> events = this.moveRobot(robot, amsTile.getDirection(), amsTile.getExpress() ? 1 : 2);
+                tilesEvents.addAll(events);
 
             }else if(tile instanceof TileBlackhole) {
-
+                tilesEvents.add(new ArrayList<>());
+                tilesEvents.peek().add(new RemoveRobotEvent(robot));
                 // Removed robot from board
                 this.robots.remove(robot);
 
             }else if(tile instanceof TileGear) {
 
                 TileGear grTile = (TileGear) tile;
+                tilesEvents.add(new ArrayList<>());
+                tilesEvents.peek().add(new RotateEvent(grTile.getAngle()));
                 switch (grTile.getAngle()) {
                     case RIGHT:
                         robot.setDirection(robot.getDirection().getRight());
@@ -124,22 +133,30 @@ public class Board implements IBoard {
             }
         });
 
+        return tilesEvents;
     }
 
     @Override
-    public void moveRobot(IRobot robot, IProgramCard card) {
+    public Queue<List<Event>> moveRobot(IRobot robot, IProgramCard card) {
+        Queue<List<Event>> events;
         if (card instanceof RotateCard) {
             RotateCard rotateCard = (RotateCard) card;
             Direction newDirection = rotateCard.getDir(robot.getDirection());
             robot.setDirection(newDirection);
+            events = new ArrayDeque<>();
+            events.add(new ArrayList<>());
+            events.peek().add(new RotateEvent(rotateCard.getDirectionChange()));
 
         } else if (card instanceof MoveCard) {
             MoveCard moveCard = (MoveCard) card;
             Direction dir = robot.getDirection();
             int amount = moveCard.getAmount();
             if (moveCard.movesBackwards()) dir = dir.getOpposite();
-            moveRobot(robot, dir, amount);
+            events = moveRobot(robot, dir, amount);
+        } else {
+            throw new RuntimeException("unimplemented behaviour for this kind of program card");
         }
+        return events;
     }
 
     @Override
@@ -163,7 +180,6 @@ public class Board implements IBoard {
                         Event event = moveRobotToNewTile(currentPosition, newPosition);
                         queue.peek().add(event);
                         return moveRobot(robot, dir, amount - 1, queue);
-
                     }
                 } else {
                     Event event = moveRobotToNewTile(currentPosition, newPosition);
@@ -174,7 +190,9 @@ public class Board implements IBoard {
                 }
             }
         } else {
-            // TODO: implement what happens if a robot leaves the board
+            queue.addAll(new ArrayList<>());
+            queue.peek().add(new RemoveRobotEvent(robot));
+            return true;
         }
 
         return false;

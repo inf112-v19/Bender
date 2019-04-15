@@ -32,7 +32,7 @@ public interface IBoard extends java.io.Serializable {
      * @param robot
      * @param card
      */
-    void moveRobot(IRobot robot, IProgramCard card);
+    Queue<List<Event>> moveRobot(IRobot robot, IProgramCard card);
 
     /**
      *
@@ -68,7 +68,7 @@ public interface IBoard extends java.io.Serializable {
      * Takes the top card from each robot and moves them in
      * prioritized order
      */
-    void stepProgramCards();
+    Queue<List<Event>> stepProgramCards();
 
     /**
      *
