@@ -56,10 +56,26 @@ public class Board implements IBoard {
         return grid;
     }
 
+    public Queue<List<Event>> round() {
+        Queue<List<Event>> events = new ArrayDeque<>();
+        while (cardsLeft()) {
+            events.addAll(step());
+        }
+        return events;
+    }
+
+    private boolean cardsLeft() {
+        for (IRobot robot : robots.keySet()) {
+            if (robot.peekCard() != null) return true;
+        }
+        return false;
+    }
+
     public Queue<List<Event>> step() {
-        this.stepTiles();
-        this.stepProgramCards();
-        return null;
+        Queue<List<Event>> tilesEvents = this.stepTiles();
+        Queue<List<Event>> pcEvents = this.stepProgramCards();
+        tilesEvents.addAll(pcEvents);
+        return tilesEvents;
     }
 
     @Override
