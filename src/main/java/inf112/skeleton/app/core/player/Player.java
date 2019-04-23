@@ -6,10 +6,11 @@ import inf112.skeleton.app.core.cards.ProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.Robot;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class Player implements IPlayer {
+public class Player<cardToAdd> implements IPlayer {
     private String username;
     private Robot robot;
     private Integer playerNo;
@@ -29,14 +30,14 @@ public class Player implements IPlayer {
     }
 
     // Add card to players list
-    public <cardToAdd> void addCard(cardToAdd) {
+    public void addCard(ProgramCard cardToAdd) {
         Cards.add(cardToAdd);
     }
 
     // list of max 5 cards to remove
-    public <cardsToRemove> void removeCards(cardsToRemove) {
-        for (ListIterator<Integer> element = cardsToRemove.listIterator(); element.hasNext(); ) {
-            Integer toRemove = element.next();
+    public void removeCards(List cardsToRemove) {
+        for (Iterator<Integer> iter = cardsToRemove.iterator(); iter.hasNext(); ) {
+            Integer toRemove = iter.next();
             Cards.remove(toRemove);
         }
     }
