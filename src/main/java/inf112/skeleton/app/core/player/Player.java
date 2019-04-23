@@ -9,12 +9,6 @@ import inf112.skeleton.app.core.robot.Robot;
 import java.util.List;
 import java.util.ListIterator;
 
-
-//      method for adding a card to a user/player
-//      method for getting all cards
-//      method for fetching robot health
-//      method for removing cards, takes a list of integers (integers) as parameter
-
 public class Player implements IPlayer {
     private String username;
     private Robot robot;
@@ -29,19 +23,9 @@ public class Player implements IPlayer {
         robot = new Robot(Direction.NORTH);
     }
 
-    // Return robot of current player
-    public Robot getRobot() {
-        return robot;
-    }
-
     // Return board of current player
     public Board getBoard() {
         return PlayerBoard;
-    }
-
-    // Return energy of robot of current player
-    public int getEnergy() {
-        return robot.getEnergy();
     }
 
     // Add card to players list
@@ -66,4 +50,25 @@ public class Player implements IPlayer {
     public void giveCardToRobot(IProgramCard card) {
         robot.addCard(card);
     }
+
+    // Return robot of current player
+    public Robot getRobot() {
+        return robot;
+    }
+
+    // Take energy (1) from players robot
+    public void takeRobotEnergy() {
+        robot.takeEnergy(1);
+    }
+
+    // Give energy (1) to players robot
+    public void giveRobotEnergy() {
+        robot.giveEnergy(1);
+    }
+
+    // Return energy of robot of current player
+    public int getEnergy() {
+        return robot.getEnergy();
+    }
+
 }
