@@ -92,7 +92,6 @@ public class SpriteLoader {
     public void dispose() {
         for (Sprite sprite : sprites.values()) {
             // sprite.getTexture().dispose();
-
         }
     }
 
@@ -130,18 +129,22 @@ public class SpriteLoader {
                     Sprite sprite = getSprite("assemblyLineForward");
                     sprite.rotate(90);
                     return sprite;
+
                 case SOUTH:
                     sprite = getSprite("assemblyLineForward");
                     sprite.rotate(90);
                     return sprite;
+
                 case EAST:
                     sprite = getSprite("assemblyLineForward");
                     sprite.rotate(90);
                     return sprite;
+
                 case WEST:
                     sprite = getSprite("assemblyLineForward");
                     sprite.rotate(90);
                     return sprite;
+
             }
         } else if (tile instanceof TileGear) {
             TileGear tileGear = (TileGear) tile;
