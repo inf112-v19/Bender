@@ -1,4 +1,4 @@
-package inf112.skeleton.app.core.interfaces;
+package inf112.skeleton.app.server;
 
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IDeck;

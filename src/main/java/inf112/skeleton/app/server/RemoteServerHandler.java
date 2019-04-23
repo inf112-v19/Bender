@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
-import inf112.skeleton.app.core.interfaces.IAction;
 import inf112.skeleton.app.core.player.IPlayer;
 import inf112.skeleton.app.libgdx.Move;
 import org.java_websocket.client.WebSocketClient;

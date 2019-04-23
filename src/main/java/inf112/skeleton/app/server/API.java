@@ -1,7 +1,5 @@
 package inf112.skeleton.app.server;
 
-import inf112.skeleton.app.core.interfaces.IAction;
-
 /**
  * Class for two way communication between server and client.
  *
