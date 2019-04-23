@@ -17,6 +17,8 @@ import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.robot.Robot;
 import inf112.skeleton.app.libgdx.RoboRally;
 
+import java.net.URISyntaxException;
+
 public class MenuState extends State {
 
     private CustomImageButton myButton;
@@ -83,7 +85,11 @@ public class MenuState extends State {
                 Player player = new Player("test");
 //                player.
                 board.addRobot(player.getRobot(), new Position(5,5));
+            try {
                 gsm.set(new RoundState(gsm, board, player));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
             dispose();
         }
     }

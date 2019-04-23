@@ -2,9 +2,12 @@ package inf112.skeleton.app.server;
 
 import com.google.gson.Gson;
 import inf112.skeleton.app.core.board.Board;
+import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.Player;
+import inf112.skeleton.app.core.position.Position;
 import org.java_websocket.WebSocket;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +16,7 @@ public class GameRoom {
     private String roomId;
     private Board board;
     private HashMap<Player, WebSocket> connections;
+    private HashMap<Player, ArrayDeque<IProgramCard>> collectiveCards;
 
     private Gson json = new Gson();
 
@@ -35,6 +39,9 @@ public class GameRoom {
         }
         // deal cards to players
     }
+    public void addChosenCards(Player player, ArrayDeque<IProgramCard> cards) {
+        collectiveCards.put(player, cards);
+    }
 
     public void round() {
         // deal cards to all players
@@ -50,4 +57,5 @@ public class GameRoom {
     public void sendBoard() {
 
     }
+
 }

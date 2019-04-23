@@ -16,8 +16,11 @@ import inf112.skeleton.app.core.robot.Robot;
 import inf112.skeleton.app.libgdx.*;
 import inf112.skeleton.app.libgdx.utils.CardTextureGenerator;
 import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
+import inf112.skeleton.app.server.RemoteServerHandler;
 
 
+import java.net.URISyntaxException;
+import java.rmi.server.RemoteServer;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,16 +48,27 @@ public class RoundState extends State {
     private CustomImageButton confirm;
     private CustomImageButton reset;
     private Texture boardBackground;
+    private boolean serverResponse;
+    private RemoteServerHandler remoteServerHandler;
+    private RemoteServerHandler.mainHandler mainHandler;
+
     public static final int CARD_WIDTH = 110;
     public static final int CARD_HEIGHT = 220;
 
-    public RoundState(GameStateManager gsm, Board board, Player player) {
+    /* Upon pressing the confirm button, the cards are sent to the server. The client waits until
+    every other client connected to the same Game Room selects their cards or time limit runs
+    out. When the client receives new position processed by the server, it may begin rendering
+
+ */
+    public RoundState(GameStateManager gsm, Board board, Player player) throws URISyntaxException {
         super(gsm);
         this.board = board;
         this.player = player;
+        serverResponse = false;
+        mainHandler = new RemoteServerHandler.mainHandler();
+        remoteServerHandler = new RemoteServerHandler(mainHandler);
 
         chosenCards = new ArrayDeque();
-
         cardTextureGenerator = new CardTextureGenerator();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -165,6 +179,7 @@ public class RoundState extends State {
         createVisualCardSequencing();
     }
 
+
     public void makeConfirmationButtons() {
         confirm = new CustomImageButton("buttons/Confirm.png", "buttons/Confirm.png", RoboRally.WIDTH - 250, CARD_WIDTH / 2 + 50, 100, 50);
         reset = new CustomImageButton("buttons/Reset.png", "buttons/Reset.png", RoboRally.WIDTH - 250, 30, 100, 50);
@@ -191,6 +206,10 @@ public class RoundState extends State {
 
         stage.addActor(confirm.getButton());
         stage.addActor(reset.getButton());
+    }
+
+    private void sendToServer() {
+        mainHandler.handleCards(chosenCards);
     }
 
 

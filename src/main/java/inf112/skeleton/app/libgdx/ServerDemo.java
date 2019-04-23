@@ -13,6 +13,7 @@ import inf112.skeleton.app.libgdx.states.MainMenuState;
 import inf112.skeleton.app.server.API;
 import inf112.skeleton.app.server.RemoteServerHandler;
 
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 
@@ -68,7 +69,7 @@ public class ServerDemo extends ApplicationAdapter {
         }
 
         @Override
-        public void handleCards(List<IProgramCard> cards) {
+        public void handleCards(ArrayDeque<IProgramCard> cards) {
 
         }
 

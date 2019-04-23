@@ -1,12 +1,11 @@
 package inf112.skeleton.app.server;
 
 import inf112.skeleton.app.core.board.IBoard;
-import inf112.skeleton.app.core.cards.IDeck;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.IPlayer;
 import inf112.skeleton.app.libgdx.Move;
-import inf112.skeleton.app.server.API;
 
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 
@@ -29,7 +28,7 @@ public interface IAction {
 
     void handleROOM(String roomId);
 
-    void handleCards(List<IProgramCard> cards);
+    void handleCards(ArrayDeque<IProgramCard> cards);
 
     void handleBoard(IBoard board);
 

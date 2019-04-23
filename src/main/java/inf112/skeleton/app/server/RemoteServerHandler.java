@@ -12,14 +12,15 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
 public class RemoteServerHandler extends API {
 
-    private WebSocketClient client;
-    private Gson json = new Gson();
+    private static WebSocketClient client;
+    private static Gson json = new Gson();
 
     public RemoteServerHandler(IAction handler) throws URISyntaxException {
         super(handler);
@@ -107,17 +108,21 @@ public class RemoteServerHandler extends API {
 
     public static class mainHandler implements IAction {
         @Override
-        public void handleCards(List<IProgramCard> cards) {
-
+        public void handleCards(ArrayDeque<IProgramCard> cards) {
+            String test = json.toJson(cards);
+            client.send("CARDS "  + test);
         }
 
         @Override
         public void handleMoves(Queue<List<Move>> moves) {
-
+            String test = json.toJson(moves);
+            client.send(test);
         }
 
         @Override
         public void handlePlayer(IPlayer player) {
+            String test = json.toJson(player);
+            client.send(test);
 
         }
 
