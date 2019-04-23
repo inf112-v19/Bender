@@ -113,24 +113,32 @@ public class RoundState extends State {
     // Handles criteria necessary for proceeding to the next stage
     public void handleNextStage() {
         if (chosenCards.size() == numberOfCards && confirmed) {
-            Queue<List<Move>> moves = new ArrayDeque<>();
-            List<Move> moveList = new ArrayList<>();
-            Position start = new Position(5, 5);
-            Position end = new Position(5, 4);
-            Move move = new Move(player.getRobot(), start, end);
-            Move move2 = new Move(otherRobot, new Position(6, 6), new Position(5, 6));
-            moveList.add(move);
-            moveList.add(move2);
-            moves.add(moveList);
             for (int i = 0; i < numberOfCards; i++)
                 player.giveCardToRobot(chosenCards.removeLast());
-            gsm.push(new PhaseState(gsm, board, moves));
+            gsm.push(new PhaseState(gsm, board, new ArrayDeque<>()));
+
+
+//        if (chosenCards.size() == numberOfCards && confirmed) {
+//            Queue<List<Move>> moves = new ArrayDeque<>();
+//            List<Move> moveList = new ArrayList<>();
+//            Position start = new Position(5, 5);
+//            Position end = new Position(5, 4);
+//            Move move = new Move(player.getRobot(), start, end);
+//            Move move2 = new Move(otherRobot, new Position(6, 6), new Position(5, 6));
+//            moveList.add(move);
+//            moveList.add(move2);
+//            moves.add(moveList);
+//            for (int i = 0; i < numberOfCards; i++)
+//                player.giveCardToRobot(chosenCards.removeLast());
+//            gsm.push(new PhaseState(gsm, board, moves));
+//        }
         }
     }
 
-    ///Draws numbers 1-5 to the position of chosen card
-    //TODO adjusting for duplicates
-    //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
+        ///Draws numbers 1-5 to the position of chosen card
+        //TODO adjusting for duplicates
+        //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
+
     public void handleVisualSelection() {
         if (chosenCards.size() > 0 && chosenCards.size() <= numberOfCards)
             for (int i = 0; i < chosenCards.size(); i++) {
