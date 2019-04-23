@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.g2d.*;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.ITile;
 import inf112.skeleton.app.core.tiles.TileAssemblyLine;
+import inf112.skeleton.app.core.tiles.TileAssemblyLineMerge;
+import inf112.skeleton.app.core.tiles.TileAssemblyLineTurn;
 import inf112.skeleton.app.core.tiles.TileBlackhole;
 import inf112.skeleton.app.core.tiles.TileGear;
+import inf112.skeleton.app.core.enums.Direction;
 
 import java.util.HashMap;
 
@@ -91,14 +94,37 @@ public class SpriteLoader {
 
     public void dispose() {
         for (Sprite sprite : sprites.values()) {
-            // sprite.getTexture().dispose();
+            sprite.getTexture().dispose();
         }
     }
 
     private Sprite getSprite(String name) {
-        Sprite sprite = sprites.get(name);
-        sprite.setRotation(0);
         return sprites.get(name);
+    }
+
+    private Sprite getSprite(String name, Direction dir) {
+        Sprite sprite = sprites.get(name);
+        switch (dir) {
+            case NORTH:
+                sprite.setRotation(0);
+                break;
+
+            case EAST:
+                sprite.setRotation(90);
+                break;
+
+            case SOUTH:
+                sprite.setRotation(180);
+                break;
+
+            case WEST:
+                sprite.setRotation(270);
+                break;
+
+            default:
+                break;
+        }
+        return sprite;
     }
 
     public void drawTile(SpriteBatch sb, ITile tile, int x, int y) {
@@ -123,30 +149,30 @@ public class SpriteLoader {
      */
     public Sprite getTileSprite(ITile tile) {
         if (tile instanceof TileAssemblyLine) {
+
             TileAssemblyLine tileAssemblyLine = (TileAssemblyLine) tile;
-            switch (tileAssemblyLine.getDirection()) {
-                case NORTH:
-                    Sprite sprite = getSprite("assemblyLineForward");
-                    sprite.rotate(90);
-                    return sprite;
+            boolean isExpress = tileAssemblyLine.getExpress();
 
-                case SOUTH:
-                    sprite = getSprite("assemblyLineForward");
-                    sprite.rotate(90);
-                    return sprite;
-
-                case EAST:
-                    sprite = getSprite("assemblyLineForward");
-                    sprite.rotate(90);
-                    return sprite;
-
-                case WEST:
-                    sprite = getSprite("assemblyLineForward");
-                    sprite.rotate(90);
-                    return sprite;
-
+            if(tileAssemblyLine instanceof TileAssemblyLineMerge && isExpress) {
+                return getSprite("");
+            }else if(tileAssemblyLine instanceof TileAssemblyLineMerge) {
+                return getSprite("");
             }
+
+            else if(tileAssemblyLine instanceof TileAssemblyLineTurn && isExpress) {
+                return getSprite("");
+            }else if(tileAssemblyLine instanceof TileAssemblyLineTurn) {
+                return getSprite("");
+            }
+
+            else if(isExpress) {
+                return getSprite("");
+            }else {
+                return getSprite("");
+            }
+
         } else if (tile instanceof TileGear) {
+
             TileGear tileGear = (TileGear) tile;
             switch (tileGear.getAngle()) {
                 case LEFT:
@@ -154,11 +180,13 @@ public class SpriteLoader {
                 case RIGHT:
                     return getSprite("rotateRight");
                 case UTURN:
-                    return null;
+                    return getSprite("empty");
             }
+
         } else if (tile instanceof TileBlackhole) {
-            return sprites.get("blackHole");
+            return getSprite("blackHole");
         }
+
         return getSprite("empty");
     }
 
