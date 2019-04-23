@@ -27,8 +27,8 @@ public class Tile implements ITile {
 
     public Tile copy() {
         Tile newTile = new Tile();
-        newTile.setRobot(robot.copy());
-        newTile.setFlag(flag.copy());
+        newTile.setRobot(robot == null ? null : robot.copy());
+        newTile.setFlag(flag == null ? null : flag.copy());
         return newTile;
     }
 

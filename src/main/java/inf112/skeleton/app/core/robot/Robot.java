@@ -13,9 +13,16 @@ public class Robot implements IRobot, Comparable<IRobot> {
     private int robotEnergy = 100;
     private Direction robotDirection;
     private ArrayList<IProgramCard> cards = new ArrayList<>();
+    private long id;
 
     public Robot(Direction robotDirection) {
         this.robotDirection = robotDirection;
+        this.id = System.currentTimeMillis();
+    }
+
+    public Robot(Direction direction, int id) {
+        this.robotDirection = direction;
+        this.id = id;
     }
 
     @Override
@@ -80,6 +87,7 @@ public class Robot implements IRobot, Comparable<IRobot> {
 
     @Override
     public int compareTo(IRobot that) {
+        if (this.id == that.getId()) return 0; // they are the same robot
         int energyDiff = this.getEnergy() - that.getEnergy();
 
         int dirDiff = this.getDirection().ordinal() - that.getDirection().ordinal();
@@ -99,10 +107,30 @@ public class Robot implements IRobot, Comparable<IRobot> {
             cards.add(this.cards.get(i).copy());
         }
         newRobot.setProgramCards(cards);
+        newRobot.setId(getId());
         return newRobot;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) this.id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Robot)) return false;
+        return this.id == ((Robot) o).getId();
     }
 
     public void setProgramCards(ArrayList<IProgramCard> newCards) {
         this.cards = newCards;
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

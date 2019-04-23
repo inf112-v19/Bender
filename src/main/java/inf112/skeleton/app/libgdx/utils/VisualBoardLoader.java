@@ -65,14 +65,16 @@ public class VisualBoardLoader {
         }
     }
 
-    public void renderRobots(SpriteBatch sb, Board board, List<Event> currentlyMoving, float progress, int xStart, int yStart) {
+    public void renderRobots(SpriteBatch sb, Board board, List<Event> events, float progress, int xStart, int yStart) {
         HashSet<IRobot> renderedRobots = new HashSet<>();
 
-        if (currentlyMoving != null) {
-            for (Event event : currentlyMoving) {
-                MoveEvent moveEvent = (MoveEvent) event;
-                renderedRobots.add(moveEvent.getRobot());
-                renderRobotSlowly(sb, moveEvent.getRobot(), xStart, yStart, moveEvent.getStartPosition(), moveEvent.getEndPosition(), progress);
+        if (events != null) {
+            for (Event event : events) {
+                if (event instanceof MoveEvent) {
+                    MoveEvent moveEvent = (MoveEvent) event;
+                    renderedRobots.add(moveEvent.getRobot());
+                    renderRobotSlowly(sb, moveEvent.getRobot(), xStart, yStart, moveEvent.getStartPosition(), moveEvent.getEndPosition(), progress);
+                }
             }
         }
 

@@ -117,9 +117,9 @@ public class RoundState extends State {
             for (int i = 0; i < numberOfCards; i++)
                 player.giveCardToRobot(chosenCards.removeLast());
 
-            Queue<List<Event>> events = board.round();
             Board boardCopy = board.copy();
-            gsm.push(new PhaseState(gsm, board, events));
+            Queue<List<Event>> events = board.round();
+            gsm.push(new PhaseState(gsm, boardCopy, events));
         }
     }
 

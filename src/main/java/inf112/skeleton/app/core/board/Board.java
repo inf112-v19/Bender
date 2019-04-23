@@ -43,6 +43,23 @@ public class Board implements IBoard {
             this.height = height;
             this.robots = new HashMap<>();
             this.grid = emptyGrid(width, height);
+        } else if (type.equals("test1")) {
+            this.height = 10;
+            this.width = 10;
+            this.robots = new HashMap<>();
+            try {
+                System.out.println("Working Directory = " +
+                        System.getProperty("user.dir"));
+
+
+
+                this.grid = BoardLoader.loadBoard(new File("src/main/java/inf112/skeleton/app/core/board/NewBoard5april.csv"));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("something went wring while loading the board");
+            }
+        } else {
+            throw new IllegalArgumentException("no map of type: " + type);
         }
     }
 

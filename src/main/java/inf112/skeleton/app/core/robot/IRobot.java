@@ -62,4 +62,8 @@ public interface IRobot extends Comparable<IRobot> {
     void setEnergy(int energy);
 
     void setProgramCards(ArrayList<IProgramCard> cards);
+
+    long getId();
+
+    void setId(long newId);
 }

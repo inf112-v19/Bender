@@ -9,6 +9,8 @@ import inf112.skeleton.app.core.board.events.MoveEvent;
 import inf112.skeleton.app.libgdx.RoboRally;
 import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
@@ -69,12 +71,7 @@ public class PhaseState extends State {
 
         sb.draw(boardBackground, 0, 0);
         visualBoardLoader.renderBoard(sb, xStart, yStart);
-
-        if (robotEvents.peek().get(0) instanceof MoveEvent) {
-            visualBoardLoader.renderRobots(sb, board, robotEvents.peek(), progress, xStart, yStart);
-        } else {
-
-        }
+        visualBoardLoader.renderRobots(sb, board, robotEvents.peek(), progress, xStart, yStart);
         sb.end();
     }
 }
