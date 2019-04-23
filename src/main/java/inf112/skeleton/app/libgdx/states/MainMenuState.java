@@ -98,11 +98,6 @@ public class MainMenuState extends State {
     }
 
     @Override
-    protected void handleInput() {
-
-    }
-
-    @Override
     public void update(float dt) {
         stage.act();
         stage.getBatch().begin();

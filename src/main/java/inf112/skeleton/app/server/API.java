@@ -1,7 +1,5 @@
 package inf112.skeleton.app.server;
 
-import inf112.skeleton.app.core.interfaces.IAction;
-
 /**
  * Class for two way communication between server and client.
  *
@@ -38,6 +36,8 @@ public abstract class API {
     public abstract void drawCard();
 
     public abstract void createRoom();
+    public abstract void getDeck();
+    public abstract void chooseCards(int[] cardIndices);
     public abstract void joinRoom(String id);
 
     public abstract void connect() throws InterruptedException;

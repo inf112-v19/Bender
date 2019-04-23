@@ -4,13 +4,16 @@ import com.google.gson.Gson;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
-import inf112.skeleton.app.core.interfaces.IAction;
+import inf112.skeleton.app.core.player.IPlayer;
+import inf112.skeleton.app.libgdx.Move;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
+import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class RemoteServerHandler extends API {
@@ -40,6 +43,16 @@ public class RemoteServerHandler extends API {
     @Override
     public void createRoom() {
         client.send("CREATEROOM");
+    }
+
+    @Override
+    public void getDeck() {
+
+    }
+
+    @Override
+    public void chooseCards(int[] cardIndices) {
+
     }
 
     @Override
@@ -94,6 +107,21 @@ public class RemoteServerHandler extends API {
 
     public static class mainHandler implements IAction {
         @Override
+        public void handleCards(List<IProgramCard> cards) {
+
+        }
+
+        @Override
+        public void handleMoves(Queue<List<Move>> moves) {
+
+        }
+
+        @Override
+        public void handlePlayer(IPlayer player) {
+
+        }
+
+        @Override
         public void handleERROR(String message) {
             System.err.println("ERROR: "+message);
         }
@@ -109,12 +137,7 @@ public class RemoteServerHandler extends API {
         }
 
         @Override
-        public void handleBOARD(IBoard board) {
-
-        }
-
-        @Override
-        public void handleCardDraw(IProgramCard card) {
+        public void handleBoard(IBoard board) {
 
         }
 
@@ -149,7 +172,7 @@ public class RemoteServerHandler extends API {
             String[] messageData = message.split(" ", 2);
             System.out.println("received message: " + message);
             if (messageData[0].equals("BOARD")) {
-                handler.handleBOARD(json.fromJson(messageData[1], Board.class));
+                handler.handleBoard(json.fromJson(messageData[1], Board.class));
             }
             if (messageData[0].equals("INFO")) {
                 handler.handleINFO(json.toJsonTree(messageData[1]).getAsJsonObject().get("message").getAsString());

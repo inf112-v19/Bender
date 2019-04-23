@@ -4,15 +4,17 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
-import inf112.skeleton.app.core.interfaces.IAction;
+import inf112.skeleton.app.server.IAction;
+import inf112.skeleton.app.core.player.IPlayer;
 import inf112.skeleton.app.libgdx.states.GameStateManager;
 import inf112.skeleton.app.libgdx.states.MainMenuState;
 import inf112.skeleton.app.server.API;
 import inf112.skeleton.app.server.RemoteServerHandler;
+
+import java.util.List;
+import java.util.Queue;
 
 public class ServerDemo extends ApplicationAdapter {
 
@@ -66,6 +68,21 @@ public class ServerDemo extends ApplicationAdapter {
         }
 
         @Override
+        public void handleCards(List<IProgramCard> cards) {
+
+        }
+
+        @Override
+        public void handleMoves(Queue<List<Move>> moves) {
+
+        }
+
+        @Override
+        public void handlePlayer(IPlayer player) {
+
+        }
+
+        @Override
         public void handleWARNING(String message) {
 
         }
@@ -76,12 +93,7 @@ public class ServerDemo extends ApplicationAdapter {
         }
 
         @Override
-        public void handleBOARD(IBoard board) {
-
-        }
-
-        @Override
-        public void handleCardDraw(IProgramCard card) {
+        public void handleBoard(IBoard board) {
 
         }
 

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.libgdx.states.GameStateManager;
 import inf112.skeleton.app.libgdx.states.MenuState;
 
-public class RobotDemo extends ApplicationAdapter {
+public class RoboRally extends ApplicationAdapter {
 
     private SpriteBatch batch;
     public static final int WIDTH = 1280;

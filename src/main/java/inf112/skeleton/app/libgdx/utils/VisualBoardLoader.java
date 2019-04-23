@@ -1,11 +1,15 @@
-package inf112.skeleton.app.libgdx;
+package inf112.skeleton.app.libgdx.utils;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.Tile;
-import inf112.skeleton.app.libgdx.utils.SpriteLoader;
+import inf112.skeleton.app.libgdx.Move;
+import inf112.skeleton.app.libgdx.RoboRally;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class VisualBoardLoader {
 
@@ -49,13 +53,30 @@ public class VisualBoardLoader {
     }
 
     public void renderRobot(SpriteBatch sb, IRobot robot, int xStart, int yStart, Position pos, boolean roundState) {
-        int height = (RobotDemo.HEIGHT - 200) / 10;
+        int height = (RoboRally.HEIGHT - 200) / 10;
         if (roundState) {
             spriteLoader.setTileSize(height);
             spriteLoader.drawRobot(sb, robot,(pos.getX() * height) + xStart, (pos.getY() * height) + yStart);
         } else {
             spriteLoader.setTileSize(64);
             spriteLoader.drawRobot(sb, robot,(pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);
+        }
+    }
+
+    public void renderRobots(SpriteBatch sb, Board board, List<Move> currentlyMoving, float progress, int xStart, int yStart) {
+        HashSet<IRobot> renderedRobots = new HashSet<>();
+
+        if (currentlyMoving != null) {
+            for (Move move : currentlyMoving) {
+                renderedRobots.add(move.getRobot());
+                renderRobotSlowly(sb, move.getRobot(), xStart, yStart, move.getFrom(), move.getEnd(), progress);
+            }
+        }
+
+        for (IRobot robot : board.getRobots()) {
+            if (renderedRobots.contains(robot)) continue;
+            Position position = board.getRobotPosition(robot);
+            renderRobotSlowly(sb, robot, xStart, yStart, position, position, 0);
         }
     }
 
