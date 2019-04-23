@@ -1,23 +1,68 @@
 package inf112.skeleton.app.core.player;
 
+import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
+import inf112.skeleton.app.core.cards.ProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.Robot;
 
-public class Player implements IPlayer {
-    String username;
-    Robot robot;
-    Integer playerNo;
+import java.util.List;
+import java.util.ListIterator;
 
+
+//      method for adding a card to a user/player
+//      method for getting all cards
+//      method for fetching robot health
+//      method for removing cards, takes a list of integers (integers) as parameter
+
+public class Player implements IPlayer {
+    private String username;
+    private Robot robot;
+    private Integer playerNo;
+    private List Cards;
+    private List cardsToRemove;
+    private ProgramCard cardToAdd;
+    private Board PlayerBoard;
+
+    // Constructor for player, starting with robot heading NORTH
     public Player(String username) {
         robot = new Robot(Direction.NORTH);
     }
+
+    // Return robot of current player
     public Robot getRobot() {
         return robot;
     }
-    public void getBoard() {
-        // TODO
+
+    // Return board of current player
+    public Board getBoard() {
+        return PlayerBoard;
     }
+
+    // Return energy of robot of current player
+    public int getEnergy() {
+        return robot.getEnergy();
+    }
+
+    // Add card to players list
+    public <cardToAdd> void addCard(cardToAdd) {
+        Cards.add(cardToAdd);
+    }
+
+    // list of max 5 cards to remove
+    public <cardsToRemove> void removeCards(cardsToRemove) {
+        for (ListIterator<Integer> element = cardsToRemove.listIterator(); element.hasNext(); ) {
+            Integer toRemove = element.next();
+            Cards.remove(toRemove);
+        }
+    }
+
+    // Return cards of current player
+    public List getCards() {
+        return Cards;
+    }
+
+    // Give card to robot of current player
     public void giveCardToRobot(IProgramCard card) {
         robot.addCard(card);
     }
