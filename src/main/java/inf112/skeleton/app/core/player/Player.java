@@ -71,4 +71,18 @@ public class Player implements IPlayer {
         return robot.getEnergy();
     }
 
+    // Return life of player's robot
+    public int getLife() {
+        return robot.getLife();
+    }
+
+    // Take one life from players robot
+    public void takeLife() {
+        robot.takeLife();
+    }
+
+    // Check if robot is alive
+    public boolean robotIsAlive() {
+        return robot.isAlive();
+    }
 }

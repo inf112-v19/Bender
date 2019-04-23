@@ -11,6 +11,7 @@ public class Robot implements IRobot, Comparable<IRobot> {
     private int robotEnergy = 8;
     private Direction robotDirection;
     private ArrayList<IProgramCard> cards = new ArrayList<>();
+    private int robotLife = 3;
 
     public Robot(Direction robotDirection) {
         this.robotDirection = robotDirection;
@@ -41,6 +42,22 @@ public class Robot implements IRobot, Comparable<IRobot> {
     @Override
     public int getEnergy() {
         return robotEnergy;
+    }
+
+    public int getLife() {
+        return robotLife;
+    }
+
+
+    public void takeLife() {
+        robotLife--;
+    }
+
+    public boolean isAlive() {
+        if ((robotLife==0)||(robotEnergy==0)) {
+            return false;
+        }
+        else return true;
     }
 
     @Override
