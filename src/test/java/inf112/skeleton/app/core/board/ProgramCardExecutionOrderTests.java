@@ -33,7 +33,7 @@ public class ProgramCardExecutionOrderTests {
         this.robot1.addCard(new MoveCard(10, false, 1));
         this.robot2.addCard(new MoveCard(9, false, 1));
         this.robot3.addCard(new MoveCard(8, false, 2));
-        this.board.stepRobots();
+        this.board.stepProgramCards();
 
         assertTrue(board.getRobot(new Position(5, 6)) == robot1);
         assertTrue(board.getRobot(new Position(3, 5)) == robot2);

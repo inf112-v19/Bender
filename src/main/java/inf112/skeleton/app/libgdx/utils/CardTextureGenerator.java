@@ -1,7 +1,6 @@
-package inf112.skeleton.app.libgdx;
+package inf112.skeleton.app.libgdx.utils;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,7 +8,6 @@ import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.RotateCard;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import inf112.skeleton.app.libgdx.utils.SpriteLoader;
 
 public class CardTextureGenerator {
     private TextureEditor textureEditor;
@@ -35,7 +33,7 @@ public class CardTextureGenerator {
     }
 
     private Texture generateRotateCard(RotateCard card) {
-        switch (card.getCurrentDirection()) {
+        switch (card.getDirectionChange()) {
             case RIGHT:
                 return makeRightTurn();
             case LEFT:

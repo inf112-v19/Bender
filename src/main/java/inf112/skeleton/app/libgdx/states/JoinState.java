@@ -119,11 +119,6 @@ public class JoinState extends State {
         joinButton.getTexture().dispose();
     }
 
-    @Override
-    protected void handleInput() {
-
-    }
-
     public int getWidth() {
         return this.width;
     }

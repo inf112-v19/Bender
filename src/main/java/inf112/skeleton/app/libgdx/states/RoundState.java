@@ -1,7 +1,6 @@
 package inf112.skeleton.app.libgdx.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,80 +12,78 @@ import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.core.position.Position;
-import inf112.skeleton.app.libgdx.CardTextureGenerator;
-import inf112.skeleton.app.libgdx.RobotDemo;
-import inf112.skeleton.app.libgdx.TextureEditor;
-import inf112.skeleton.app.libgdx.VisualBoardLoader;
+import inf112.skeleton.app.core.robot.Robot;
+import inf112.skeleton.app.libgdx.*;
+import inf112.skeleton.app.libgdx.utils.CardTextureGenerator;
+import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
 
 
-import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class RoundState extends State {
-    //    private final List<Player> players;
-    private TextureEditor textureEditor;
+
     private ProgramDeck deck;
-    private boolean confirmed;
+    private Board board;
+    private IProgramCard[] availableRoundCard;
+    private int numberOfCards = 5;
+    private Player player;
+    private Robot otherRobot;
+
+    private CardTextureGenerator cardTextureGenerator;
     private Stage stage;
+    private BitmapFont font;
+    private boolean confirmed;
     private Texture tileTexture;
     private Texture cardBackground;
-    private IProgramCard[] availableRoundCard;
     private ArrayDeque<IProgramCard> chosenCards;
-    private BitmapFont font;
     private GlyphLayout[] visualCardSequencing;
     private ArrayList<Integer> selectedCardPosX;
     private VisualBoardLoader visualBoardLoader;
-    private Board board;
-    private Player player;
-    private CardTextureGenerator cardTextureGenerator;
-
-
-    private int numberOfCards = 5;
-
     private CustomImageButton confirm;
     private CustomImageButton reset;
     private Texture boardBackground;
     public static final int CARD_WIDTH = 110;
     public static final int CARD_HEIGHT = 220;
 
-    //TODO code quality, remove unnecessary stuff
-    public RoundState(GameStateManager gsm) throws IOException {
+    public RoundState(GameStateManager gsm, Board board, Player player) {
         super(gsm);
-        textureEditor = new TextureEditor();
-        cardTextureGenerator = new CardTextureGenerator();
-        player = new Player("test");
-        board = new Board("empty", 10, 10);
+        this.board = board;
+        this.player = player;
+
         chosenCards = new ArrayDeque();
+
+        cardTextureGenerator = new CardTextureGenerator();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         selectedCardPosX = new ArrayList();
         visualBoardLoader = new VisualBoardLoader(board);
-//        visualBoardLoader = new VisualBoardLoader("src/main/resources/boards/sampleboard1.txt");
-
-        board.addRobot(player.getRobot(), new Position(0, 0));
         initializeTextures();
         makeDeck();
         makeCardButtons();
         makeConfirmationButtons();
     }
 
-    //Creates unique glyph layouts for each card
+    /**
+     * Creates unique glyph layouts for each card
+     */
     public void createVisualCardSequencing() {
         visualCardSequencing = new GlyphLayout[5];
         for (int i = 0; i < 5; i++) {
+            // TODO : move Gdx.files.internal to SpriteLoader
             font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
             font.getData().setScale(0.5f, 0.5f);
             font.setColor(90f / 255f, 14f / 255f, 14f / 255f, 255f / 255f);
             String text = "" + (i + 1);
             visualCardSequencing[i] = new GlyphLayout(font, text);
-
         }
     }
 
     public void initializeTextures() {
         createVisualCardSequencing();
+        // TODO : move Gdx.files.internal to SpriteLoader
         cardBackground = new Texture(Gdx.files.internal("cards/Card_background1.png"));
         tileTexture = new Texture(Gdx.files.internal("tiles/empty_tile.png"));
         boardBackground = new Texture(Gdx.files.internal("boards/board_background_round.png"));
@@ -98,7 +95,9 @@ public class RoundState extends State {
         this.drawForRound();
     }
 
-    //Draw as in draw deck
+    /**
+     * Draw as in draw deck
+     */
     public void drawForRound() {
         availableRoundCard = new IProgramCard[9];
         for (int i = 0; i < 9; i++) {
@@ -107,17 +106,25 @@ public class RoundState extends State {
     }
 
     @Override
-    protected void handleInput() {
+    public void handleInput() {
         handleNextStage();
     }
 
     // Handles criteria necessary for proceeding to the next stage
     public void handleNextStage() {
         if (chosenCards.size() == numberOfCards && confirmed) {
+            Queue<List<Move>> moves = new ArrayDeque<>();
+            List<Move> moveList = new ArrayList<>();
+            Position start = new Position(5, 5);
+            Position end = new Position(5, 4);
+            Move move = new Move(player.getRobot(), start, end);
+            Move move2 = new Move(otherRobot, new Position(6, 6), new Position(5, 6));
+            moveList.add(move);
+            moveList.add(move2);
+            moves.add(moveList);
             for (int i = 0; i < numberOfCards; i++)
                 player.giveCardToRobot(chosenCards.removeLast());
-            gsm.push(new PhaseState(gsm, board, player));
-
+            gsm.push(new PhaseState(gsm, board, moves));
         }
     }
 
@@ -151,8 +158,8 @@ public class RoundState extends State {
     }
 
     public void makeConfirmationButtons() {
-        confirm = new CustomImageButton("buttons/Confirm.png", "buttons/Confirm.png", RobotDemo.WIDTH - 250, CARD_WIDTH / 2 + 50, 100, 50);
-        reset = new CustomImageButton("buttons/Reset.png", "buttons/Reset.png", RobotDemo.WIDTH - 250, 30, 100, 50);
+        confirm = new CustomImageButton("buttons/Confirm.png", "buttons/Confirm.png", RoboRally.WIDTH - 250, CARD_WIDTH / 2 + 50, 100, 50);
+        reset = new CustomImageButton("buttons/Reset.png", "buttons/Reset.png", RoboRally.WIDTH - 250, 30, 100, 50);
         confirmed = false;
         confirm.getButton().addListener(new InputListener() {
             @Override
@@ -236,11 +243,11 @@ public class RoundState extends State {
 
     public void renderBoard(SpriteBatch sb) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
-        int height = (RobotDemo.HEIGHT - cardBackground.getHeight()) / 10;
+        int height = (RoboRally.HEIGHT - cardBackground.getHeight()) / 10;
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
-        visualBoardLoader.renderBoardCustomSize(sb, RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
-        visualBoardLoader.renderRobot(sb, player.getRobot(), RobotDemo.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
+        visualBoardLoader.renderBoardCustomSize(sb, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
+        visualBoardLoader.renderRobot(sb, player.getRobot(), RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
         stage.getBatch().draw(cardBackground, 0, 0);
 
     }

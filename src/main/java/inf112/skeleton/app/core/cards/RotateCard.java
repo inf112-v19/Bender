@@ -20,7 +20,7 @@ public class  RotateCard extends ProgramCard {
             default: return null;
         }
     }
-    public DirectionChange getCurrentDirection() {
+    public DirectionChange getDirectionChange() {
         return dir;
     }
 }
