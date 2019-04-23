@@ -2,6 +2,8 @@ package inf112.skeleton.app.core.robot;
 
 
 import inf112.skeleton.app.core.cards.IProgramCard;
+import inf112.skeleton.app.core.cards.ProgramCard;
+import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.enums.Direction;
 
 import java.util.ArrayList;
@@ -30,6 +32,10 @@ public class Robot implements IRobot, Comparable<IRobot> {
     public int takeEnergy(int drawEnergy) {
         robotEnergy -= drawEnergy;
         return robotEnergy;
+    }
+
+    public void setEnergy(int energy) {
+        this.robotEnergy = energy;
     }
 
     @Override
@@ -85,4 +91,18 @@ public class Robot implements IRobot, Comparable<IRobot> {
         return energyDiff + dirDiff;
     }
 
+    public Robot copy() {
+        Robot newRobot = new Robot(robotDirection);
+        newRobot.setEnergy(robotEnergy);
+        ArrayList<IProgramCard> cards = new ArrayList<>();
+        for (int i = 0; i < this.cards.size(); i++) {
+            cards.add(this.cards.get(i).copy());
+        }
+        newRobot.setProgramCards(cards);
+        return newRobot;
+    }
+
+    public void setProgramCards(ArrayList<IProgramCard> newCards) {
+        this.cards = newCards;
+    }
 }

@@ -12,6 +12,7 @@ import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.*;
 
+import java.io.File;
 import java.util.*;
 
 public class Board implements IBoard {
@@ -29,6 +30,13 @@ public class Board implements IBoard {
         this.robots = new HashMap<>();
     }
 
+    public Board(int width, int height, ITile[][] grid, HashMap<IRobot, Position> robots) {
+        this.width = width;
+        this.height = height;
+        this.grid = grid;
+        this.robots = robots;
+    }
+
     public Board(String type, int width, int height) {
         if (type.equals("empty")) {
             this.width = width;
@@ -36,6 +44,24 @@ public class Board implements IBoard {
             this.robots = new HashMap<>();
             this.grid = emptyGrid(width, height);
         }
+    }
+
+    public Board copy() {
+        ITile[][] newGrid = new ITile[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                newGrid[i][j] = grid[i][j].copy();
+            }
+        }
+
+        HashMap<IRobot, Position> newRobots = new HashMap<>();
+        for (IRobot robot : robots.keySet()) {
+            Position p = robots.get(robot);
+            newRobots.put(robot.copy(), p);
+        }
+
+        Board newBoard = new Board(width, height, newGrid, newRobots);
+        return newBoard;
     }
 
     public int getWidth() {
@@ -234,7 +260,7 @@ public class Board implements IBoard {
         toTile.setRobot(robot);
         fromTile.setRobot(null);
         robots.put(robot, to);
-        return new MoveEvent(from, to);
+        return new MoveEvent(robot, from, to);
     }
 
     private boolean withinBounds(Position position) {

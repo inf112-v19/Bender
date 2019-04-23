@@ -2,6 +2,9 @@ package inf112.skeleton.app.core.robot;
 
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.core.flag.IFlag;
+
+import java.util.ArrayList;
 
 public interface IRobot extends Comparable<IRobot> {
 
@@ -53,4 +56,10 @@ public interface IRobot extends Comparable<IRobot> {
     IProgramCard drawCard();
 
     IProgramCard peekCard();
+
+    IRobot copy();
+
+    void setEnergy(int energy);
+
+    void setProgramCards(ArrayList<IProgramCard> cards);
 }
