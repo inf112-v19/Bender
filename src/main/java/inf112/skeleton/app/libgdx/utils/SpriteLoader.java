@@ -54,36 +54,46 @@ public class SpriteLoader {
 
         Sprite empty = new Sprite(new TextureRegion(tiles, 4 * tileSize, 0 * tileSize, tileSize, tileSize));
         Sprite blackHole = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0 * tileSize, tileSize, tileSize));
-        Sprite fastAssemblyForward = new Sprite(new TextureRegion(tiles, 4 * tileSize, 1 * tileSize, tileSize, tileSize)); // rotate
-        Sprite fastAssemblyTurnLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 2 * tileSize, tileSize, tileSize)); // rotate
-        Sprite fastAssemblyTurnRight = new Sprite(new TextureRegion(tiles, 4 * tileSize, 2 * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyTurnLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 4 * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyTurnRight = new Sprite(new TextureRegion(tiles, 2 * tileSize, 4 * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyLineForward = new Sprite(new TextureRegion(tiles, 0 * tileSize, 6 * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyFromRight = new Sprite(new TextureRegion(tiles, 0 * tileSize, 8 * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 7 * tileSize, tileSize, tileSize)); // rotate
-        Sprite assemblyFromBoth = new Sprite(new TextureRegion(tiles, 0 * tileSize, 5 * tileSize, tileSize, tileSize)); // rotate
-        Sprite fastAssemblyFromRight = new Sprite(new TextureRegion(tiles, 4 * tileSize, 9 * tileSize, tileSize, tileSize)); // rotate
-        Sprite fastAssemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 9 * tileSize, tileSize, tileSize)); // rotate
-        Sprite fastAssemblyFromBoth = new Sprite(new TextureRegion(tiles, 0 * tileSize, 10 * tileSize, tileSize, tileSize)); // rotate
+
+        Sprite assemblyForward = new Sprite(new TextureRegion(tiles, 0 * tileSize, 6 * tileSize, tileSize, tileSize));
+        Sprite assemblyTurnLeft = new Sprite(new TextureRegion(tiles, 1 * tileSize, 4 * tileSize, tileSize, tileSize));
+        Sprite assemblyTurnRight = new Sprite(new TextureRegion(tiles, 2 * tileSize, 4 * tileSize, tileSize, tileSize));
+
+        Sprite fastAssemblyForward = new Sprite(new TextureRegion(tiles, 4 * tileSize, 1 * tileSize, tileSize, tileSize));
+        Sprite fastAssemblyTurnLeft = new Sprite(new TextureRegion(tiles, 1 * tileSize, 2 * tileSize, tileSize, tileSize));
+        Sprite fastAssemblyTurnRight = new Sprite(new TextureRegion(tiles, 2 * tileSize, 2 * tileSize, tileSize, tileSize));
+
+        //Sprite assemblyFromRight = new Sprite(new TextureRegion(tiles, 0 * tileSize, 8 * tileSize, tileSize, tileSize)); // rotate
+        //Sprite assemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 7 * tileSize, tileSize, tileSize)); // rotate
+        Sprite assemblyMerge = new Sprite(new TextureRegion(tiles, 4 * tileSize, 8 * tileSize, tileSize, tileSize));
+
+        //Sprite fastAssemblyFromRight = new Sprite(new TextureRegion(tiles, 4 * tileSize, 9 * tileSize, tileSize, tileSize)); // rotate
+        //Sprite fastAssemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 9 * tileSize, tileSize, tileSize)); // rotate
+        Sprite fastAssemblyMerge = new Sprite(new TextureRegion(tiles, 3 * tileSize, 10 * tileSize, tileSize, tileSize));
+
         Sprite rotateLeft = new Sprite(new TextureRegion(tiles, 4 * tileSize, 6 * tileSize, tileSize, tileSize));
         Sprite rotateRight = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0 * tileSize, tileSize, tileSize));
         Sprite wall = new Sprite(new TextureRegion(tiles, 4 * tileSize, 3 * tileSize, tileSize, tileSize)); // rotate
 
         sprites.put("empty", empty);
         sprites.put("blackHole", blackHole);
+
+        sprites.put("assemblyForward", assemblyForward);
+        sprites.put("assemblyTurnLeft", assemblyTurnLeft);
+        sprites.put("assemblyTurnRight", assemblyTurnRight);
+
         sprites.put("fastAssemblyForward", fastAssemblyForward);
         sprites.put("fastAssemblyTurnLeft", fastAssemblyTurnLeft);
         sprites.put("fastAssemblyTurnRight", fastAssemblyTurnRight);
-        sprites.put("assemblyTurnLeft", assemblyTurnLeft);
-        sprites.put("assemblyTurnRight", assemblyTurnRight);
-        sprites.put("assemblyLineForward", assemblyLineForward);
-        sprites.put("assemblyFromRight", assemblyFromRight);
-        sprites.put("assemblyFromLeft", assemblyFromLeft);
-        sprites.put("assemblyFromBoth", assemblyFromBoth);
-        sprites.put("fastAssemblyFromRight", fastAssemblyFromRight);
-        sprites.put("fastAssemblyFromLeft", fastAssemblyFromLeft);
-        sprites.put("fastAssemblyFromBoth", fastAssemblyFromBoth);
+
+        //sprites.put("assemblyFromRight", assemblyFromRight);
+        //sprites.put("assemblyFromLeft", assemblyFromLeft);
+        sprites.put("assemblyMerge", assemblyMerge);
+
+        //sprites.put("fastAssemblyFromRight", fastAssemblyFromRight);
+        //sprites.put("fastAssemblyFromLeft", fastAssemblyFromLeft);
+        sprites.put("fastAssemblyMerge", fastAssemblyMerge);
+
         sprites.put("rotateLeft", rotateLeft);
         sprites.put("rotateRight", rotateRight);
         sprites.put("wall", wall);
@@ -142,33 +152,45 @@ public class SpriteLoader {
     }
 
     /**
-     * TODO: finish when tiles are finished
+     * Method for getting a sprite based on the tile type
      *
      * @param tile
      * @return
      */
     public Sprite getTileSprite(ITile tile) {
-        if (tile instanceof TileAssemblyLine) {
+        if(tile instanceof TileAssemblyLine) {
 
             TileAssemblyLine tileAssemblyLine = (TileAssemblyLine) tile;
             boolean isExpress = tileAssemblyLine.getExpress();
 
             if(tileAssemblyLine instanceof TileAssemblyLineMerge && isExpress) {
-                return getSprite("");
+                return getSprite("fastAssemblyMerge", tileAssemblyLine.getDirection());
             }else if(tileAssemblyLine instanceof TileAssemblyLineMerge) {
-                return getSprite("");
+                return getSprite("assemblyMerge", tileAssemblyLine.getDirection());
             }
 
             else if(tileAssemblyLine instanceof TileAssemblyLineTurn && isExpress) {
-                return getSprite("");
+                switch(((TileAssemblyLineTurn) tileAssemblyLine).getTurnDir()) {
+                    case LEFT:
+                        return getSprite("fastAssemblyTurnLeft", tileAssemblyLine.getDirection());
+
+                    case RIGHT:
+                        return getSprite("fastAssemblyTurnRight", tileAssemblyLine.getDirection());
+                }
             }else if(tileAssemblyLine instanceof TileAssemblyLineTurn) {
-                return getSprite("");
+                switch(((TileAssemblyLineTurn) tileAssemblyLine).getTurnDir()) {
+                    case LEFT:
+                        return getSprite("assemblyTurnLeft", tileAssemblyLine.getDirection());
+
+                    case RIGHT:
+                        return getSprite("assemblyTurnRight", tileAssemblyLine.getDirection());
+                }
             }
 
             else if(isExpress) {
-                return getSprite("");
-            }else {
-                return getSprite("");
+                return getSprite("fastAssemblyForward", tileAssemblyLine.getDirection());
+            }else{
+                return getSprite("assemblyForward", tileAssemblyLine.getDirection());
             }
 
         } else if (tile instanceof TileGear) {
