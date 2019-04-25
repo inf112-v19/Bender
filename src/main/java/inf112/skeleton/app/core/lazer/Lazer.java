@@ -12,6 +12,7 @@ public class Lazer {
 
     public Event shootLazer(Robot robot, Board board) {
         LaserEvent lazerShoot;
+        Position checkPosition = new Position(0,0);
         // Can position be found from Robot or board?
         Direction dir = robot.getDirection();
         Position startPosition = board.getRobotPosition(robot);
@@ -22,7 +23,7 @@ public class Lazer {
             // NORTH = y-- until 0
             case NORTH:
             for (int i=PosY; i>=0; i-- ){
-                Position checkPosition = new Position(PosX, i);
+                checkPosition = new Position(PosX, i);
                 if (!(board.getRobot(checkPosition)==null)) {
                     // Robot has been found, damage and return position
                 }
@@ -57,7 +58,7 @@ public class Lazer {
         // If found wall, only stop lazer
         // If found robot initiate damage to robot, and then stop lazer
 
-
-        return lazerShoot;
+        LaserEvent returnEvent = new LaserEvent(startPosition,checkPosition);
+        return returnEvent;
     }
 }
