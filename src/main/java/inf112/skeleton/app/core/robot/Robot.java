@@ -5,6 +5,7 @@ import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Robot implements IRobot, Comparable<IRobot> {
 
@@ -87,6 +88,12 @@ public class Robot implements IRobot, Comparable<IRobot> {
     // OUTPUTS the whole array of cards
     public ArrayList getCardArray() {
         return this.cards;
+    }
+
+    // SEND cards of one round to robot
+    public boolean programRobot(List cardsToRobot) {
+
+        return true;
     }
 
     @Override
