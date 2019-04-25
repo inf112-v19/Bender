@@ -11,7 +11,7 @@ public class BoardLoader {
 
     public static void main(String[] args) {
         BoardLoader bl = new BoardLoader();
-        File fl = new File("VaultBoard9april.csv");
+        File fl = new File("VaultBoard_Corr_25apr.csv");
 
         try {
             ITile[][] board = bl.loadBoard(fl);
