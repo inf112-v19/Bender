@@ -51,7 +51,7 @@ public class Board implements IBoard {
             try {
                 System.out.println("Working Directory = " +
                         System.getProperty("user.dir"));
-                this.grid = BoardLoader.loadBoard(new File("src/main/java/inf112/skeleton/app/core/board/VaultBoard_Corr_25apr.csv"));
+                this.grid = BoardLoader.loadBoard(new File("src/main/resources/boards/VaultBoard_Corr_25apr.csv"));
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException("something went wring while loading the board");
