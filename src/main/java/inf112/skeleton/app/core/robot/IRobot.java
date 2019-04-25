@@ -5,6 +5,7 @@ import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.flag.IFlag;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public interface IRobot extends Comparable<IRobot> {
 
@@ -63,7 +64,7 @@ public interface IRobot extends Comparable<IRobot> {
 
     void setProgramCards(ArrayList<IProgramCard> cards);
 
-    long getId();
+    UUID getId();
 
-    void setId(long newId);
+    void setId(UUID newId);
 }

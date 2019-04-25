@@ -7,20 +7,22 @@ import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.enums.Direction;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.UUID;
 
 public class Robot implements IRobot, Comparable<IRobot> {
 
     private int robotEnergy = 100;
     private Direction robotDirection;
     private ArrayList<IProgramCard> cards = new ArrayList<>();
-    private long id;
+    private UUID id;
 
     public Robot(Direction robotDirection) {
         this.robotDirection = robotDirection;
-        this.id = System.currentTimeMillis();
+        this.id = UUID.randomUUID();
     }
 
-    public Robot(Direction direction, int id) {
+    public Robot(Direction direction, UUID id) {
         this.robotDirection = direction;
         this.id = id;
     }
@@ -110,26 +112,27 @@ public class Robot implements IRobot, Comparable<IRobot> {
         return newRobot;
     }
 
+
     @Override
     public int hashCode() {
-        return (int) this.id;
+        return Objects.hashCode(this.id);
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Robot)) return false;
-        return this.id == ((Robot) o).getId();
+        return this.id.equals(((Robot) o).getId());
     }
 
     public void setProgramCards(ArrayList<IProgramCard> newCards) {
         this.cards = newCards;
     }
 
-    public long getId() {
+    public UUID getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 }
