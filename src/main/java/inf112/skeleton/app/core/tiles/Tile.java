@@ -25,6 +25,17 @@ public class Tile implements ITile {
             throw new IllegalArgumentException("Wall array must be of length 4");
     }
 
+    public Tile copy() {
+        Tile newTile = new Tile();
+        newTile.setRobot(robot == null ? null : robot.copy());
+        newTile.setFlag(flag == null ? null : flag.copy());
+        return newTile;
+    }
+
+    public void setFlag(IFlag flag) {
+        this.flag = flag;
+    }
+
     public boolean hasRobot() {
         return robot != null;
     }

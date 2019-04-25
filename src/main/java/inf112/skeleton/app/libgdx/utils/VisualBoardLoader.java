@@ -2,6 +2,8 @@ package inf112.skeleton.app.libgdx.utils;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
+import inf112.skeleton.app.core.board.events.Event;
+import inf112.skeleton.app.core.board.events.MoveEvent;
 import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.Tile;
@@ -63,13 +65,16 @@ public class VisualBoardLoader {
         }
     }
 
-    public void renderRobots(SpriteBatch sb, Board board, List<Move> currentlyMoving, float progress, int xStart, int yStart) {
+    public void renderRobots(SpriteBatch sb, Board board, List<Event> events, float progress, int xStart, int yStart) {
         HashSet<IRobot> renderedRobots = new HashSet<>();
 
-        if (currentlyMoving != null) {
-            for (Move move : currentlyMoving) {
-                renderedRobots.add(move.getRobot());
-                renderRobotSlowly(sb, move.getRobot(), xStart, yStart, move.getFrom(), move.getEnd(), progress);
+        if (events != null) {
+            for (Event event : events) {
+                if (event instanceof MoveEvent) {
+                    MoveEvent moveEvent = (MoveEvent) event;
+                    renderedRobots.add(moveEvent.getRobot());
+                    renderRobotSlowly(sb, moveEvent.getRobot(), xStart, yStart, moveEvent.getStartPosition(), moveEvent.getEndPosition(), progress);
+                }
             }
         }
 

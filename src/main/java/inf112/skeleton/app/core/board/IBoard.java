@@ -76,4 +76,6 @@ public interface IBoard extends java.io.Serializable {
      * @return
      */
     Position getRobotPosition(IRobot robot);
+
+    Event moveRobotToNewTile(Position from, Position to);
 }
