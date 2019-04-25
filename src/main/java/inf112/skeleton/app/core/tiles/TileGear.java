@@ -1,13 +1,13 @@
 package inf112.skeleton.app.core.tiles;
 
 import inf112.skeleton.app.core.enums.DirectionChange;
-import inf112.skeleton.app.core.flag.Flag;
+import inf112.skeleton.app.core.flag.IFlag;
 import inf112.skeleton.app.core.robot.IRobot;
 
 public class TileGear extends Tile {
     private DirectionChange angle;
 
-    public TileGear(IRobot robot, Flag flag, boolean[] walls, DirectionChange angle) {
+    public TileGear(IRobot robot, IFlag flag, boolean[] walls, DirectionChange angle) {
         super(robot, flag, walls);
         this.angle = angle;
     }
@@ -16,6 +16,8 @@ public class TileGear extends Tile {
 
     @Override
     public TileGear copy() {
-        return new TileGear(this.getRobot(), (Flag) this.getFlag(), super.walls, this.getAngle());
+        IRobot robot_copy = robot == null ? null : robot.copy();
+        IFlag flag_copy = flag == null ? null : flag.copy();
+        return new TileGear(robot_copy, flag_copy, super.walls, this.getAngle());
     }
 }

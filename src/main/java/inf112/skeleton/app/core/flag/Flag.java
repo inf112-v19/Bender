@@ -15,6 +15,6 @@ public class Flag implements IFlag {
     }
 
     public Flag copy() {
-        return new Flag(ordinal);
+        return new Flag(this.ordinal);
     }
 }
