@@ -3,6 +3,7 @@ package inf112.skeleton.app.libgdx.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.ITile;
 import inf112.skeleton.app.core.tiles.TileAssemblyLine;
@@ -62,23 +63,17 @@ public class SpriteLoader {
         Sprite fastAssemblyForward = new Sprite(new TextureRegion(tiles, 4 * tileSize, 1 * tileSize, tileSize, tileSize));
         Sprite fastAssemblyTurnLeft = new Sprite(new TextureRegion(tiles, 1 * tileSize, 2 * tileSize, tileSize, tileSize));
         Sprite fastAssemblyTurnRight = new Sprite(new TextureRegion(tiles, 2 * tileSize, 2 * tileSize, tileSize, tileSize));
-
-        //Sprite assemblyFromRight = new Sprite(new TextureRegion(tiles, 0 * tileSize, 8 * tileSize, tileSize, tileSize));
-        //Sprite assemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 7 * tileSize, tileSize, tileSize));
         Sprite assemblyMerge = new Sprite(new TextureRegion(tiles, 4 * tileSize, 8 * tileSize, tileSize, tileSize));
-
-        //Sprite fastAssemblyFromRight = new Sprite(new TextureRegion(tiles, 4 * tileSize, 9 * tileSize, tileSize, tileSize));
-        //Sprite fastAssemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 9 * tileSize, tileSize, tileSize));
         Sprite fastAssemblyMerge = new Sprite(new TextureRegion(tiles, 3 * tileSize, 10 * tileSize, tileSize, tileSize));
 
         Sprite rotateLeft = new Sprite(new TextureRegion(tiles, 4 * tileSize, 6 * tileSize, tileSize, tileSize));
         Sprite rotateRight = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0 * tileSize, tileSize, tileSize));
         Sprite wall = new Sprite(new TextureRegion(tiles, 6 * tileSize, 3 * tileSize, tileSize, tileSize));
 
-        Sprite flag1 = new Sprite(new TextureRegion(tiles, 6 * tileSize, 5 * tileSize, tileSize, tileSize));
-        Sprite flag2 = new Sprite(new TextureRegion(tiles, 7 * tileSize, 5 * tileSize, tileSize, tileSize));
-        Sprite flag3 = new Sprite(new TextureRegion(tiles, 8 * tileSize, 5 * tileSize, tileSize, tileSize));
-        Sprite flag4 = new Sprite(new TextureRegion(tiles, 9 * tileSize, 5 * tileSize, tileSize, tileSize));
+        Sprite flag1 = new Sprite(new TextureRegion(tiles, 6 * tileSize, 6 * tileSize, tileSize, tileSize));
+        Sprite flag2 = new Sprite(new TextureRegion(tiles, 6 * tileSize, 7 * tileSize, tileSize, tileSize));
+        Sprite flag3 = new Sprite(new TextureRegion(tiles, 6 * tileSize, 8 * tileSize, tileSize, tileSize));
+        Sprite flag4 = new Sprite(new TextureRegion(tiles, 6 * tileSize, 9 * tileSize, tileSize, tileSize));
 
         sprites.put("empty", empty);
         sprites.put("blackHole", blackHole);
@@ -90,13 +85,7 @@ public class SpriteLoader {
         sprites.put("fastAssemblyForward", fastAssemblyForward);
         sprites.put("fastAssemblyTurnLeft", fastAssemblyTurnLeft);
         sprites.put("fastAssemblyTurnRight", fastAssemblyTurnRight);
-
-        //sprites.put("assemblyFromRight", assemblyFromRight);
-        //sprites.put("assemblyFromLeft", assemblyFromLeft);
         sprites.put("assemblyMerge", assemblyMerge);
-
-        //sprites.put("fastAssemblyFromRight", fastAssemblyFromRight);
-        //sprites.put("fastAssemblyFromLeft", fastAssemblyFromLeft);
         sprites.put("fastAssemblyMerge", fastAssemblyMerge);
 
         sprites.put("rotateLeft", rotateLeft);
@@ -166,14 +155,15 @@ public class SpriteLoader {
 
         if(tile.hasFlag()) {
             Sprite flag = getSprite("flag" + tile.getFlag().getOrdinal());
-            flag.setBounds(x, y, this.tileSize, this.tileSize);
+            flag.setBounds(x, y, this.tileSize,  this.tileSize);
             flag.setSize(this.tileSize, this.tileSize);
             flag.draw(sb);
         }
     }
 
-    public void drawRobot(SpriteBatch sb, IRobot robot, float x, float y) {
-        Sprite sprite = getRobotSprite(robot);
+    public void drawRobot(SpriteBatch sb, IRobot robot, IBoard board, float x, float y) {
+        IRobot currentRobot = board.getRobot(robot);
+        Sprite sprite = getRobotSprite(currentRobot);
         sprite.setBounds(x, y, this.tileSize, this.tileSize);
         sprite.setSize(this.tileSize, this.tileSize);
         sprite.draw(sb);

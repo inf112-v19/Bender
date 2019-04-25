@@ -59,4 +59,13 @@ public enum Direction {
             default: throw new IllegalArgumentException("illegal direction string: " + str);
         }
     }
+
+    public Direction getNewDirection(DirectionChange dirChange) {
+        switch (dirChange) {
+            case LEFT: return this.getLeft();
+            case RIGHT: return this.getRight();
+            case UTURN: return this.getOpposite();
+            default: throw new IllegalArgumentException("invalid direction change: " + dirChange);
+        }
+    }
 }

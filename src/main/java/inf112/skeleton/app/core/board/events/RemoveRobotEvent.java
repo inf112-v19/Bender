@@ -13,6 +13,6 @@ public class RemoveRobotEvent implements Event {
 
     @Override
     public void apply(IBoard board) {
-
+        // TODO : implement
     }
 }

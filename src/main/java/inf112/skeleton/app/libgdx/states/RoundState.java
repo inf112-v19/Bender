@@ -32,7 +32,6 @@ public class RoundState extends State {
     private IProgramCard[] availableRoundCard;
     private int numberOfCards = 5;
     private Player player;
-    private Robot otherRobot;
 
     private CardTextureGenerator cardTextureGenerator;
     private Stage stage;
@@ -241,7 +240,7 @@ public class RoundState extends State {
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoardCustomSize(sb, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
-        visualBoardLoader.renderRobot(sb, player.getRobot(), RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
+        visualBoardLoader.renderRobot(sb, player.getRobot(), board, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
         stage.getBatch().draw(cardBackground, 0, 0);
 
     }

@@ -2,6 +2,7 @@ package inf112.skeleton.app.libgdx.utils;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
+import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.board.events.MoveEvent;
 import inf112.skeleton.app.core.position.Position;
@@ -54,14 +55,14 @@ public class VisualBoardLoader {
         spriteLoader.dispose();
     }
 
-    public void renderRobot(SpriteBatch sb, IRobot robot, int xStart, int yStart, Position pos, boolean roundState) {
+    public void renderRobot(SpriteBatch sb, IRobot robot, IBoard board, int xStart, int yStart, Position pos, boolean roundState) {
         int height = (RoboRally.HEIGHT - 200) / 10;
         if (roundState) {
             spriteLoader.setTileSize(height);
-            spriteLoader.drawRobot(sb, robot,(pos.getX() * height) + xStart, (pos.getY() * height) + yStart);
+            spriteLoader.drawRobot(sb, robot, board,(pos.getX() * height) + xStart, (pos.getY() * height) + yStart);
         } else {
             spriteLoader.setTileSize(64);
-            spriteLoader.drawRobot(sb, robot,(pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);
+            spriteLoader.drawRobot(sb, robot, board,(pos.getX() * 64) + xStart, (pos.getY() * 64) + yStart);
         }
     }
 
@@ -73,7 +74,7 @@ public class VisualBoardLoader {
                 if (event instanceof MoveEvent) {
                     MoveEvent moveEvent = (MoveEvent) event;
                     renderedRobots.add(moveEvent.getRobot());
-                    renderRobotSlowly(sb, moveEvent.getRobot(), xStart, yStart, moveEvent.getStartPosition(), moveEvent.getEndPosition(), progress);
+                    renderRobotSlowly(sb, moveEvent.getRobot(), board, xStart, yStart, moveEvent.getStartPosition(), moveEvent.getEndPosition(), progress);
                 }
             }
         }
@@ -81,11 +82,11 @@ public class VisualBoardLoader {
         for (IRobot robot : board.getRobots()) {
             if (renderedRobots.contains(robot)) continue;
             Position position = board.getRobotPosition(robot);
-            renderRobotSlowly(sb, robot, xStart, yStart, position, position, 0);
+            renderRobotSlowly(sb, robot, board, xStart, yStart, position, position, 0);
         }
     }
 
-    public void renderRobotSlowly(SpriteBatch sb, IRobot robot, int xStart, int yStart, Position start, Position end, float progress) {
+    public void renderRobotSlowly(SpriteBatch sb, IRobot robot, IBoard board, int xStart, int yStart, Position start, Position end, float progress) {
         int height = 64;
         int xDistance = (end.getX() - start.getX()) * height;
         int yDistance = (end.getY() - start.getY()) * height;
@@ -97,7 +98,7 @@ public class VisualBoardLoader {
         float currentY = yStart + (start.getY() * height) + yProgression;
 
         spriteLoader.setTileSize(64);
-        spriteLoader.drawRobot(sb, robot, currentX, currentY);
+        spriteLoader.drawRobot(sb, robot, board, currentX, currentY);
     }
 
     public Position getRobotPos() {
