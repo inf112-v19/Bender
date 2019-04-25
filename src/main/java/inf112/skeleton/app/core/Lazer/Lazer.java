@@ -14,21 +14,31 @@ public class Lazer {
         // Can position be found from Robot or board?
         Direction dir = robot.getDirection();
         int PosX = board.getRobotPosition(robot).getX();
-        int posY = board.getRobotPosition(robot).getY();
+        int PosY = board.getRobotPosition(robot).getY();
         // Go from position in direction of dir
         switch (dir){
             // NORTH = y-- until 0
             case NORTH:
-            {for (int i=PosX; i< )}
+            for (int i=PosY; i>=0; i-- ){
+
+            }
             // SOUTH = y++ until 11
             case SOUTH:
-            {}
-            // SOUTH = y++ until 11
+            for (int i=PosY; i<=11; i++){
+
+            }
+            // EAST = x++ until 11
             case EAST:
-            {}
+                for (int i=PosX; i<=11; i++)
+            {
+
+            }
             // WEST = x-- until 0
             case WEST:
-            {}
+                for (int i=PosX; i>=0; i--)
+            {
+
+            }
 
         }
         // Iterate each tile, and check for wall or robot
