@@ -15,9 +15,12 @@ public class BoardLoader {
 
         try {
             ITile[][] board = bl.loadBoard(fl);
+            System.out.println();
         } catch(IOException e) {
             System.out.println(e.getMessage());
         }
+
+        System.out.println();
     }
 
     /**

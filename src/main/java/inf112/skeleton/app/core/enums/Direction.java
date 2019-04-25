@@ -52,7 +52,7 @@ public enum Direction {
             case "SOUTH": return SOUTH;
             case "EAST": return EAST;
             case "WEST": return WEST;
-            default: return null;
+            default: throw new IllegalArgumentException("illegal direction string: " + str);
         }
     }
 }

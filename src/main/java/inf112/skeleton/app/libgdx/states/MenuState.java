@@ -74,7 +74,7 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (touched) {
-            Board testBoard = new Board("empty", 10, 10);
+            Board testBoard = new Board("test1", 10, 10);
             Player testPlayer = new Player("petter");
             testBoard.addRobot(testPlayer.getRobot(), new Position(5, 5));
             gsm.set(new RoundState(gsm, testBoard, testPlayer));
