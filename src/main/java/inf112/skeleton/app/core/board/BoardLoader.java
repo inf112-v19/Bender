@@ -54,7 +54,7 @@ public class BoardLoader {
                             tile = new TileAssemblyLine(null, getFlag(params[1]), getWalls(params[2]), params[5].equals("EXPRESS"), Direction.getFromString(params[4]));
 
                         else if(params[3].equals("TURN"))
-                            tile = new TileAssemblyLineTurn(null, getFlag(params[1]), getWalls(params[2]), params[5].equals("EXPRESS"), Direction.getFromString(params[4]), DirectionChange.getFromString(params[6]));
+                            tile = new TileAssemblyLineTurn(null, getFlag(params[1]), getWalls(params[2]), params[6].equals("EXPRESS"), Direction.getFromString(params[4]), DirectionChange.getFromString(params[5]));
 
                         else if(params[3].equals("SPLIT"))
                             tile = new TileAssemblyLineSplit(null, getFlag(params[1]), getWalls(params[2]), params[5].equals("EXPRESS"), Direction.getFromString(params[4]));
