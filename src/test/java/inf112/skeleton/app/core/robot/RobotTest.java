@@ -16,15 +16,15 @@ public class RobotTest {
 
     @Test
     public void takeRobotEnergyTest() {
-        int energy = 20;
+        int energy = 1;
         robotBender.takeEnergy(energy);
-        assertEquals(robotBender.getEnergy(),100-energy);
+        assertEquals(robotBender.getEnergy(),7-energy);
     }
 
     @Test
     public void giveRobotEnergyTest() {
-        robotBender.giveEnergy(20);
-        assertEquals(robotBender.getEnergy(),120);
+        robotBender.giveEnergy(2);
+        assertEquals(robotBender.getEnergy(),10);
     }
 
     @Test
@@ -35,9 +35,9 @@ public class RobotTest {
 
     @Test
     public void takeTwoTimesEnergyGivesDifferenceTest() {
-        robotBender.takeEnergy(20);
-        robotBender.takeEnergy(20);
-        assertEquals(robotBender.getEnergy(),60);
+        robotBender.takeEnergy(2);
+        robotBender.takeEnergy(2);
+        assertEquals(robotBender.getEnergy(),4);
     }
 
     @Test

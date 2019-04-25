@@ -278,7 +278,7 @@ public class Board implements IBoard {
         return robots.keySet();
     }
 
-    public int getNumberOfFlags() {
+    public static int getNumberOfFlags() {
         return numberOfFlags;
     }
 }
