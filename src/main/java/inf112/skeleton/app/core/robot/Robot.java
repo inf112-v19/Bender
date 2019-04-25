@@ -2,9 +2,13 @@ package inf112.skeleton.app.core.robot;
 
 
 import inf112.skeleton.app.core.cards.IProgramCard;
+import inf112.skeleton.app.core.cards.ProgramCard;
+import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.enums.Direction;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.List;
 
 public class Robot implements IRobot, Comparable<IRobot> {
@@ -12,10 +16,18 @@ public class Robot implements IRobot, Comparable<IRobot> {
     private int robotEnergy = 8;
     private Direction robotDirection;
     private ArrayList<IProgramCard> cards = new ArrayList<>();
+
+    private UUID id;
     private int robotLife = 3;
 
     public Robot(Direction robotDirection) {
         this.robotDirection = robotDirection;
+        this.id = UUID.randomUUID();
+    }
+
+    public Robot(Direction direction, UUID id) {
+        this.robotDirection = direction;
+        this.id = id;
     }
 
     @Override
@@ -32,6 +44,10 @@ public class Robot implements IRobot, Comparable<IRobot> {
     public int takeEnergy(int drawEnergy) {
         robotEnergy -= drawEnergy;
         return robotEnergy;
+    }
+
+    public void setEnergy(int energy) {
+        this.robotEnergy = energy;
     }
 
     @Override
@@ -109,4 +125,39 @@ public class Robot implements IRobot, Comparable<IRobot> {
         return energyDiff + dirDiff;
     }
 
+    public Robot copy() {
+        Robot newRobot = new Robot(robotDirection);
+        newRobot.setEnergy(robotEnergy);
+        ArrayList<IProgramCard> cards = new ArrayList<>();
+        for (int i = 0; i < this.cards.size(); i++) {
+            cards.add(this.cards.get(i).copy());
+        }
+        newRobot.setProgramCards(cards);
+        newRobot.setId(getId());
+        return newRobot;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.id);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Robot)) return false;
+        return this.id.equals(((Robot) o).getId());
+    }
+
+    public void setProgramCards(ArrayList<IProgramCard> newCards) {
+        this.cards = newCards;
+    }
+
+    public UUID getId() {
+        return this.id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 }

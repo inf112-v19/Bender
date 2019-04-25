@@ -27,4 +27,8 @@ public interface ITile {
     IFlag getFlag();
 
     boolean canEnter(Direction direction);
+
+    ITile copy();
+
+    void setFlag(IFlag flag);
 }

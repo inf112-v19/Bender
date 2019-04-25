@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import inf112.skeleton.app.core.board.Board;
+import inf112.skeleton.app.core.player.Player;
+import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.libgdx.RoboRally;
 
 public class MenuState extends State {
@@ -71,7 +74,10 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (touched) {
-                gsm.set(new RoundState(gsm, null, null));
+            Board testBoard = new Board("empty", 10, 10);
+            Player testPlayer = new Player("petter");
+            testBoard.addRobot(testPlayer.getRobot(), new Position(5, 5));
+            gsm.set(new RoundState(gsm, testBoard, testPlayer));
             dispose();
         }
     }

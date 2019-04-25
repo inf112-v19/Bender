@@ -23,4 +23,8 @@ public class  RotateCard extends ProgramCard {
     public DirectionChange getDirectionChange() {
         return dir;
     }
+
+    public RotateCard copy() {
+        return new RotateCard(this.priority(), dir);
+    }
 }
