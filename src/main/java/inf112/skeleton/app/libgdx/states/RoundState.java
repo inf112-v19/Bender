@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.cards.IProgramCard;
+import inf112.skeleton.app.core.cards.ProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
