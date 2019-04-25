@@ -28,7 +28,9 @@ public class Lazer {
                 }
                 else if (true) {
                     // Find a wall, and return
-                    if (Tile.hasWall board.getTile(checkPosition))
+                    if (Tile.hasWall(board.getTile(checkPosition))) {
+
+                    }
                 }
 
             }
