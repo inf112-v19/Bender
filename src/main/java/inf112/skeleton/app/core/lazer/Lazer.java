@@ -20,44 +20,66 @@ public class Lazer {
         int PosY = startPosition.getY();
         // Go from position in direction of dir
         switch (dir){
-            // NORTH = y-- until 0
+            // NORTH = y-- down to 0
             case NORTH:
             for (int i=PosY; i>=0; i-- ){
                 checkPosition = new Position(PosX, i);
                 if (!(board.getRobot(checkPosition)==null)) {
                     // Robot has been found, damage and return position
+                    board.getRobot(checkPosition).takeEnergy(1);
                 }
                 else if (true) {
                     // Find a wall, and return
-                    if (Tile.hasWall(board.getTile(checkPosition))) {
-
-                    }
+                    Tile tile = board.getTile(checkPosition)
+                    // if (tile.hasWall) {}
                 }
-
             }
-            // SOUTH = y++ until 11
+            // SOUTH = y++ up to 11
             case SOUTH:
             for (int i=PosY; i<=11; i++){
-
+                checkPosition = new Position(PosX, i);
+                if (!(board.getRobot(checkPosition)==null)) {
+                    // Robot has been found, damage and return position
+                    board.getRobot(checkPosition).takeEnergy(1);
+                }
+                else if (true) {
+                    // Find a wall, and return
+                    Tile tile = board.getTile(checkPosition)
+                    // if (tile.hasWall) {}
+                }
             }
-            // EAST = x++ until 11
+            // EAST = x++ up to11
             case EAST:
-                for (int i=PosX; i<=11; i++)
-            {
-
+                for (int i=PosX; i<=11; i++) {
+                    checkPosition = new Position(i, PosY);
+                    if (!(board.getRobot(checkPosition)==null)) {
+                        // Robot has been found, damage and return position
+                        board.getRobot(checkPosition).takeEnergy(1);
+                    }
+                    else if (true) {
+                        // Find a wall, and return
+                        Tile tile = board.getTile(checkPosition)
+                        // if (tile.hasWall) {}
+                    }
             }
-            // WEST = x-- until 0
+            // WEST = x-- down to 0
             case WEST:
-                for (int i=PosX; i>=0; i--)
-            {
-
+                for (int i=PosX; i>=0; i--) {
+                    checkPosition = new Position(i, PosY);
+                    if (!(board.getRobot(checkPosition)==null)) {
+                        // Robot has been found, damage and return position
+                        board.getRobot(checkPosition).takeEnergy(1);
+                    }
+                    else if (true) {
+                        // Find a wall, and return
+                        Tile tile = board.getTile(checkPosition)
+                        // if (tile.hasWall) {}
+                    }
             }
 
         }
-        // Iterate each tile, and check for wall or robot
-        // If found wall, only stop lazer
-        // If found robot initiate damage to robot, and then stop lazer
 
+        // build Laserevent and return values
         LaserEvent returnEvent = new LaserEvent(startPosition,checkPosition);
         return returnEvent;
     }
