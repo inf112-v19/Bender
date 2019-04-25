@@ -1,4 +1,4 @@
-package inf112.skeleton.app.core.position;
+package inf112.skeleton.app.core.board;
 
 public class Position {
 

@@ -9,17 +9,6 @@ import java.io.*;
 
 public class BoardLoader {
 
-    public static void main(String[] args) {
-        BoardLoader bl = new BoardLoader();
-        File fl = new File("VaultBoard_Corr_25apr.csv");
-
-        try {
-            ITile[][] board = bl.loadBoard(fl);
-        } catch(IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     /**
      * Creates an ITile based on a text file on the CSV format:
      * https://docs.google.com/spreadsheets/d/16Zcec6W2YBtkaVKUAjNydJ6Xspv5uP9LYe6uhFLXc_c/
@@ -42,25 +31,25 @@ public class BoardLoader {
         for (int i = 0; i < h; i++) {
             String[] rLine = reader.readLine().split(",");
             for (int j = 0; j < w; j++) {
-                String[] params = rLine[j].split("|");
+                String[] params = rLine[j].split("\\|");
 
                 switch (params[0].charAt(0)) {
                     case 'N':
-                        tile = new Tile(null, getFlag(params[2]), getWalls(params[1]));
+                        tile = new Tile(null, getFlag(params[1]), getWalls(params[2]));
                         break;
 
                     case 'A':
-                        if(params[4].equals("MOVE"))
-                            tile = new TileAssemblyLine(null, getFlag(params[2]), getWalls(params[1]), params[5].equals("EXPRESS"), Direction.getFromString(params[3]));
+                        if(params[3].equals("MOVE"))
+                            tile = new TileAssemblyLine(null, getFlag(params[1]), getWalls(params[2]), params[5].equals("EXPRESS"), Direction.getFromString(params[4]));
 
-                        else if(params[4].equals("TURN"))
-                            tile = new TileAssemblyLineTurn(null, getFlag(params[2]), getWalls(params[1]), params[5].equals("EXPRESS"), Direction.getFromString(params[3]), DirectionChange.getFromString(params[6]));
+                        else if(params[3].equals("TURN"))
+                            tile = new TileAssemblyLineTurn(null, getFlag(params[1]), getWalls(params[2]), params[6].equals("EXPRESS"), Direction.getFromString(params[4]), DirectionChange.getFromString(params[5]));
 
-                        else if(params[4].equals("SPLIT"))
-                            tile = new TileAssemblyLineSplit(null, getFlag(params[2]), getWalls(params[1]), params[5].equals("EXPRESS"), Direction.getFromString(params[3]));
+                        else if(params[3].equals("SPLIT"))
+                            tile = new TileAssemblyLineSplit(null, getFlag(params[1]), getWalls(params[2]), params[5].equals("EXPRESS"), Direction.getFromString(params[4]));
 
-                        else if(params[4].equals("MERGE"))
-                            tile = new TileAssemblyLineMerge(null, getFlag(params[2]), getWalls(params[1]), params[5].equals("EXPRESS"), Direction.getFromString(params[3]));
+                        else if(params[3].equals("MERGE"))
+                            tile = new TileAssemblyLineMerge(null, getFlag(params[1]), getWalls(params[2]), params[5].equals("EXPRESS"), Direction.getFromString(params[4]));
 
                         else
                             throw new IllegalArgumentException("Tile of type AssemblyLine did not have a valid type");
@@ -68,11 +57,11 @@ public class BoardLoader {
                         break;
 
                     case 'B':
-                        tile = new TileBlackhole(null, getFlag(params[2]), getWalls(params[1]));
+                        tile = new TileBlackhole(null, getFlag(params[1]), getWalls(params[2]));
                         break;
 
                     case 'G':
-                        tile = new TileGear(null, getFlag(params[2]), getWalls(params[1]), DirectionChange.getFromString(params[3]));
+                        tile = new TileGear(null, getFlag(params[1]), getWalls(params[2]), DirectionChange.getFromString(params[3]));
                         break;
 
                     default:
@@ -106,6 +95,9 @@ public class BoardLoader {
      * @return
      */
     public static Flag getFlag(String st) {
-        return new Flag(Integer.parseInt(st));
+        int ord = Integer.parseInt(st);
+        if(ord != 0)
+            return new Flag(ord);
+        return null;
     }
 }

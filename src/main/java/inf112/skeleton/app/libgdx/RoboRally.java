@@ -2,6 +2,8 @@ package inf112.skeleton.app.libgdx;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
@@ -35,5 +37,13 @@ public class RoboRally extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // wipes the screen clear
         gsm.update(Gdx.graphics.getDeltaTime()); //Difference between the render times
         gsm.render(batch);
+    }
+
+    public static void main(String[] args) {
+        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+        cfg.width = RoboRally.WIDTH;
+        cfg.height= RoboRally.HEIGHT;
+        cfg.title = RoboRally.TITLE;
+        new LwjglApplication(new RoboRally(), cfg);
     }
 }

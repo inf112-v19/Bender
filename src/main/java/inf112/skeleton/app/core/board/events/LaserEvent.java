@@ -1,7 +1,7 @@
 package inf112.skeleton.app.core.board.events;
 
 import inf112.skeleton.app.core.board.IBoard;
-import inf112.skeleton.app.core.position.Position;
+import inf112.skeleton.app.core.board.Position;
 
 public class LaserEvent implements Event {
 

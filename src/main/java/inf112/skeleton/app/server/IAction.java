@@ -1,14 +1,10 @@
 package inf112.skeleton.app.server;
 
 import inf112.skeleton.app.core.board.IBoard;
-import inf112.skeleton.app.core.cards.IDeck;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.IPlayer;
-import inf112.skeleton.app.libgdx.Move;
-import inf112.skeleton.app.server.API;
 
 import java.util.List;
-import java.util.Queue;
 
 /**
  * Handler for server responses. {@link API} implementation
@@ -33,7 +29,6 @@ public interface IAction {
 
     void handleBoard(IBoard board);
 
-    void handleMoves(Queue<List<Move>> moves);
 
     void handlePlayer(IPlayer player);
 }

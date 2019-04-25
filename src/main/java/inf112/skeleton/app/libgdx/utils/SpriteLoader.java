@@ -3,6 +3,7 @@ package inf112.skeleton.app.libgdx.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.ITile;
 import inf112.skeleton.app.core.tiles.TileAssemblyLine;
@@ -62,18 +63,17 @@ public class SpriteLoader {
         Sprite fastAssemblyForward = new Sprite(new TextureRegion(tiles, 4 * tileSize, 1 * tileSize, tileSize, tileSize));
         Sprite fastAssemblyTurnLeft = new Sprite(new TextureRegion(tiles, 1 * tileSize, 2 * tileSize, tileSize, tileSize));
         Sprite fastAssemblyTurnRight = new Sprite(new TextureRegion(tiles, 2 * tileSize, 2 * tileSize, tileSize, tileSize));
-
-        //Sprite assemblyFromRight = new Sprite(new TextureRegion(tiles, 0 * tileSize, 8 * tileSize, tileSize, tileSize)); // rotate
-        //Sprite assemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 7 * tileSize, tileSize, tileSize)); // rotate
         Sprite assemblyMerge = new Sprite(new TextureRegion(tiles, 4 * tileSize, 8 * tileSize, tileSize, tileSize));
-
-        //Sprite fastAssemblyFromRight = new Sprite(new TextureRegion(tiles, 4 * tileSize, 9 * tileSize, tileSize, tileSize)); // rotate
-        //Sprite fastAssemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 9 * tileSize, tileSize, tileSize)); // rotate
         Sprite fastAssemblyMerge = new Sprite(new TextureRegion(tiles, 3 * tileSize, 10 * tileSize, tileSize, tileSize));
 
         Sprite rotateLeft = new Sprite(new TextureRegion(tiles, 4 * tileSize, 6 * tileSize, tileSize, tileSize));
         Sprite rotateRight = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0 * tileSize, tileSize, tileSize));
-        Sprite wall = new Sprite(new TextureRegion(tiles, 4 * tileSize, 3 * tileSize, tileSize, tileSize)); // rotate
+        Sprite wall = new Sprite(new TextureRegion(tiles, 6 * tileSize, 3 * tileSize, tileSize, tileSize));
+
+        Sprite flag1 = new Sprite(new TextureRegion(tiles, 6 * tileSize, 6 * tileSize, tileSize, tileSize));
+        Sprite flag2 = new Sprite(new TextureRegion(tiles, 6 * tileSize, 7 * tileSize, tileSize, tileSize));
+        Sprite flag3 = new Sprite(new TextureRegion(tiles, 6 * tileSize, 8 * tileSize, tileSize, tileSize));
+        Sprite flag4 = new Sprite(new TextureRegion(tiles, 6 * tileSize, 9 * tileSize, tileSize, tileSize));
 
         sprites.put("empty", empty);
         sprites.put("blackHole", blackHole);
@@ -85,18 +85,17 @@ public class SpriteLoader {
         sprites.put("fastAssemblyForward", fastAssemblyForward);
         sprites.put("fastAssemblyTurnLeft", fastAssemblyTurnLeft);
         sprites.put("fastAssemblyTurnRight", fastAssemblyTurnRight);
-
-        //sprites.put("assemblyFromRight", assemblyFromRight);
-        //sprites.put("assemblyFromLeft", assemblyFromLeft);
         sprites.put("assemblyMerge", assemblyMerge);
-
-        //sprites.put("fastAssemblyFromRight", fastAssemblyFromRight);
-        //sprites.put("fastAssemblyFromLeft", fastAssemblyFromLeft);
         sprites.put("fastAssemblyMerge", fastAssemblyMerge);
 
         sprites.put("rotateLeft", rotateLeft);
         sprites.put("rotateRight", rotateRight);
         sprites.put("wall", wall);
+
+        sprites.put("flag1", flag1);
+        sprites.put("flag2", flag2);
+        sprites.put("flag3", flag3);
+        sprites.put("flag4", flag4);
 
         Sprite robot = new Sprite(new Texture(Gdx.files.internal("tiles/robot.png")));
         sprites.put("robot", robot);
@@ -114,21 +113,23 @@ public class SpriteLoader {
 
     private Sprite getSprite(String name, Direction dir) {
         Sprite sprite = sprites.get(name);
+        sprite.setOrigin(tileSize / 2, tileSize / 2);
+        sprite.setRotation(0);
         switch (dir) {
             case NORTH:
-                sprite.setRotation(0);
+                sprite.rotate(0);
                 break;
 
             case EAST:
-                sprite.setRotation(90);
+                sprite.rotate(90);
                 break;
 
             case SOUTH:
-                sprite.setRotation(180);
+                sprite.rotate(180);
                 break;
 
             case WEST:
-                sprite.setRotation(270);
+                sprite.rotate(270);
                 break;
 
             default:
@@ -142,10 +143,27 @@ public class SpriteLoader {
         sprite.setBounds(x, y, this.tileSize, this.tileSize);
         sprite.setSize(this.tileSize, this.tileSize);
         sprite.draw(sb);
+
+        for (Direction dir : Direction.directions) {
+            if (tile.hasWall(dir)) {
+                Sprite wall = getSprite("wall", dir);
+                wall.setBounds(x, y, this.tileSize, this.tileSize);
+                wall.setSize(this.tileSize, this.tileSize);
+                wall.draw(sb);
+            }
+        }
+
+        if(tile.hasFlag()) {
+            Sprite flag = getSprite("flag" + tile.getFlag().getOrdinal());
+            flag.setBounds(x, y, this.tileSize,  this.tileSize);
+            flag.setSize(this.tileSize, this.tileSize);
+            flag.draw(sb);
+        }
     }
 
-    public void drawRobot(SpriteBatch sb, IRobot robot, float x, float y) {
-        Sprite sprite = getRobotSprite(robot);
+    public void drawRobot(SpriteBatch sb, IRobot robot, IBoard board, float x, float y) {
+        IRobot currentRobot = board.getRobot(robot);
+        Sprite sprite = getRobotSprite(currentRobot);
         sprite.setBounds(x, y, this.tileSize, this.tileSize);
         sprite.setSize(this.tileSize, this.tileSize);
         sprite.draw(sb);

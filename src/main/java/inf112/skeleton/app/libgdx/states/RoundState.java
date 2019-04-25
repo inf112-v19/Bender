@@ -9,12 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.cards.IProgramCard;
-import inf112.skeleton.app.core.cards.ProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
-import inf112.skeleton.app.core.position.Position;
-import inf112.skeleton.app.core.robot.Robot;
 import inf112.skeleton.app.libgdx.*;
 import inf112.skeleton.app.libgdx.utils.CardTextureGenerator;
 import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
@@ -32,13 +29,11 @@ public class RoundState extends State {
     private IProgramCard[] availableRoundCard;
     private int numberOfCards = 5;
     private Player player;
-    private Robot otherRobot;
 
     private CardTextureGenerator cardTextureGenerator;
     private Stage stage;
     private BitmapFont font;
     private boolean confirmed;
-    private Texture tileTexture;
     private Texture cardBackground;
     private ArrayDeque<IProgramCard> chosenCards;
     private GlyphLayout[] visualCardSequencing;
@@ -87,7 +82,6 @@ public class RoundState extends State {
         createVisualCardSequencing();
         // TODO : move Gdx.files.internal to SpriteLoader
         cardBackground = new Texture(Gdx.files.internal("cards/Card_background1.png"));
-        tileTexture = new Texture(Gdx.files.internal("tiles/empty_tile.png"));
         boardBackground = new Texture(Gdx.files.internal("boards/board_background_round.png"));
 
     }
@@ -243,7 +237,7 @@ public class RoundState extends State {
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoardCustomSize(sb, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
-        visualBoardLoader.renderRobot(sb, player.getRobot(), RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
+        visualBoardLoader.renderRobot(sb, player.getRobot(), board, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
         stage.getBatch().draw(cardBackground, 0, 0);
 
     }
@@ -262,6 +256,5 @@ public class RoundState extends State {
         confirm.getTexture().dispose();
         reset.getTexture().dispose();
         cardBackground.dispose();
-        tileTexture.dispose();
     }
 }

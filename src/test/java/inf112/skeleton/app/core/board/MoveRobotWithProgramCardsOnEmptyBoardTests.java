@@ -5,7 +5,6 @@ import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.RotateCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.enums.DirectionChange;
-import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.robot.Robot;
 import org.junit.*;
