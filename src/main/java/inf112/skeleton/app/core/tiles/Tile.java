@@ -3,6 +3,7 @@ package inf112.skeleton.app.core.tiles;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.flag.IFlag;
 import inf112.skeleton.app.core.robot.IRobot;
+import inf112.skeleton.app.core.robot.Robot;
 
 public class Tile implements ITile {
 
@@ -26,10 +27,9 @@ public class Tile implements ITile {
     }
 
     public Tile copy() {
-        Tile newTile = new Tile();
-        newTile.setRobot(robot == null ? null : robot.copy());
-        newTile.setFlag(flag == null ? null : flag.copy());
-        return newTile;
+        IRobot robot = this.robot == null ? null : this.robot.copy();
+        IFlag flag = this.flag == null ? null : this.flag.copy();
+        return new Tile(robot, flag, walls);
     }
 
     public boolean hasRobot() {

@@ -31,4 +31,6 @@ public interface ITile {
     ITile copy();
 
     void setFlag(IFlag flag);
+
+    boolean hasWall(Direction dir);
 }

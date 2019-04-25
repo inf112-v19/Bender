@@ -73,7 +73,7 @@ public class SpriteLoader {
 
         Sprite rotateLeft = new Sprite(new TextureRegion(tiles, 4 * tileSize, 6 * tileSize, tileSize, tileSize));
         Sprite rotateRight = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0 * tileSize, tileSize, tileSize));
-        Sprite wall = new Sprite(new TextureRegion(tiles, 4 * tileSize, 3 * tileSize, tileSize, tileSize)); // rotate
+        Sprite wall = new Sprite(new TextureRegion(tiles, 6 * tileSize, 3 * tileSize, tileSize, tileSize)); // rotate
 
         sprites.put("empty", empty);
         sprites.put("blackHole", blackHole);
@@ -144,6 +144,15 @@ public class SpriteLoader {
         sprite.setBounds(x, y, this.tileSize, this.tileSize);
         sprite.setSize(this.tileSize, this.tileSize);
         sprite.draw(sb);
+
+        for (Direction dir : Direction.directions) {
+            if (tile.hasWall(dir)) {
+                Sprite wall = getSprite("wall", dir);
+                wall.setBounds(x, y, this.tileSize, this.tileSize);
+                wall.setSize(this.tileSize, this.tileSize);
+                wall.draw(sb);
+            }
+        }
     }
 
     public void drawRobot(SpriteBatch sb, IRobot robot, float x, float y) {

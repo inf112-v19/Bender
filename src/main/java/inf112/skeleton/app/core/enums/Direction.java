@@ -2,9 +2,13 @@ package inf112.skeleton.app.core.enums;
 
 import inf112.skeleton.app.core.position.Position;
 
+import java.util.ArrayList;
+
 public enum Direction {
 
     NORTH, SOUTH, EAST, WEST;
+
+    public static final Direction[] directions = {NORTH, SOUTH, EAST, WEST};
 
     public Position getNewPosition(Position position) {
         switch (this) {
