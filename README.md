@@ -18,4 +18,4 @@
 * [Server client specification](https://github.com/inf112-v19/Bender/wiki)
 
 ## Known bugs
-* Ubuntu 18.04.2 and Java 11 is a bad combination. Remeber to run the jar file with java 8.
+* *Ubuntu 18.04.2*, *LibGDX* and *Java 11* is a bad combination. Remeber to run the jar file with java 8.
