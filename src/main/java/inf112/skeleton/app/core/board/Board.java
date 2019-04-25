@@ -18,7 +18,7 @@ public class Board implements IBoard {
 
     private int width;
     private int height;
-    private int numberOfFlags;
+    private static int numberOfFlags;
 
     private ITile[][] grid;
     private HashMap<IRobot, Position> robots;
@@ -278,7 +278,7 @@ public class Board implements IBoard {
         return robots.keySet();
     }
 
-    public int getNumberOfFlags() {
+    public static int getNumberOfFlags() {
         return numberOfFlags;
     }
 }
