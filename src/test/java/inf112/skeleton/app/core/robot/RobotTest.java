@@ -18,7 +18,7 @@ public class RobotTest {
     public void takeRobotEnergyTest() {
         int energy = 1;
         robotBender.takeEnergy(energy);
-        assertEquals(robotBender.getEnergy(),7-energy);
+        assertEquals(robotBender.getEnergy(),8-energy);
     }
 
     @Test
