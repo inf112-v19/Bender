@@ -3,7 +3,6 @@ package inf112.skeleton.app.core.tiles;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.flag.IFlag;
 import inf112.skeleton.app.core.robot.IRobot;
-import inf112.skeleton.app.core.robot.Robot;
 
 public class Tile implements ITile {
 
