@@ -114,7 +114,7 @@ public class Player<cardToAdd> implements IPlayer {
             for (int k=5; k>0; k--) {
                 robot.addCard((IProgramCard) flippedList.get(k));
             }
-            
+
             // Copy cards to keep for next round
             for (int j=5; j<0; j--) {
                 LastRound.add(flippedList.get(j));
