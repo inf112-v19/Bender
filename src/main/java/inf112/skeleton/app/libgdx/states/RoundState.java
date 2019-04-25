@@ -75,6 +75,11 @@ public class RoundState extends State {
         makeDeck();
         makeCardButtons();
         makeConfirmationButtons();
+        updateServerBoard();
+    }
+
+    private void updateServerBoard() {
+        mainHandler.handleBoardUpdate(this.board);
     }
 
     /**
@@ -121,8 +126,7 @@ public class RoundState extends State {
         if (confirmed) {
             receiveServerResponse();
         }
-
-        if (serverResponse) {
+        if (mainHandler.getReceived()) {
             handleNextStage();
         }
 

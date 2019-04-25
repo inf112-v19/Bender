@@ -84,6 +84,16 @@ public class ServerDemo extends ApplicationAdapter {
         }
 
         @Override
+        public void handleServerResponse() {
+
+        }
+
+        @Override
+        public void received(boolean b) {
+
+        }
+
+        @Override
         public void handleWARNING(String message) {
 
         }

@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.google.gson.*;
 import com.sun.security.ntlm.Server;
+import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -60,7 +61,10 @@ public class ServerMain extends WebSocketServer {
                 return;
             }
             conn.send("ERROR {\"message\":\"Room was not found!\"}");
-        } else if (message.equals("GETBOARD")) {
+        } else if (messageData[0].equals("UPDATEBOARD")) {
+            System.out.println("Board updated");
+            Board board  = gson.fromJson(messageData[1], Board.class);
+            this.gameRoom.updateBoard(board);
             // TODO: generate a board and send to the client.
         } else if (messageData[0].equals("CARDS")) {
             System.out.println(conn.getRemoteSocketAddress());

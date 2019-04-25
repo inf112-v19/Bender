@@ -82,4 +82,7 @@ public class GameRoom {
         }
     }
 
+    public void updateBoard(Board board) {
+        this.board = board;
+    }
 }

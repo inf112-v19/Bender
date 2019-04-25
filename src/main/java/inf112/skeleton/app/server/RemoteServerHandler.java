@@ -111,6 +111,7 @@ public class RemoteServerHandler extends API {
     }
 
     public static class mainHandler implements IAction {
+        boolean received;
         @Override
         public void handleCards(ArrayDeque<IProgramCard> cards) {
             String test = json.toJson(cards);
@@ -147,8 +148,6 @@ public class RemoteServerHandler extends API {
 
         @Override
         public void handleBoard(IBoard board) {
-            System.out.println("hello");
-
         }
 
         @Override
@@ -158,6 +157,19 @@ public class RemoteServerHandler extends API {
 
         public void handleServerResponse() {
             client.send("RESPONSE");
+        }
+
+        @Override
+        public void received(boolean b) {
+            received = b;
+        }
+
+        public void handleBoardUpdate(Board board) {
+            client.send("UPDATEBOARD " + json.toJson(board));
+        }
+
+        public boolean getReceived() {
+            return this.received;
         }
     }
 
@@ -169,6 +181,7 @@ public class RemoteServerHandler extends API {
         public WSC(URI serverUri) {
             super(serverUri);
         }
+        public boolean received;
 
         @Override
         public void onOpen(ServerHandshake handshakedata) {
@@ -195,8 +208,8 @@ public class RemoteServerHandler extends API {
                 handler.handleROOM(json.toJsonTree(messageData[1]).getAsJsonObject().get("roomId").getAsString());
             }
             if (messageData[0].equals("SERVERRESPONSE")) {
-                System.out.println("client recevied");
-//                handler.handleRESPONSE(jsom)
+                handler.received(true);
+                System.out.println("client received");
             }
         }
 

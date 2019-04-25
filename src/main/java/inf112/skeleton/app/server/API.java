@@ -26,11 +26,12 @@ public abstract class API {
      * when #getBoard() is called, the method should call the
      * related handler when the board is retrieved.
      */
-    public IAction handler;
+    public static IAction handler;
 
     public API(IAction handler) {
         this.handler = handler;
     }
+    public boolean received;
 
     public abstract void getBoard();
     public abstract void drawCard();

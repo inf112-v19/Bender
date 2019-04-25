@@ -35,4 +35,8 @@ public interface IAction {
     void handleMoves(Queue<List<Move>> moves);
 
     void handlePlayer(IPlayer player);
+
+    void handleServerResponse();
+
+    void received(boolean b);
 }
