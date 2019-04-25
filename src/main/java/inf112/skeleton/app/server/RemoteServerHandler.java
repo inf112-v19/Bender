@@ -27,7 +27,7 @@ public class RemoteServerHandler extends API {
     }
 
     private WebSocketClient newClient() throws URISyntaxException {
-        return client = new WSC(new URI("ws://localhost:8887"));
+        return client = new WSC(new URI("ws://192.168.56.1:8887"));
     }
 
     @Override
@@ -47,7 +47,6 @@ public class RemoteServerHandler extends API {
 
     @Override
     public void getDeck() {
-
     }
 
     @Override
@@ -113,21 +112,8 @@ public class RemoteServerHandler extends API {
         public HashMap<Player, ArrayDeque<IProgramCard>> playerCardMap;
         @Override
         public void handleCards(ArrayDeque<IProgramCard> cards) {
-            String test = json.toJson(cards);
-            client.send("CARDS "  + test);
-        }
-
-        @Override
-        public void handleMoves(Queue<List<Move>> moves) {
-            String test = json.toJson(moves);
-            client.send(test);
-        }
-
-        @Override
-        public void handlePlayer(IPlayer player) {
-            String test = json.toJson(player);
-            client.send(test);
-
+            String cardsAsString = json.toJson(cards);
+            client.send("CARDS "  + cardsAsString);
         }
 
         @Override

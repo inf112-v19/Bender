@@ -37,6 +37,7 @@ public class ServerMain extends WebSocketServer {
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         System.out.println("closed " + conn.getRemoteSocketAddress() + " with exit code " + code + " additional info: " + reason);
+
 //        userRoomPairs.remove(conn);
     }
 
@@ -112,10 +113,7 @@ public class ServerMain extends WebSocketServer {
 
         return new GameRoom("SingleRoom");
     }
-
-//    public HashMap<WebSocket, GameRoom> getUserRoomPairs() {
-//        return userRoomPairs;
-//    }
+    
 
     @Override
     public void onMessage(WebSocket conn, ByteBuffer message) {
@@ -135,7 +133,7 @@ public class ServerMain extends WebSocketServer {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        String host = "0.0.0.0";
+        String host = "192.168.56.1";
         int port = 8887;
 
         WebSocketServer server = new ServerMain(new InetSocketAddress(host, port));

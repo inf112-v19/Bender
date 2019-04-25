@@ -33,10 +33,6 @@ public interface IAction {
 
     void handleBoard(IBoard board);
 
-    void handleMoves(Queue<List<Move>> moves);
-
-    void handlePlayer(IPlayer player);
-
     void handleServerResponse();
 
     void received(boolean b);
