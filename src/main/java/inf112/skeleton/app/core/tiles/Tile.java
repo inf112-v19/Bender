@@ -7,8 +7,8 @@ import inf112.skeleton.app.core.robot.Robot;
 
 public class Tile implements ITile {
 
-    private IRobot robot;
-    private IFlag flag;
+    protected IRobot robot;
+    protected IFlag flag;
     protected boolean[] walls = new boolean[4];
 
     public Tile() {
@@ -24,12 +24,6 @@ public class Tile implements ITile {
             this.walls = walls;
         else
             throw new IllegalArgumentException("Wall array must be of length 4");
-    }
-
-    public Tile copy() {
-        IRobot robot = this.robot == null ? null : this.robot.copy();
-        IFlag flag = this.flag == null ? null : this.flag.copy();
-        return new Tile(robot, flag, walls);
     }
 
     public boolean hasRobot() {
@@ -78,5 +72,11 @@ public class Tile implements ITile {
 
     public boolean canEnter(Direction dir) {
         return !this.hasWall(dir);
+    }
+
+    public Tile copy() {
+        IRobot robot = this.robot == null ? null : this.robot.copy();
+        IFlag flag = this.flag == null ? null : this.flag.copy();
+        return new Tile(robot, flag, walls);
     }
 }
