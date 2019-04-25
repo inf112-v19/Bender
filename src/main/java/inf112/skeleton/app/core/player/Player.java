@@ -116,6 +116,7 @@ public class Player<cardToAdd> implements IPlayer {
             }
 
             // Copy cards to keep for next round
+            LastRound.clear();
             for (int j=5; j<0; j--) {
                 LastRound.add(flippedList.get(j));
             }
