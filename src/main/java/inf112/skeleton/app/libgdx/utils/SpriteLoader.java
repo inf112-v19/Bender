@@ -114,21 +114,23 @@ public class SpriteLoader {
 
     private Sprite getSprite(String name, Direction dir) {
         Sprite sprite = sprites.get(name);
+        sprite.setOrigin(tileSize / 2, tileSize / 2);
+        sprite.setRotation(0);
         switch (dir) {
             case NORTH:
-                sprite.setRotation(0);
+                sprite.rotate(0);
                 break;
 
             case EAST:
-                sprite.setRotation(90);
+                sprite.rotate(90);
                 break;
 
             case SOUTH:
-                sprite.setRotation(180);
+                sprite.rotate(180);
                 break;
 
             case WEST:
-                sprite.setRotation(270);
+                sprite.rotate(270);
                 break;
 
             default:

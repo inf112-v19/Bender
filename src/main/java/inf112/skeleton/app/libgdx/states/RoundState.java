@@ -38,7 +38,6 @@ public class RoundState extends State {
     private Stage stage;
     private BitmapFont font;
     private boolean confirmed;
-    private Texture tileTexture;
     private Texture cardBackground;
     private ArrayDeque<IProgramCard> chosenCards;
     private GlyphLayout[] visualCardSequencing;
@@ -87,7 +86,6 @@ public class RoundState extends State {
         createVisualCardSequencing();
         // TODO : move Gdx.files.internal to SpriteLoader
         cardBackground = new Texture(Gdx.files.internal("cards/Card_background1.png"));
-        tileTexture = new Texture(Gdx.files.internal("tiles/empty_tile.png"));
         boardBackground = new Texture(Gdx.files.internal("boards/board_background_round.png"));
 
     }
@@ -262,6 +260,5 @@ public class RoundState extends State {
         confirm.getTexture().dispose();
         reset.getTexture().dispose();
         cardBackground.dispose();
-        tileTexture.dispose();
     }
 }
