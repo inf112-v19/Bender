@@ -30,6 +30,7 @@ public class Lazer {
                 if (!(board.getRobot(checkPosition)==null)) {
                     // Robot has been found, damage and return position
                     board.getRobot(checkPosition).takeEnergy(1);
+                    break;
                 }
                 else if (tile.hasWall(Direction.SOUTH)||tile.hasWall(Direction.NORTH)) {
                         break;
@@ -58,6 +59,7 @@ public class Lazer {
                     if (!(board.getRobot(checkPosition)==null)) {
                         // Robot has been found, damage and return position
                         board.getRobot(checkPosition).takeEnergy(1);
+                        break;
                     }
                     else if (tile.hasWall(Direction.EAST)||tile.hasWall(Direction.WEST)) {
                         break;
@@ -71,6 +73,7 @@ public class Lazer {
                     if (!(board.getRobot(checkPosition)==null)) {
                         // Robot has been found, damage and return position
                         board.getRobot(checkPosition).takeEnergy(1);
+                        break;
                     }
                     else if (tile.hasWall(Direction.EAST)||tile.hasWall(Direction.WEST)) {
                         break;
