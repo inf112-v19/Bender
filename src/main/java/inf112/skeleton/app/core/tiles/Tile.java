@@ -8,7 +8,7 @@ public class Tile implements ITile {
 
     private IRobot robot;
     private IFlag flag;
-    private boolean[] walls = new boolean[4];
+    protected boolean[] walls = new boolean[4];
 
     public Tile() {
         this.robot = null;
@@ -32,10 +32,6 @@ public class Tile implements ITile {
         return newTile;
     }
 
-    public void setFlag(IFlag flag) {
-        this.flag = flag;
-    }
-
     public boolean hasRobot() {
         return robot != null;
     }
@@ -48,6 +44,10 @@ public class Tile implements ITile {
         this.robot = robot;
     }
 
+    public void setFlag(IFlag flag) {
+        this.flag = flag;
+    }
+
     public boolean hasFlag() {
         return !(this.flag == null);
     }
@@ -57,22 +57,26 @@ public class Tile implements ITile {
         return null;
     }
 
-    public boolean canEnter(Direction dir) {
+    public boolean hasWall(Direction dir) {
         switch (dir) {
             case NORTH:
-                return !this.walls[0];
+                return this.walls[0];
 
             case EAST:
-                return !this.walls[1];
+                return this.walls[1];
 
             case SOUTH:
-                return !this.walls[2];
+                return this.walls[2];
 
             case WEST:
-                return !this.walls[3];
+                return this.walls[3];
 
             default:
                 return false;
         }
+    }
+
+    public boolean canEnter(Direction dir) {
+        return !this.hasWall(dir);
     }
 }

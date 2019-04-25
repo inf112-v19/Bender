@@ -8,4 +8,9 @@ public class TileAssemblyLineSplit extends TileAssemblyLine {
     public TileAssemblyLineSplit(IRobot robot, Flag flag, boolean[] walls, boolean isExpress, Direction dir) {
         super(robot, flag, walls, isExpress, dir);
     }
+
+    @Override
+    public TileAssemblyLineSplit copy() {
+        return new TileAssemblyLineSplit(this.getRobot(), (Flag) this.getFlag(), super.walls, this.getExpress(), this.getDirection());
+    }
 }

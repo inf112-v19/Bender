@@ -13,4 +13,9 @@ public class TileGear extends Tile {
     }
 
     public DirectionChange getAngle() { return this.angle; }
+
+    @Override
+    public TileGear copy() {
+        return new TileGear(this.getRobot(), (Flag) this.getFlag(), super.walls, this.getAngle());
+    }
 }

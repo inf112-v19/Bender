@@ -21,4 +21,9 @@ public class TileAssemblyLine extends Tile {
 
     public Direction getDirection() { return this.lineDir; }
     public void setDirection(Direction dir) { this.lineDir = dir; }
+
+    @Override
+    public TileAssemblyLine copy() {
+        return new TileAssemblyLine(this.getRobot(), (Flag) this.getFlag(), super.walls, this.getExpress(), this.getDirection());
+    }
 }

@@ -15,4 +15,9 @@ public class TileAssemblyLineTurn extends TileAssemblyLine {
 
     public DirectionChange getTurnDir() { return this.turnDir; }
     public void setTurnDir(DirectionChange turnDir) { this.turnDir = turnDir; }
+
+    @Override
+    public TileAssemblyLineTurn copy() {
+        return new TileAssemblyLineTurn(this.getRobot(), (Flag) this.getFlag(), super.walls, this.getExpress(), this.getDirection(), this.getTurnDir());
+    }
 }
