@@ -9,13 +9,16 @@ import inf112.skeleton.app.core.enums.Direction;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.List;
 
 public class Robot implements IRobot, Comparable<IRobot> {
 
-    private int robotEnergy = 100;
+    private int robotEnergy = 8;
     private Direction robotDirection;
     private ArrayList<IProgramCard> cards = new ArrayList<>();
+
     private UUID id;
+    private int robotLife = 3;
 
     public Robot(Direction robotDirection) {
         this.robotDirection = robotDirection;
@@ -58,6 +61,22 @@ public class Robot implements IRobot, Comparable<IRobot> {
         return robotEnergy;
     }
 
+    public int getLife() {
+        return robotLife;
+    }
+
+
+    public void takeLife() {
+        robotLife--;
+    }
+
+    public boolean isAlive() {
+        if ((robotLife==0)||(robotEnergy==0)) {
+            return false;
+        }
+        else return true;
+    }
+
     @Override
     public void shootLazer() {
         // TODO: implement
@@ -85,6 +104,12 @@ public class Robot implements IRobot, Comparable<IRobot> {
     // OUTPUTS the whole array of cards
     public ArrayList getCardArray() {
         return this.cards;
+    }
+
+    // SEND cards of one round to robot
+    public boolean programRobot(List cardsToRobot) {
+
+        return true;
     }
 
     @Override
