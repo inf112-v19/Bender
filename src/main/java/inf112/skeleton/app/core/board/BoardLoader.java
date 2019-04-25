@@ -96,9 +96,8 @@ public class BoardLoader {
      */
     public static Flag getFlag(String st) {
         int ord = Integer.parseInt(st);
-        if(ord != 0) {
+        if(ord != 0)
             return new Flag(ord);
-        }
         return null;
     }
 }
