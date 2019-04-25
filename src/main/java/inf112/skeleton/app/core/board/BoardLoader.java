@@ -9,17 +9,6 @@ import java.io.*;
 
 public class BoardLoader {
 
-    public static void main(String[] args) {
-        BoardLoader bl = new BoardLoader();
-        File fl = new File("src/main/java/inf112/skeleton/app/core/board/VaultBoard_Corr_25apr.csv");
-
-        try {
-            ITile[][] board = bl.loadBoard(fl);
-        } catch(IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     /**
      * Creates an ITile based on a text file on the CSV format:
      * https://docs.google.com/spreadsheets/d/16Zcec6W2YBtkaVKUAjNydJ6Xspv5uP9LYe6uhFLXc_c/
