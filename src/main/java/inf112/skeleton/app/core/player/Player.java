@@ -128,14 +128,14 @@ public class Player<cardToAdd> implements IPlayer {
             return ++nextFlag;
         }
 
-  //      public boolean HasWon() {
-    //          if (nextFlag > Board.getNumberOfFlags()) {
-    //              return true;
-    //         }
-    //        else {
-    //            return false;
-    //        }
-    //    }
+        public boolean HasWon() {
+              if (nextFlag > Board.getNumberOfFlags()) {
+                  return true;
+             }
+            else {
+                return false;
+            }
+        }
 
 
         // Keep previous cards until new cards is loaded into robot
