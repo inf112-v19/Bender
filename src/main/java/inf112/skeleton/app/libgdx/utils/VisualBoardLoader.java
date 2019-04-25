@@ -5,10 +5,9 @@ import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.board.events.MoveEvent;
-import inf112.skeleton.app.core.position.Position;
+import inf112.skeleton.app.core.board.Position;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.Tile;
-import inf112.skeleton.app.libgdx.Move;
 import inf112.skeleton.app.libgdx.RoboRally;
 
 import java.util.HashSet;

@@ -1,8 +1,6 @@
 package inf112.skeleton.app.core.enums;
 
-import inf112.skeleton.app.core.position.Position;
-
-import java.util.ArrayList;
+import inf112.skeleton.app.core.board.Position;
 
 public enum Direction {
 

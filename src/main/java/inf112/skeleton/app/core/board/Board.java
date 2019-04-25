@@ -7,7 +7,6 @@ import inf112.skeleton.app.core.board.events.RotateEvent;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.RotateCard;
 import inf112.skeleton.app.core.enums.DirectionChange;
-import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
@@ -50,8 +49,6 @@ public class Board implements IBoard {
             this.width = 10;
             this.robots = new HashMap<>();
             try {
-                System.out.println("Working Directory = " +
-                        System.getProperty("user.dir"));
                 this.grid = BoardLoader.loadBoard(new File("src/main/resources/boards/VaultBoard_Corr_25apr.csv"));
             } catch (Exception e) {
                 e.printStackTrace();

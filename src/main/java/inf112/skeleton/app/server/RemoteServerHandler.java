@@ -5,7 +5,6 @@ import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.IPlayer;
-import inf112.skeleton.app.libgdx.Move;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -13,7 +12,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.List;
-import java.util.Queue;
 import java.util.Scanner;
 
 public class RemoteServerHandler extends API {
@@ -108,11 +106,6 @@ public class RemoteServerHandler extends API {
     public static class mainHandler implements IAction {
         @Override
         public void handleCards(List<IProgramCard> cards) {
-
-        }
-
-        @Override
-        public void handleMoves(Queue<List<Move>> moves) {
 
         }
 

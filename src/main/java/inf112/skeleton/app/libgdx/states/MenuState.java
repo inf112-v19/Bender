@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.player.Player;
-import inf112.skeleton.app.core.position.Position;
+import inf112.skeleton.app.core.board.Position;
 import inf112.skeleton.app.libgdx.RoboRally;
 
 public class MenuState extends State {
