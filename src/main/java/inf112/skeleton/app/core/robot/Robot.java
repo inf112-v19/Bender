@@ -87,7 +87,6 @@ public class Robot implements IRobot, Comparable<IRobot> {
 
     @Override
     public int compareTo(IRobot that) {
-        if (this.id == that.getId()) return 0; // they are the same robot
         int energyDiff = this.getEnergy() - that.getEnergy();
 
         int dirDiff = this.getDirection().ordinal() - that.getDirection().ordinal();
