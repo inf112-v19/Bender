@@ -124,10 +124,12 @@ public class Player<cardToAdd> implements IPlayer {
             return true;
         }
 
+        // gives next flag then user has found a flag
         public int foundFlag() {
             return ++nextFlag;
         }
 
+        // Checks if user has visited the last flag
         public boolean HasWon() {
               if (nextFlag > Board.getNumberOfFlags()) {
                   return true;
@@ -136,14 +138,5 @@ public class Player<cardToAdd> implements IPlayer {
                 return false;
             }
         }
-
-
-        // Keep previous cards until new cards is loaded into robot
-        // To be able to set cards that is "burnt" into memory
-        // caused by damage, for energy levels 4,3,2,1
-        // the higher slots get stuck first (5,4,3,2,1)
-        // Need to copy from previous round, into current round,
-        // all cards to be "stuck" in memory
-        // and to see where new cards is put in the array when using addCard()
 
     }
