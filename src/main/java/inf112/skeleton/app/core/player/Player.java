@@ -17,8 +17,9 @@ public class Player<cardToAdd> implements IPlayer {
     private Integer playerNo;
     private List Cards;
     private List cardsToRemove;
-    private ProgramCard cardToAdd;
+    private IProgramCard cardToAdd;
     private Board PlayerBoard;
+    private int nextFlag;
 
     // Constructor for player, starting with robot heading NORTH
     public Player(String username) {
@@ -31,7 +32,7 @@ public class Player<cardToAdd> implements IPlayer {
     }
 
     // Add card to players list
-    public void addCard(ProgramCard cardToAdd) {
+    public void addCard(IProgramCard cardToAdd) {
         Cards.add(cardToAdd);
     }
 
@@ -49,7 +50,7 @@ public class Player<cardToAdd> implements IPlayer {
     }
 
     // Give card to robot of current player
-    public void giveCardToRobot(ProgramCard card) {
+    public void giveCardToRobot(IProgramCard card) {
         robot.addCard(card);
     }
 
@@ -120,9 +121,21 @@ public class Player<cardToAdd> implements IPlayer {
             for (int j=5; j<0; j--) {
                 LastRound.add(flippedList.get(j));
             }
-
             return true;
         }
+
+        public int foundFlag() {
+            return ++nextFlag;
+        }
+
+  //      public boolean HasWon() {
+    //          if (nextFlag > Board.getNumberOfFlags()) {
+    //              return true;
+    //         }
+    //        else {
+    //            return false;
+    //        }
+    //    }
 
 
         // Keep previous cards until new cards is loaded into robot
