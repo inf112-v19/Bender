@@ -14,6 +14,7 @@ import inf112.skeleton.app.server.API;
 import inf112.skeleton.app.server.RemoteServerHandler;
 
 import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 
@@ -90,6 +91,11 @@ public class ServerDemo extends ApplicationAdapter {
 
         @Override
         public void received(boolean b) {
+
+        }
+
+        @Override
+        public void updateCards(HashMap hashMap) {
 
         }
 

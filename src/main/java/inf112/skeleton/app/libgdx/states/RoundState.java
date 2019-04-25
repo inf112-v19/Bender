@@ -127,7 +127,9 @@ public class RoundState extends State {
             receiveServerResponse();
         }
         if (mainHandler.getReceived()) {
+            System.out.println("cards " + mainHandler.playerCardMap);
             handleNextStage();
+            mainHandler.received(false);
         }
 
     }

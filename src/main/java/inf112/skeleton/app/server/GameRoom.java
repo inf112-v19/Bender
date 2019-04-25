@@ -20,6 +20,7 @@ public class GameRoom {
     private static HashMap<WebSocket, ArrayDeque<IProgramCard>> collectiveCards;
 
     private Gson json = new Gson();
+    private int totalConnections;
 
     public GameRoom(String roomId) {
         collectiveCards = new HashMap<>();
@@ -76,7 +77,7 @@ public class GameRoom {
         collectiveCards.put(web, cards);
         System.out.println("collective cards keyset size: " + collectiveCards.keySet().size());
         System.out.println("total connections : " + connections.values().size());
-        if (collectiveCards.keySet().size() == connections.values().size()) {
+        if (collectiveCards.keySet().size() == totalConnections) {
             System.out.println("this works");
             selectionDone = true;
         }
@@ -84,5 +85,16 @@ public class GameRoom {
 
     public void updateBoard(Board board) {
         this.board = board;
+    }
+    public void clearCards() {
+        collectiveCards.clear();
+        connections.clear();
+    }
+    public void setTotalConnections(int n) {
+        totalConnections = n;
+    }
+
+    public void setStatus(boolean b) {
+        this.selectionDone = false;
     }
 }

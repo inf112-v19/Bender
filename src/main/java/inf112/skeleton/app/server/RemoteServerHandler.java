@@ -5,6 +5,7 @@ import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.IPlayer;
+import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.libgdx.Move;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -12,10 +13,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
-import java.util.ArrayDeque;
-import java.util.List;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 public class RemoteServerHandler extends API {
 
@@ -112,6 +110,7 @@ public class RemoteServerHandler extends API {
 
     public static class mainHandler implements IAction {
         boolean received;
+        public HashMap<Player, ArrayDeque<IProgramCard>> playerCardMap;
         @Override
         public void handleCards(ArrayDeque<IProgramCard> cards) {
             String test = json.toJson(cards);
@@ -167,6 +166,10 @@ public class RemoteServerHandler extends API {
         public void handleBoardUpdate(Board board) {
             client.send("UPDATEBOARD " + json.toJson(board));
         }
+        @Override
+        public void updateCards(HashMap hashMap) {
+            this.playerCardMap = hashMap;
+        }
 
         public boolean getReceived() {
             return this.received;
@@ -209,7 +212,9 @@ public class RemoteServerHandler extends API {
             }
             if (messageData[0].equals("SERVERRESPONSE")) {
                 handler.received(true);
+                handler.updateCards(json.fromJson(messageData[1], HashMap.class));
                 System.out.println("client received");
+                client.send("CLEAR");
             }
         }
 

@@ -6,6 +6,7 @@ import inf112.skeleton.app.core.player.IPlayer;
 import inf112.skeleton.app.libgdx.Move;
 
 import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 
@@ -39,4 +40,6 @@ public interface IAction {
     void handleServerResponse();
 
     void received(boolean b);
+
+    void updateCards(HashMap hashMap);
 }

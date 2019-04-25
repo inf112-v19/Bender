@@ -19,7 +19,7 @@ public class ServerMain extends WebSocketServer {
     private Gson gson = new Gson();
 
     //    private HashMap<WebSocket, GameRoom> userRoomPairs = new HashMap<>();
-    private List<WebSocket> webSocket;
+    private ArrayList<WebSocket> webSocket = new ArrayList<>();
     private GameRoom gameRoom = new GameRoom("SingleRoom");
 
     public ServerMain(InetSocketAddress address) {
@@ -31,6 +31,7 @@ public class ServerMain extends WebSocketServer {
         // conn.send("Welcome to the server!"); //This method sends a message to the new client
         // broadcast( "new connection: " + handshake.getResourceDescriptor() ); //This method sends a message to all clients connected
         System.out.println("new connection to " + conn.getRemoteSocketAddress());
+        webSocket.add(conn);
     }
 
     @Override
@@ -63,10 +64,14 @@ public class ServerMain extends WebSocketServer {
             conn.send("ERROR {\"message\":\"Room was not found!\"}");
         } else if (messageData[0].equals("UPDATEBOARD")) {
             System.out.println("Board updated");
-            Board board  = gson.fromJson(messageData[1], Board.class);
-            this.gameRoom.updateBoard(board);
-            // TODO: generate a board and send to the client.
+            Board board = gson.fromJson(messageData[1], Board.class);
+            try {
+                this.gameRoom.updateBoard(board);
+            }catch (RuntimeException e) {
+                System.out.println("wow");
+            }
         } else if (messageData[0].equals("CARDS")) {
+            gameRoom.setTotalConnections(webSocket.size());
             System.out.println(conn.getRemoteSocketAddress());
             System.out.println("received cards");
             System.out.println("message :" + message);
@@ -76,22 +81,28 @@ public class ServerMain extends WebSocketServer {
             System.out.println("game room: " + gameRoom.getRoomId());
             try {
                 addCards(conn, chosenCards);
-            } catch (IllegalStateException ee ) {
+            } catch (IllegalStateException ee) {
                 System.out.println("wow");
             }
         } else if (message.equals("RESPONSE")) {
             System.out.println(gameRoom.getStatus());
+            System.out.println(webSocket.size());
             if (gameRoom.getStatus()) {
                 System.out.println("status passed");
                 String data = gson.toJson(gameRoom.getResponseMap());
                 System.out.println("seding " + data);
                 this.broadcast("SERVERRESPONSE " + data);
+                gameRoom.setStatus(false);
             }
 
-        }else{
+        } else if (message.equals("CLEAR")) {
+            gameRoom.clearCards();
+
+        } else {
             conn.send("ERROR {\"message\":\"This command has not yet been implemented\"}");
         }
     }
+
     public void addCards(WebSocket conn, ArrayDeque<IProgramCard> chosenCards) {
         gameRoom.addChosenCards(conn, chosenCards);
     }
