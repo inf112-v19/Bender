@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
+import inf112.skeleton.app.core.cards.ProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
@@ -123,7 +124,7 @@ public class RoundState extends State {
             moveList.add(move2);
             moves.add(moveList);
             for (int i = 0; i < numberOfCards; i++)
-                player.giveCardToRobot(chosenCards.removeLast());
+                player.giveCardToRobot((ProgramCard) (chosenCards.removeLast()));
             gsm.push(new PhaseState(gsm, board, moves));
         }
     }
