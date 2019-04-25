@@ -4,7 +4,9 @@ import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.board.events.LaserEvent;
 import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.robot.Robot;
+import inf112.skeleton.app.core.tiles.Tile;
 
 public class Lazer {
 
@@ -12,13 +14,22 @@ public class Lazer {
         LaserEvent lazerShoot;
         // Can position be found from Robot or board?
         Direction dir = robot.getDirection();
-        int PosX = board.getRobotPosition(robot).getX();
-        int PosY = board.getRobotPosition(robot).getY();
+        Position startPosition = board.getRobotPosition(robot);
+        int PosX = startPosition.getX();
+        int PosY = startPosition.getY();
         // Go from position in direction of dir
         switch (dir){
             // NORTH = y-- until 0
             case NORTH:
             for (int i=PosY; i>=0; i-- ){
+                Position checkPosition = new Position(PosX, i);
+                if (!(board.getRobot(checkPosition)==null)) {
+                    // Robot has been found, damage and return position
+                }
+                else if (true) {
+                    // Find a wall, and return
+                    if (Tile.hasWall board.getTile(checkPosition))
+                }
 
             }
             // SOUTH = y++ until 11
