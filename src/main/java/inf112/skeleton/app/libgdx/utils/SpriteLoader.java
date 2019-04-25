@@ -63,17 +63,22 @@ public class SpriteLoader {
         Sprite fastAssemblyTurnLeft = new Sprite(new TextureRegion(tiles, 1 * tileSize, 2 * tileSize, tileSize, tileSize));
         Sprite fastAssemblyTurnRight = new Sprite(new TextureRegion(tiles, 2 * tileSize, 2 * tileSize, tileSize, tileSize));
 
-        //Sprite assemblyFromRight = new Sprite(new TextureRegion(tiles, 0 * tileSize, 8 * tileSize, tileSize, tileSize)); // rotate
-        //Sprite assemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 7 * tileSize, tileSize, tileSize)); // rotate
+        //Sprite assemblyFromRight = new Sprite(new TextureRegion(tiles, 0 * tileSize, 8 * tileSize, tileSize, tileSize));
+        //Sprite assemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 7 * tileSize, tileSize, tileSize));
         Sprite assemblyMerge = new Sprite(new TextureRegion(tiles, 4 * tileSize, 8 * tileSize, tileSize, tileSize));
 
-        //Sprite fastAssemblyFromRight = new Sprite(new TextureRegion(tiles, 4 * tileSize, 9 * tileSize, tileSize, tileSize)); // rotate
-        //Sprite fastAssemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 9 * tileSize, tileSize, tileSize)); // rotate
+        //Sprite fastAssemblyFromRight = new Sprite(new TextureRegion(tiles, 4 * tileSize, 9 * tileSize, tileSize, tileSize));
+        //Sprite fastAssemblyFromLeft = new Sprite(new TextureRegion(tiles, 0 * tileSize, 9 * tileSize, tileSize, tileSize));
         Sprite fastAssemblyMerge = new Sprite(new TextureRegion(tiles, 3 * tileSize, 10 * tileSize, tileSize, tileSize));
 
         Sprite rotateLeft = new Sprite(new TextureRegion(tiles, 4 * tileSize, 6 * tileSize, tileSize, tileSize));
         Sprite rotateRight = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0 * tileSize, tileSize, tileSize));
-        Sprite wall = new Sprite(new TextureRegion(tiles, 6 * tileSize, 3 * tileSize, tileSize, tileSize)); // rotate
+        Sprite wall = new Sprite(new TextureRegion(tiles, 6 * tileSize, 3 * tileSize, tileSize, tileSize));
+
+        Sprite flag1 = new Sprite(new TextureRegion(tiles, 6 * tileSize, 5 * tileSize, tileSize, tileSize));
+        Sprite flag2 = new Sprite(new TextureRegion(tiles, 7 * tileSize, 5 * tileSize, tileSize, tileSize));
+        Sprite flag3 = new Sprite(new TextureRegion(tiles, 8 * tileSize, 5 * tileSize, tileSize, tileSize));
+        Sprite flag4 = new Sprite(new TextureRegion(tiles, 9 * tileSize, 5 * tileSize, tileSize, tileSize));
 
         sprites.put("empty", empty);
         sprites.put("blackHole", blackHole);
@@ -97,6 +102,11 @@ public class SpriteLoader {
         sprites.put("rotateLeft", rotateLeft);
         sprites.put("rotateRight", rotateRight);
         sprites.put("wall", wall);
+
+        sprites.put("flag1", flag1);
+        sprites.put("flag2", flag2);
+        sprites.put("flag3", flag3);
+        sprites.put("flag4", flag4);
 
         Sprite robot = new Sprite(new Texture(Gdx.files.internal("tiles/robot.png")));
         sprites.put("robot", robot);
@@ -152,6 +162,13 @@ public class SpriteLoader {
                 wall.setSize(this.tileSize, this.tileSize);
                 wall.draw(sb);
             }
+        }
+
+        if(tile.hasFlag()) {
+            Sprite flag = getSprite("flag" + tile.getFlag().getOrdinal());
+            flag.setBounds(x, y, this.tileSize, this.tileSize);
+            flag.setSize(this.tileSize, this.tileSize);
+            flag.draw(sb);
         }
     }
 
