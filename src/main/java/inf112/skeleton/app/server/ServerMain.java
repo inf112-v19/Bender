@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.util.*;
 
 import com.google.gson.*;
+import com.sun.security.ntlm.Server;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -14,11 +15,11 @@ import org.java_websocket.server.WebSocketServer;
 public class ServerMain extends WebSocketServer {
     private JsonParser json = new JsonParser();
     private Random r = new Random();
-    private Gson gson;
+    private Gson gson = new Gson();
 
     //    private HashMap<WebSocket, GameRoom> userRoomPairs = new HashMap<>();
     private List<WebSocket> webSocket;
-    private GameRoom gameRoom;
+    private GameRoom gameRoom = new GameRoom("SingleRoom");
 
     public ServerMain(InetSocketAddress address) {
         super(address);
@@ -62,13 +63,35 @@ public class ServerMain extends WebSocketServer {
         } else if (message.equals("GETBOARD")) {
             // TODO: generate a board and send to the client.
         } else if (messageData[0].equals("CARDS")) {
+            System.out.println(conn.getRemoteSocketAddress());
+            System.out.println("received cards");
+            System.out.println("message :" + message);
             JsonElement data = json.parse(messageData[1]);
             ArrayDeque<IProgramCard> chosenCards = gson.fromJson(data, ArrayDeque.class);
-            GameRoom.addChosenCards(conn, chosenCards);
-        } else {
+            System.out.println("chosen cards: " + chosenCards);
+            System.out.println("game room: " + gameRoom.getRoomId());
+            try {
+                addCards(conn, chosenCards);
+            } catch (IllegalStateException ee ) {
+                System.out.println("wow");
+            }
+        } else if (message.equals("RESPONSE")) {
+            System.out.println(gameRoom.getStatus());
+            if (gameRoom.getStatus()) {
+                System.out.println("status passed");
+                String data = gson.toJson(gameRoom.getResponseMap());
+                System.out.println("seding " + data);
+                this.broadcast("SERVERRESPONSE " + data);
+            }
+
+        }else{
             conn.send("ERROR {\"message\":\"This command has not yet been implemented\"}");
         }
     }
+    public void addCards(WebSocket conn, ArrayDeque<IProgramCard> chosenCards) {
+        gameRoom.addChosenCards(conn, chosenCards);
+    }
+
 
     private GameRoom createRoom() {
 
@@ -89,6 +112,7 @@ public class ServerMain extends WebSocketServer {
         System.err.println("an error occurred:" + ex);
         // TODO: Figure out and handle errors
     }
+
 
     @Override
     public void onStart() {

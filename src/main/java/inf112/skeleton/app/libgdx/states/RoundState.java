@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.TimeUtils;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
-import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.robot.Robot;
 import inf112.skeleton.app.libgdx.*;
 import inf112.skeleton.app.libgdx.utils.CardTextureGenerator;
@@ -20,11 +20,8 @@ import inf112.skeleton.app.server.RemoteServerHandler;
 
 
 import java.net.URISyntaxException;
-import java.rmi.server.RemoteServer;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
 
 public class RoundState extends State {
 
@@ -121,8 +118,25 @@ public class RoundState extends State {
 
     @Override
     public void handleInput() {
-        handleNextStage();
+        if (confirmed) {
+            receiveServerResponse();
+        }
+
+        if (serverResponse) {
+            handleNextStage();
+        }
+
     }
+
+    //sends a request to server every n seconds asking whether players have selected their cards
+    private void receiveServerResponse() {
+        mainHandler.handleServerResponse();
+    }
+
+    private void sendToServer() {
+        mainHandler.handleCards(chosenCards);
+    }
+
 
     // Handles criteria necessary for proceeding to the next stage
     public void handleNextStage() {
@@ -149,9 +163,9 @@ public class RoundState extends State {
         }
     }
 
-        ///Draws numbers 1-5 to the position of chosen card
-        //TODO adjusting for duplicates
-        //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
+    ///Draws numbers 1-5 to the position of chosen card
+    //TODO adjusting for duplicates
+    //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
 
     public void handleVisualSelection() {
         if (chosenCards.size() > 0 && chosenCards.size() <= numberOfCards)
@@ -187,8 +201,10 @@ public class RoundState extends State {
         confirm.getButton().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (chosenCards.size() == numberOfCards)
+                if (chosenCards.size() == numberOfCards) {
+                    sendToServer();
                     confirmed = true;
+                }
                 return true;
             }
         });
@@ -206,10 +222,6 @@ public class RoundState extends State {
 
         stage.addActor(confirm.getButton());
         stage.addActor(reset.getButton());
-    }
-
-    private void sendToServer() {
-        mainHandler.handleCards(chosenCards);
     }
 
 

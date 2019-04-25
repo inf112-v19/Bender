@@ -25,6 +25,7 @@ public class RemoteServerHandler extends API {
     public RemoteServerHandler(IAction handler) throws URISyntaxException {
         super(handler);
         newClient();
+        connectClient();
     }
 
     private WebSocketClient newClient() throws URISyntaxException {
@@ -63,6 +64,9 @@ public class RemoteServerHandler extends API {
 
     public WebSocketClient getClient() {
         return client;
+    }
+    public void connectClient() {
+        client.connect();
     }
 
     public static void main(String[] args) throws URISyntaxException, InterruptedException {
@@ -143,12 +147,17 @@ public class RemoteServerHandler extends API {
 
         @Override
         public void handleBoard(IBoard board) {
+            System.out.println("hello");
 
         }
 
         @Override
         public void handleROOM(String roomId) {
             System.out.println("ROOM: "+roomId);
+        }
+
+        public void handleServerResponse() {
+            client.send("RESPONSE");
         }
     }
 
@@ -184,6 +193,10 @@ public class RemoteServerHandler extends API {
             }
             if (messageData[0].equals("ROOM")) {
                 handler.handleROOM(json.toJsonTree(messageData[1]).getAsJsonObject().get("roomId").getAsString());
+            }
+            if (messageData[0].equals("SERVERRESPONSE")) {
+                System.out.println("client recevied");
+//                handler.handleRESPONSE(jsom)
             }
         }
 
