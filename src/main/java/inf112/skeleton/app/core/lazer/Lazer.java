@@ -1,10 +1,9 @@
-package inf112.skeleton.app.core.Lazer;
+package inf112.skeleton.app.core.lazer;
 
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.board.events.LaserEvent;
 import inf112.skeleton.app.core.enums.Direction;
-import inf112.skeleton.app.core.position.Position;
 import inf112.skeleton.app.core.robot.Robot;
 
 public class Lazer {
