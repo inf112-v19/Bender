@@ -9,10 +9,9 @@ import java.io.*;
 
 public class BoardLoader {
 
-    /*
     public static void main(String[] args) {
         BoardLoader bl = new BoardLoader();
-        File fl = new File("NewBoard5april.csv");
+        File fl = new File("VaultBoard9april.csv");
 
         try {
             ITile[][] board = bl.loadBoard(fl);
@@ -20,7 +19,6 @@ public class BoardLoader {
             System.out.println(e.getMessage());
         }
     }
-    */
 
     /**
      * Creates an ITile based on a text file on the CSV format:
