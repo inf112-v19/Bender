@@ -13,4 +13,8 @@ public class Flag implements IFlag {
     public int compareTo(IFlag that) {
         return this.getOrdinal() - that.getOrdinal();
     }
+
+    public Flag copy() {
+        return new Flag(this.ordinal);
+    }
 }

@@ -18,5 +18,9 @@ public class MoveCard extends ProgramCard {
     public boolean movesBackwards() {
         return this.movesBackwards;
     }
+
+    public MoveCard copy() {
+        return new MoveCard(this.priority(), movesBackwards, amount);
+    }
 }
 

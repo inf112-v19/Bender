@@ -6,18 +6,20 @@ import inf112.skeleton.app.core.board.events.RemoveRobotEvent;
 import inf112.skeleton.app.core.board.events.RotateEvent;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.RotateCard;
-import inf112.skeleton.app.core.position.Position;
+import inf112.skeleton.app.core.enums.DirectionChange;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.*;
 
+import java.io.File;
 import java.util.*;
 
 public class Board implements IBoard {
 
     private int width;
     private int height;
+    private static int numberOfFlags;
 
     private ITile[][] grid;
     private HashMap<IRobot, Position> robots;
@@ -29,13 +31,50 @@ public class Board implements IBoard {
         this.robots = new HashMap<>();
     }
 
+    public Board(int width, int height, ITile[][] grid, HashMap<IRobot, Position> robots) {
+        this.width = width;
+        this.height = height;
+        this.grid = grid;
+        this.robots = robots;
+    }
+
     public Board(String type, int width, int height) {
         if (type.equals("empty")) {
             this.width = width;
             this.height = height;
             this.robots = new HashMap<>();
             this.grid = emptyGrid(width, height);
+        } else if (type.equals("test1")) {
+            this.height = 10;
+            this.width = 10;
+            this.robots = new HashMap<>();
+            try {
+                this.grid = BoardLoader.loadBoard(new File("src/main/resources/boards/VaultBoard_Corr_25apr.csv"));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("something went wring while loading the board");
+            }
+        } else {
+            throw new IllegalArgumentException("no map of type: " + type);
         }
+    }
+
+    public Board copy() {
+        ITile[][] newGrid = new ITile[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                newGrid[i][j] = grid[i][j].copy();
+            }
+        }
+
+        HashMap<IRobot, Position> newRobots = new HashMap<>();
+        for (IRobot robot : robots.keySet()) {
+            Position p = robots.get(robot);
+            newRobots.put(robot.copy(), p);
+        }
+
+        Board newBoard = new Board(width, height, newGrid, newRobots);
+        return newBoard;
     }
 
     public int getWidth() {
@@ -125,7 +164,7 @@ public class Board implements IBoard {
 
                 TileGear grTile = (TileGear) tile;
                 tilesEvents.add(new ArrayList<>());
-                tilesEvents.peek().add(new RotateEvent(grTile.getAngle()));
+                tilesEvents.peek().add(new RotateEvent(robot, grTile.getAngle()));
                 switch (grTile.getAngle()) {
                     case RIGHT:
                         robot.setDirection(robot.getDirection().getRight());
@@ -161,7 +200,7 @@ public class Board implements IBoard {
             robot.setDirection(newDirection);
             events = new ArrayDeque<>();
             events.add(new ArrayList<>());
-            events.peek().add(new RotateEvent(rotateCard.getDirectionChange()));
+            events.peek().add(new RotateEvent(robot, rotateCard.getDirectionChange()));
 
         } else if (card instanceof MoveCard) {
             MoveCard moveCard = (MoveCard) card;
@@ -208,6 +247,7 @@ public class Board implements IBoard {
         } else {
             queue.addAll(new ArrayList<>());
             queue.peek().add(new RemoveRobotEvent(robot));
+            // TODO : remove robot
             return true;
         }
 
@@ -221,10 +261,6 @@ public class Board implements IBoard {
         getTile(position).setRobot(robot);
     }
 
-    /**
-     * HELPER METHODS
-     */
-
     public Event moveRobotToNewTile(Position from, Position to) {
         ITile fromTile = getTile(from);
         ITile toTile = getTile(to);
@@ -234,7 +270,7 @@ public class Board implements IBoard {
         toTile.setRobot(robot);
         fromTile.setRobot(null);
         robots.put(robot, to);
-        return new MoveEvent(from, to);
+        return new MoveEvent(robot, from, to);
     }
 
     private boolean withinBounds(Position position) {
@@ -275,5 +311,29 @@ public class Board implements IBoard {
 
     public Iterable<IRobot> getRobots() {
         return robots.keySet();
+    }
+
+    public static int getNumberOfFlags() {
+        return numberOfFlags;
+    }
+
+    public IRobot getRobot(IRobot robot) {
+        for (IRobot r : robots.keySet()) {
+            if (r.equals(robot)) {
+                return r;
+            }
+        }
+        throw new IllegalArgumentException("robot not on board");
+    }
+
+    public Direction getRobotDirection(IRobot robot) {
+        IRobot robot1 = getRobot(robot);
+        return robot1.getDirection();
+    }
+
+    public void rotateRobot(IRobot robot, DirectionChange directionChange) {
+        IRobot actualRobot = getRobot(robot);
+        Direction newDirection = actualRobot.getDirection().getNewDirection(directionChange);
+        actualRobot.setDirection(newDirection);
     }
 }

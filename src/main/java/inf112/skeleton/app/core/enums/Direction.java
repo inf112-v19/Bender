@@ -1,10 +1,12 @@
 package inf112.skeleton.app.core.enums;
 
-import inf112.skeleton.app.core.position.Position;
+import inf112.skeleton.app.core.board.Position;
 
 public enum Direction {
 
     NORTH, SOUTH, EAST, WEST;
+
+    public static final Direction[] directions = {NORTH, SOUTH, EAST, WEST};
 
     public Position getNewPosition(Position position) {
         switch (this) {
@@ -52,7 +54,16 @@ public enum Direction {
             case "SOUTH": return SOUTH;
             case "EAST": return EAST;
             case "WEST": return WEST;
-            default: return null;
+            default: throw new IllegalArgumentException("illegal direction string: " + str);
+        }
+    }
+
+    public Direction getNewDirection(DirectionChange dirChange) {
+        switch (dirChange) {
+            case LEFT: return this.getLeft();
+            case RIGHT: return this.getRight();
+            case UTURN: return this.getOpposite();
+            default: throw new IllegalArgumentException("invalid direction change: " + dirChange);
         }
     }
 }

@@ -8,7 +8,7 @@ public enum DirectionChange {
             case "LEFT": return LEFT;
             case "RIGHT": return RIGHT;
             case "UTURN": return UTURN;
-            default: return null;
+            default: throw new IllegalArgumentException("illegal directionchange: " + str);
         }
     }
 }

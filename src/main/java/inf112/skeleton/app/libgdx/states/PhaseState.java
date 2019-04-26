@@ -4,27 +4,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.core.board.Board;
-import inf112.skeleton.app.libgdx.Move;
+import inf112.skeleton.app.core.board.events.Event;
+import inf112.skeleton.app.core.board.events.MoveEvent;
 import inf112.skeleton.app.libgdx.RoboRally;
 import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
 public class PhaseState extends State {
 
     public Board board;
-    private Queue<List<Move>> robotMoves;
+    private Queue<List<Event>> robotEvents;
 
     private VisualBoardLoader visualBoardLoader;
     private long waitTimeAfterMoves;
     private boolean robotsAreMoving;
     private float progress;
-    private static float movementSpeed = 0.02f;
+    private static float movementSpeed = 0.04f;
     private Texture boardBackground;
 
-    public PhaseState(GameStateManager gsm, Board board, Queue<List<Move>> robotMoves) {
+    public PhaseState(GameStateManager gsm, Board board, Queue<List<Event>> robotMoves) {
         super(gsm);
-        this.robotMoves = robotMoves;
+        this.robotEvents = robotMoves;
         this.robotsAreMoving = false;
         this.progress = 0;
         this.board = board;
@@ -36,7 +40,7 @@ public class PhaseState extends State {
 
     @Override
     public void update(float dt) {
-        if (robotMoves.isEmpty()) {
+        if (robotEvents.isEmpty()) {
             if (waitTimeAfterMoves++ < 20) return;
             visualBoardLoader.disposeTextures();
             gsm.pop();
@@ -49,10 +53,10 @@ public class PhaseState extends State {
             progress += movementSpeed;
             if (progress >= 1) {
                 robotsAreMoving = false;
-                for (Move move : robotMoves.peek()) {
-                    board.moveRobotToNewTile(move.getFrom(), move.getEnd());
+                for (Event event : robotEvents.peek()) {
+                    event.apply(board);
                 }
-                robotMoves.poll();
+                robotEvents.poll();
             }
         }
     }
@@ -67,7 +71,7 @@ public class PhaseState extends State {
 
         sb.draw(boardBackground, 0, 0);
         visualBoardLoader.renderBoard(sb, xStart, yStart);
-        visualBoardLoader.renderRobots(sb, board, robotMoves.peek(), progress, xStart, yStart);
+        visualBoardLoader.renderRobots(sb, board, robotEvents.peek(), progress, xStart, yStart);
         sb.end();
     }
 }

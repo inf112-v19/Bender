@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.TimeUtils;
 import inf112.skeleton.app.core.board.Board;
+import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
-import inf112.skeleton.app.core.robot.Robot;
 import inf112.skeleton.app.libgdx.*;
 import inf112.skeleton.app.libgdx.utils.CardTextureGenerator;
 import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
@@ -22,6 +21,8 @@ import inf112.skeleton.app.server.RemoteServerHandler;
 import java.net.URISyntaxException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 
 public class RoundState extends State {
 
@@ -30,13 +31,11 @@ public class RoundState extends State {
     private IProgramCard[] availableRoundCard;
     private int numberOfCards = 5;
     private Player player;
-    private Robot otherRobot;
 
     private CardTextureGenerator cardTextureGenerator;
     private Stage stage;
     private BitmapFont font;
     private boolean confirmed;
-    private Texture tileTexture;
     private Texture cardBackground;
     private ArrayDeque<IProgramCard> chosenCards;
     private GlyphLayout[] visualCardSequencing;
@@ -101,7 +100,6 @@ public class RoundState extends State {
         createVisualCardSequencing();
         // TODO : move Gdx.files.internal to SpriteLoader
         cardBackground = new Texture(Gdx.files.internal("cards/Card_background1.png"));
-        tileTexture = new Texture(Gdx.files.internal("tiles/empty_tile.png"));
         boardBackground = new Texture(Gdx.files.internal("boards/board_background_round.png"));
 
     }
@@ -147,23 +145,10 @@ public class RoundState extends State {
         if (chosenCards.size() == numberOfCards && confirmed) {
             for (int i = 0; i < numberOfCards; i++)
                 player.giveCardToRobot(chosenCards.removeLast());
-            gsm.push(new PhaseState(gsm, board, new ArrayDeque<>()));
 
-
-//        if (chosenCards.size() == numberOfCards && confirmed) {
-//            Queue<List<Move>> moves = new ArrayDeque<>();
-//            List<Move> moveList = new ArrayList<>();
-//            Position start = new Position(5, 5);
-//            Position end = new Position(5, 4);
-//            Move move = new Move(player.getRobot(), start, end);
-//            Move move2 = new Move(otherRobot, new Position(6, 6), new Position(5, 6));
-//            moveList.add(move);
-//            moveList.add(move2);
-//            moves.add(moveList);
-//            for (int i = 0; i < numberOfCards; i++)
-//                player.giveCardToRobot(chosenCards.removeLast());
-//            gsm.push(new PhaseState(gsm, board, moves));
-//        }
+            Board boardCopy = board.copy();
+            Queue<List<Event>> events = board.round();
+            gsm.push(new PhaseState(gsm, boardCopy, events));
         }
     }
 
@@ -290,7 +275,7 @@ public class RoundState extends State {
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoardCustomSize(sb, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
-        visualBoardLoader.renderRobot(sb, player.getRobot(), RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
+        visualBoardLoader.renderRobot(sb, player.getRobot(), board, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
         stage.getBatch().draw(cardBackground, 0, 0);
 
     }
@@ -309,6 +294,5 @@ public class RoundState extends State {
         confirm.getTexture().dispose();
         reset.getTexture().dispose();
         cardBackground.dispose();
-        tileTexture.dispose();
     }
 }

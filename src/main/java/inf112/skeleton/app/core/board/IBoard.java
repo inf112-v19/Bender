@@ -1,7 +1,7 @@
 package inf112.skeleton.app.core.board;
 
 import inf112.skeleton.app.core.board.events.Event;
-import inf112.skeleton.app.core.position.Position;
+import inf112.skeleton.app.core.enums.DirectionChange;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
@@ -76,4 +76,12 @@ public interface IBoard extends java.io.Serializable {
      * @return
      */
     Position getRobotPosition(IRobot robot);
+
+    Event moveRobotToNewTile(Position from, Position to);
+
+    IRobot getRobot(IRobot robot);
+
+    Direction getRobotDirection(IRobot robot);
+
+    void rotateRobot(IRobot robot, DirectionChange change);
 }

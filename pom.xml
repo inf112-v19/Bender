@@ -131,7 +131,7 @@
                             <finalName>libgdx-app</finalName>
                             <archive>
                                 <manifest>
-                                    <mainClass>inf112.skeleton.app.libgdx.Main</mainClass>
+                                    <mainClass>inf112.skeleton.app.libgdx.RoboRally</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>

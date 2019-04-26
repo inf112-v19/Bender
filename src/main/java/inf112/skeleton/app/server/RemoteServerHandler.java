@@ -6,7 +6,7 @@ import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.IPlayer;
 import inf112.skeleton.app.core.player.Player;
-import inf112.skeleton.app.libgdx.Move;
+
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -14,6 +14,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.*;
+import java.util.Scanner;
 
 public class RemoteServerHandler extends API {
 
@@ -27,7 +28,7 @@ public class RemoteServerHandler extends API {
     }
 
     private WebSocketClient newClient() throws URISyntaxException {
-        return client = new WSC(new URI("ws://10.0.0.137:8887"));
+        return client = new WSC(new URI("ws://localhost:8887"));
     }
 
     @Override
@@ -111,10 +112,12 @@ public class RemoteServerHandler extends API {
         boolean received = false;
         public HashMap<Player, ArrayDeque<IProgramCard>> playerCardMap;
         @Override
+
         public void handleCards(ArrayDeque<IProgramCard> cards) {
             String cardsAsString = json.toJson(cards);
-            client.send("CARDS "  + cardsAsString);
+            client.send("CARDS " + cardsAsString);
         }
+
 
         @Override
         public void handleERROR(String message) {

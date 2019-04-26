@@ -3,12 +3,9 @@ package inf112.skeleton.app.server;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.IPlayer;
-import inf112.skeleton.app.libgdx.Move;
-
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * Handler for server responses. {@link API} implementation
