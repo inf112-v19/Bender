@@ -6,11 +6,14 @@ import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.board.events.LaserEvent;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.Robot;
+import inf112.skeleton.app.core.sound.sound;
 import inf112.skeleton.app.core.tiles.ITile;
 
 public class Lazer {
 
-    public Event shootLazer(Robot robot, Board board) {
+    public Event shootLazer(Robot robot, Board board) throws Exception {
+        sound lyd1 = new sound();
+
         Position checkPosition = new Position(0,0);
         Direction dir = robot.getDirection();
         Position startPosition = board.getRobotPosition(robot);
@@ -18,6 +21,7 @@ public class Lazer {
         int PosY = startPosition.getY();
         ITile tile = board.getTile(checkPosition);
 
+        lyd1.shootLaser();
         // Go from position in direction of dir and look for Robot or wall
         switch (dir){
             // NORTH = y-- down to 0
@@ -29,6 +33,7 @@ public class Lazer {
                 if (!(board.getRobot(checkPosition)==null)) {
                     // Robot has been found, damage and return position
                         board.getRobot(checkPosition).takeEnergy(1);
+                        lyd1.laserHit();
                         break;
                 }
                 else if (tile.hasWall(Direction.SOUTH)) {
@@ -48,6 +53,7 @@ public class Lazer {
                 if (!(board.getRobot(checkPosition)==null)) {
                     // Robot has been found, damage and return position
                     board.getRobot(checkPosition).takeEnergy(1);
+                    lyd1.laserHit();
                     break;
                 }
                 else if (tile.hasWall(Direction.SOUTH)) {
@@ -66,6 +72,7 @@ public class Lazer {
                     if (!(board.getRobot(checkPosition)==null)) {
                         // Robot has been found, damage and return position
                         board.getRobot(checkPosition).takeEnergy(1);
+                        lyd1.laserHit();
                         break;
                     }
                     else if (tile.hasWall(Direction.EAST)) {
@@ -84,6 +91,7 @@ public class Lazer {
                     if (!(board.getRobot(checkPosition)==null)) {
                         // Robot has been found, damage and return position
                         board.getRobot(checkPosition).takeEnergy(1);
+                        lyd1.laserHit();
                         break;
                     }
                     else if (tile.hasWall(Direction.EAST)) {
