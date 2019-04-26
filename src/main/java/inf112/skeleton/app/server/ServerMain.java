@@ -45,8 +45,6 @@ public class ServerMain extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         String[] messageData = message.split(" ", 2);
-        System.out.println(Arrays.toString(messageData));
-        System.out.println("received message from " + conn.getRemoteSocketAddress() + ": " + message);
         if (messageData[0].equals("CREATEROOM")) {
             GameRoom gameRoom = createRoom();
             conn.send("INFO {\"message\":\"Room created successfully\"}");
@@ -73,13 +71,8 @@ public class ServerMain extends WebSocketServer {
                 System.out.println("wow");
             }
         } else if (messageData[0].equals("CARDS")) {
-            System.out.println(conn.getRemoteSocketAddress());
-            System.out.println("received cards");
-            System.out.println("message :" + message);
             JsonElement data = json.parse(messageData[1]);
             ArrayDeque<IProgramCard> chosenCards = gson.fromJson(data, ArrayDeque.class);
-            System.out.println("chosen cards: " + chosenCards);
-            System.out.println("game room: " + gameRoom.getRoomId());
             try {
                 addCards(conn, chosenCards);
             } catch (IllegalStateException ee) {
@@ -87,21 +80,15 @@ public class ServerMain extends WebSocketServer {
             }
         } else if (message.equals("RESPONSE")) {
             gameRoom.setTotalConnections(webSocket.size());
-            System.out.println("setting connection size to: " + webSocket.size());
-            System.out.println(gameRoom.getStatus());
-            System.out.println(webSocket.size());
             if (gameRoom.getStatus()) {
-                System.out.println("status passed");
                 String data = gson.toJson(gameRoom.getResponseMap());
-                System.out.println("seding " + data);
                 this.broadcast("SERVERRESPONSE " + data);
                 gameRoom.setStatus(false);
             }
-
         } else if (message.equals("CLEAR")) {
             gameRoom.clearCards();
-
         } else {
+            System.out.println(message);
             conn.send("ERROR {\"message\":\"This command has not yet been implemented\"}");
         }
     }
@@ -115,7 +102,7 @@ public class ServerMain extends WebSocketServer {
 
         return new GameRoom("SingleRoom");
     }
-    
+
 
     @Override
     public void onMessage(WebSocket conn, ByteBuffer message) {

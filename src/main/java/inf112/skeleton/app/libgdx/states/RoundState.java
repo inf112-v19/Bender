@@ -127,11 +127,9 @@ public class RoundState extends State {
             receiveServerResponse();
         }
         if (mainHandler.getReceived()) {
-            System.out.println("cards " + mainHandler.playerCardMap);
             handleNextStage();
             mainHandler.received(false);
         }
-
     }
 
     //sends a request to server every n seconds asking whether players have selected their cards
