@@ -32,6 +32,7 @@ public class ServerMain extends WebSocketServer {
         // broadcast( "new connection: " + handshake.getResourceDescriptor() ); //This method sends a message to all clients connected
         System.out.println("new connection to " + conn.getRemoteSocketAddress());
         webSocket.add(conn);
+        System.out.println("total connections: " + webSocket.size());
     }
 
     @Override
@@ -72,7 +73,6 @@ public class ServerMain extends WebSocketServer {
                 System.out.println("wow");
             }
         } else if (messageData[0].equals("CARDS")) {
-            gameRoom.setTotalConnections(webSocket.size());
             System.out.println(conn.getRemoteSocketAddress());
             System.out.println("received cards");
             System.out.println("message :" + message);
@@ -86,6 +86,8 @@ public class ServerMain extends WebSocketServer {
                 System.out.println("wow");
             }
         } else if (message.equals("RESPONSE")) {
+            gameRoom.setTotalConnections(webSocket.size());
+            System.out.println("setting connection size to: " + webSocket.size());
             System.out.println(gameRoom.getStatus());
             System.out.println(webSocket.size());
             if (gameRoom.getStatus()) {
@@ -133,7 +135,7 @@ public class ServerMain extends WebSocketServer {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        String host = "192.168.56.1";
+        String host = "10.0.0.137";
         int port = 8887;
 
         WebSocketServer server = new ServerMain(new InetSocketAddress(host, port));

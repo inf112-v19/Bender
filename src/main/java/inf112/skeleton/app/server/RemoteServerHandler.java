@@ -27,7 +27,7 @@ public class RemoteServerHandler extends API {
     }
 
     private WebSocketClient newClient() throws URISyntaxException {
-        return client = new WSC(new URI("ws://192.168.56.1:8887"));
+        return client = new WSC(new URI("ws://10.0.0.137:8887"));
     }
 
     @Override
@@ -108,7 +108,7 @@ public class RemoteServerHandler extends API {
     }
 
     public static class mainHandler implements IAction {
-        boolean received;
+        boolean received = false;
         public HashMap<Player, ArrayDeque<IProgramCard>> playerCardMap;
         @Override
         public void handleCards(ArrayDeque<IProgramCard> cards) {

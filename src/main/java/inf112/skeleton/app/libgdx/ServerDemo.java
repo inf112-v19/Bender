@@ -74,15 +74,6 @@ public class ServerDemo extends ApplicationAdapter {
 
         }
 
-        @Override
-        public void handleMoves(Queue<List<Move>> moves) {
-
-        }
-
-        @Override
-        public void handlePlayer(IPlayer player) {
-
-        }
 
         @Override
         public void handleServerResponse() {
