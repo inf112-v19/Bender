@@ -7,7 +7,6 @@ import inf112.skeleton.app.core.board.events.LaserEvent;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.Robot;
 import inf112.skeleton.app.core.tiles.ITile;
-import inf112.skeleton.app.core.tiles.Tile;
 
 public class Lazer {
 
@@ -29,12 +28,16 @@ public class Lazer {
                     checkPosition = new Position(PosX, i);
                 if (!(board.getRobot(checkPosition)==null)) {
                     // Robot has been found, damage and return position
-                    board.getRobot(checkPosition).takeEnergy(1);
-                    break;
-                }
-                else if (tile.hasWall(Direction.SOUTH)||tile.hasWall(Direction.NORTH)) {
+                        board.getRobot(checkPosition).takeEnergy(1);
                         break;
                 }
+                else if (tile.hasWall(Direction.SOUTH)) {
+                        checkPosition = new Position(PosX, i-1);
+                        break;
+                }
+                else if (tile.hasWall(Direction.NORTH)) {
+                        break;
+                    }
             }
             // SOUTH = y++ up to 11
             case SOUTH:
@@ -47,9 +50,13 @@ public class Lazer {
                     board.getRobot(checkPosition).takeEnergy(1);
                     break;
                 }
-                else if (tile.hasWall(Direction.SOUTH)||tile.hasWall(Direction.NORTH)) {
-                    break;
+                else if (tile.hasWall(Direction.SOUTH)) {
+                        break;
                 }
+                else if (tile.hasWall(Direction.NORTH)) {
+                        checkPosition = new Position(PosX, i-1);
+                        break;
+                    }
             }
             // EAST = x++ up to11
             case EAST:
@@ -61,7 +68,11 @@ public class Lazer {
                         board.getRobot(checkPosition).takeEnergy(1);
                         break;
                     }
-                    else if (tile.hasWall(Direction.EAST)||tile.hasWall(Direction.WEST)) {
+                    else if (tile.hasWall(Direction.EAST)) {
+                        break;
+                    }
+                    else if (tile.hasWall(Direction.WEST)) {
+                        checkPosition = new Position (i-1, PosY);
                         break;
                     }
             }
@@ -75,7 +86,11 @@ public class Lazer {
                         board.getRobot(checkPosition).takeEnergy(1);
                         break;
                     }
-                    else if (tile.hasWall(Direction.EAST)||tile.hasWall(Direction.WEST)) {
+                    else if (tile.hasWall(Direction.EAST)) {
+                        checkPosition = new Position(i-1, PosY);
+                        break;
+                    }
+                    else if (tile.hasWall(Direction.WEST)) {
                         break;
                     }
             }
