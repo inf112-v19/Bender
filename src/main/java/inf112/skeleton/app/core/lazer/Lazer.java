@@ -21,7 +21,7 @@ public class Lazer {
         int PosY = startPosition.getY();
         ITile tile = board.getTile(checkPosition);
 
-        lyd1.shootLaser();
+        effect.shootLaser();
         // Go from position in direction of dir and look for Robot or wall
         switch (dir){
             // NORTH = y-- down to 0
