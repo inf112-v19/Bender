@@ -12,7 +12,7 @@ import inf112.skeleton.app.core.tiles.ITile;
 public class Lazer {
 
     public Event shootLazer(Robot robot, Board board) throws Exception {
-        sound lyd1 = new sound();
+        sound effect = new sound();
 
         Position checkPosition = new Position(0,0);
         Direction dir = robot.getDirection();
@@ -33,7 +33,7 @@ public class Lazer {
                 if (!(board.getRobot(checkPosition)==null)) {
                     // Robot has been found, damage and return position
                         board.getRobot(checkPosition).takeEnergy(1);
-                        lyd1.laserHit();
+                        effect.laserHit();
                         break;
                 }
                 else if (tile.hasWall(Direction.SOUTH)) {
@@ -53,7 +53,7 @@ public class Lazer {
                 if (!(board.getRobot(checkPosition)==null)) {
                     // Robot has been found, damage and return position
                     board.getRobot(checkPosition).takeEnergy(1);
-                    lyd1.laserHit();
+                    effect.laserHit();
                     break;
                 }
                 else if (tile.hasWall(Direction.SOUTH)) {
@@ -72,7 +72,7 @@ public class Lazer {
                     if (!(board.getRobot(checkPosition)==null)) {
                         // Robot has been found, damage and return position
                         board.getRobot(checkPosition).takeEnergy(1);
-                        lyd1.laserHit();
+                        effect.laserHit();
                         break;
                     }
                     else if (tile.hasWall(Direction.EAST)) {
@@ -91,7 +91,7 @@ public class Lazer {
                     if (!(board.getRobot(checkPosition)==null)) {
                         // Robot has been found, damage and return position
                         board.getRobot(checkPosition).takeEnergy(1);
-                        lyd1.laserHit();
+                        effect.laserHit();
                         break;
                     }
                     else if (tile.hasWall(Direction.EAST)) {
@@ -105,7 +105,7 @@ public class Lazer {
 
         }
 
-        // build Laserevent and return values
+        // build LaserEvent and return values
         LaserEvent returnEvent = new LaserEvent(startPosition,checkPosition);
         return returnEvent;
     }

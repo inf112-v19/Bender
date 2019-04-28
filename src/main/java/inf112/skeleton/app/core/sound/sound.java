@@ -18,5 +18,11 @@ public class sound {
         Thread.sleep(1000);
         clip.play();
     }
+
+    public static void Main (String[] args) throws Exception {
+        // TEST for playing clips
+        sound playclip = new sound();
+        playclip.shootLaser();
+    }
 }
 
