@@ -6,13 +6,13 @@ import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.board.events.LaserEvent;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.Robot;
-import inf112.skeleton.app.core.sound.sound;
+import inf112.skeleton.app.core.sound.Sound;
 import inf112.skeleton.app.core.tiles.ITile;
 
 public class Lazer {
 
     public Event shootLazer(Robot robot, Board board) throws Exception {
-        sound effect = new sound();
+        Sound effect = new Sound();
 
         Position checkPosition = new Position(0,0);
         Direction dir = robot.getDirection();

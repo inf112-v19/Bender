@@ -1,28 +1,28 @@
 package inf112.skeleton.app.core.sound;
 import java.applet.*;
-import javax.swing.*;
-import java.io.*;
 import java.net.*;
 
-public class sound {
+public class Sound {
+    public static void Main (String[] args) throws Exception {
+        // TEST for playing clips
+        Sound playclip = new Sound();
+        playclip.laserHit();
+    }
+
     public static void shootLaser () throws Exception{
 
-        URL url = sound.class.getResource("back.wav");
+        URL url = Sound.class.getResource("");
         AudioClip clip = Applet.newAudioClip(url);
         clip.play();
     }
 
     public static void laserHit () throws Exception {
-        URL url = sound.class.getResource("back.wav");
+        URL url = Sound.class.getResource("Bring it on.wav");
         AudioClip clip = Applet.newAudioClip(url);
         Thread.sleep(1000);
         clip.play();
     }
 
-    public static void Main (String[] args) throws Exception {
-        // TEST for playing clips
-        sound playclip = new sound();
-        playclip.shootLaser();
-    }
+
 }
 
