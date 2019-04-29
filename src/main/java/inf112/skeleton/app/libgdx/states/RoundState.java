@@ -63,8 +63,10 @@ public class RoundState extends State {
         this.player = player;
         this.singlePlayer = singlePLayer;
         serverResponse = false;
-        mainHandler = new RemoteServerHandler.mainHandler();
-        remoteServerHandler = new RemoteServerHandler(mainHandler);
+        if (!singlePLayer) {
+            mainHandler = new RemoteServerHandler.mainHandler();
+            remoteServerHandler = new RemoteServerHandler(mainHandler);
+        }
 
         chosenCards = new ArrayDeque();
         cardTextureGenerator = new CardTextureGenerator();
@@ -76,7 +78,14 @@ public class RoundState extends State {
         makeDeck();
         makeCardButtons();
         makeConfirmationButtons();
-        updateServerBoard();
+
+        if (!singlePLayer)
+            updateServerBoard();
+        else
+            makeAITurns();
+    }
+
+    private void makeAITurns() {
     }
 
     private void updateServerBoard() {
@@ -123,11 +132,24 @@ public class RoundState extends State {
 
     @Override
     public void handleInput() {
+        if (!singlePlayer)
+            handleMultiplayer();
+        else
+            handleSingleplayer();
+
+    }
+
+    private void handleSingleplayer() {
+        if (confirmed)
+            handleNextStageSingleplayer();
+    }
+
+    private void handleMultiplayer() {
         if (confirmed) {
             receiveServerResponse();
         }
         if (mainHandler.getReceived()) {
-            handleNextStage();
+            handleNextStageSingleplayer();
             mainHandler.received(false);
         }
     }
@@ -143,7 +165,7 @@ public class RoundState extends State {
 
 
     // Handles criteria necessary for proceeding to the next stage
-    public void handleNextStage() {
+    public void handleNextStageSingleplayer() {
         if (chosenCards.size() == numberOfCards && confirmed) {
             for (int i = 0; i < numberOfCards; i++)
                 player.giveCardToRobot(chosenCards.removeLast());
@@ -155,7 +177,6 @@ public class RoundState extends State {
     }
 
     ///Draws numbers 1-5 to the position of chosen card
-    //TODO adjusting for duplicates
     //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
 
     public void handleVisualSelection() {
@@ -192,7 +213,7 @@ public class RoundState extends State {
         confirm.getButton().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (chosenCards.size() == numberOfCards) {
+                if (chosenCards.size() == numberOfCards && !singlePlayer) {
                     sendToServer();
                     confirmed = true;
                 }
