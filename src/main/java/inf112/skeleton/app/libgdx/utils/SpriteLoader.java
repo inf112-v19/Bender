@@ -169,6 +169,15 @@ public class SpriteLoader {
         sprite.draw(sb);
     }
 
+    public void drawRobot(SpriteBatch sb, IRobot robot, IBoard board, float x, float y, float rotation) {
+        IRobot currentRobot = board.getRobot(robot);
+        Sprite sprite = getRobotSprite(currentRobot);
+        sprite.setBounds(x, y, this.tileSize, this.tileSize);
+        sprite.setSize(this.tileSize, this.tileSize);
+        sprite.rotate(rotation);
+        sprite.draw(sb);
+    }
+
     /**
      * Method for getting a sprite based on the tile type
      *
