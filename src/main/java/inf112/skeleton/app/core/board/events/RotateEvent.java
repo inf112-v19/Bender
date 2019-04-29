@@ -18,6 +18,15 @@ public class RotateEvent implements Event {
 
     @Override
     public void apply(IBoard board) {
-        board.rotateRobot(robot, dirChange);
+        IRobot realRobot = board.getRobot(robot);
+        board.rotateRobot(realRobot, dirChange);
+    }
+
+    public DirectionChange directionChange() {
+        return this.dirChange;
+    }
+
+    public IRobot robot() {
+        return robot;
     }
 }
