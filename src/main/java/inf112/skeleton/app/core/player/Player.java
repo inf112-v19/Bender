@@ -15,7 +15,7 @@ public class Player<cardToAdd> implements IPlayer {
     private String username;
     private Robot robot;
     private Integer playerNo;
-    private List Cards;
+    private List Cards = new ArrayList();
     private List cardsToRemove;
     private IProgramCard cardToAdd;
     private Board PlayerBoard;
