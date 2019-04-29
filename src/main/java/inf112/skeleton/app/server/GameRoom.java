@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.Player;
-import inf112.skeleton.app.core.position.Position;
 import org.java_websocket.WebSocket;
 
 import java.util.ArrayDeque;
