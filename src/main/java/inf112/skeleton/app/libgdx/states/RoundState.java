@@ -26,6 +26,7 @@ import java.util.Queue;
 
 public class RoundState extends State {
 
+    private final boolean singlePlayer;
     private ProgramDeck deck;
     private Board board;
     private IProgramCard[] availableRoundCard;
@@ -56,10 +57,11 @@ public class RoundState extends State {
     out. When the client receives new position processed by the server, it may begin rendering
 
  */
-    public RoundState(GameStateManager gsm, Board board, Player player) throws URISyntaxException {
+    public RoundState(GameStateManager gsm, Board board, Player player, boolean singlePLayer) throws URISyntaxException {
         super(gsm);
         this.board = board;
         this.player = player;
+        this.singlePlayer = singlePLayer;
         serverResponse = false;
         mainHandler = new RemoteServerHandler.mainHandler();
         remoteServerHandler = new RemoteServerHandler(mainHandler);
