@@ -237,7 +237,7 @@ public class Board implements IBoard {
 
         if (withinBounds(newPosition)) {
             ITile nextTile = getTile(newPosition);
-            if (nextTile.canEnter(dir) && getTile(currentPosition).ca) {
+            if (nextTile.canEnter(dir) && getTile(currentPosition).canExit(dir)) {
                 if (nextTile.hasRobot()) {
                     if (moveRobot(nextTile.getRobot(), dir, 1, queue)) {
                         Event event = moveRobotToNewTile(currentPosition, newPosition);

@@ -89,8 +89,8 @@ public class MenuState extends State {
             createChoiceButtons();
         }
         if (multiplayer || singleplayer) {
-            Board board = new Board("test1", 10, 10);
-            Player player = new Player("petter");
+            Board board = new Board("test1", 12, 12);
+            Player player = new Player("");
             board.addRobot(player.getRobot(), new Position(5, 5));
             try {
                 gsm.set(new RoundState(gsm, board, player, singleplayer));
