@@ -11,7 +11,7 @@ import inf112.skeleton.app.core.tiles.ITile;
 
 public class Lazer {
 
-    public Event shootLazer(Robot robot, Board board) throws Exception {
+    public static Event shootLazer(Robot robot, Board board) throws Exception {
         Sound effect = new Sound();
 
         Position checkPosition = new Position(0,0);
