@@ -52,6 +52,8 @@ public interface IBoard extends java.io.Serializable {
      */
     void addRobot(IRobot robot, Position position);
 
+    void addRobot(IRobot robot);
+
     /**
      * @param pos
      * @return true if there is a robot at pos
@@ -84,4 +86,8 @@ public interface IBoard extends java.io.Serializable {
     Direction getRobotDirection(IRobot robot);
 
     void rotateRobot(IRobot robot, DirectionChange change);
+
+    int numberOfRobots();
+
+    boolean containsRobot(IRobot robot);
 }

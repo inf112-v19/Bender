@@ -21,6 +21,9 @@ public class Board implements IBoard {
     private int height;
     private static int numberOfFlags;
 
+
+    private static Position[] startingPositions = {new Position(0, 0), new Position(9, 0), new Position(0, 9), new Position(9, 9)};
+
     private ITile[][] grid;
     private HashMap<IRobot, Position> robots;
 
@@ -335,5 +338,24 @@ public class Board implements IBoard {
         IRobot actualRobot = getRobot(robot);
         Direction newDirection = actualRobot.getDirection().getNewDirection(directionChange);
         actualRobot.setDirection(newDirection);
+    }
+
+    public int numberOfRobots() {
+        return robots.size();
+    }
+
+    public boolean containsRobot(IRobot robot) {
+        for (IRobot r : robots.keySet()) {
+            if (r.equals(robot)) return true;
+        }
+        return false;
+    }
+
+    public void addRobot(IRobot robot) {
+        for (Position position : startingPositions) {
+            if (getTile(position).hasRobot())  continue;
+            addRobot(robot, position);
+        }
+        throw new RuntimeException("board is full");
     }
 }

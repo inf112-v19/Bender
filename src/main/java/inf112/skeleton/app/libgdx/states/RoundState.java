@@ -14,6 +14,7 @@ import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.core.robot.IRobot;
+import inf112.skeleton.app.core.robot.Robot;
 import inf112.skeleton.app.libgdx.*;
 import inf112.skeleton.app.libgdx.utils.CardTextureGenerator;
 import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
@@ -199,9 +200,25 @@ public class RoundState extends State {
         if (confirmed)
             receiveServerResponse();
         if (mainHandler.getReceived()) {
-            handleNextStageSingleplayer();
+            handleNextStageMultiplayer();
             mainHandler.received(false);
         }
+    }
+
+    public void handleNextStageMultiplayer() {
+        for (Player player : mainHandler.playerCardMap.keySet()) {
+            if (!board.containsRobot(player.getRobot())) {
+                board.addRobot(player.getRobot());
+            }
+            IRobot robot = board.getRobot(player.getRobot());
+            for (IProgramCard card : mainHandler.playerCardMap.get(player)) {
+                robot.addCard(card);
+            }
+        }
+
+        Board boardCopy = board.copy();
+        Queue<List<Event>> events = board.round();
+        gsm.push(new PhaseState(gsm, boardCopy, events));
     }
 
     //sends a request to server every n seconds asking whether players have selected their cards
