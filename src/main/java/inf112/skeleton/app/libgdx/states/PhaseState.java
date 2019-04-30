@@ -63,6 +63,11 @@ public class PhaseState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
+        if (!robotsAreMoving) {
+            robotsAreMoving = true;
+            progress = 0;
+            update(0);
+        }
         Gdx.gl.glClearColor(1, 1, 1, 1);
         sb.begin();
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
