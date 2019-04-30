@@ -179,7 +179,8 @@ public class Board implements IBoard {
 
                 TileRepair rTile = (TileRepair) tile;
                 tilesEvents.add(new ArrayList<>());
-                tilesEvents.peek().add(new RepairEvent(robot));
+                tilesEvents.peek().add(new RepairEvent(robot, rTile.getLevel()));
+                // Gives 1 energy to robot
                 robot.giveEnergy(rTile.getLevel());
 
             }else if(tile instanceof Tile) {
