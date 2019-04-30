@@ -5,23 +5,26 @@ import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.IPlayer;
+import inf112.skeleton.app.core.player.Player;
+
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
-import java.util.List;
+import java.util.*;
 import java.util.Scanner;
 
 public class RemoteServerHandler extends API {
 
-    private WebSocketClient client;
-    private Gson json = new Gson();
+    private static WebSocketClient client;
+    private static Gson json = new Gson();
 
     public RemoteServerHandler(IAction handler) throws URISyntaxException {
         super(handler);
         newClient();
+        connectClient();
     }
 
     private WebSocketClient newClient() throws URISyntaxException {
@@ -45,7 +48,6 @@ public class RemoteServerHandler extends API {
 
     @Override
     public void getDeck() {
-
     }
 
     @Override
@@ -60,6 +62,9 @@ public class RemoteServerHandler extends API {
 
     public WebSocketClient getClient() {
         return client;
+    }
+    public void connectClient() {
+        client.connect();
     }
 
     public static void main(String[] args) throws URISyntaxException, InterruptedException {
@@ -104,15 +109,15 @@ public class RemoteServerHandler extends API {
     }
 
     public static class mainHandler implements IAction {
+        boolean received = false;
+        public HashMap<Player, ArrayDeque<IProgramCard>> playerCardMap;
         @Override
-        public void handleCards(List<IProgramCard> cards) {
 
+        public void handleCards(ArrayDeque<IProgramCard> cards) {
+            String cardsAsString = json.toJson(cards);
+            client.send("CARDS " + cardsAsString);
         }
 
-        @Override
-        public void handlePlayer(IPlayer player) {
-
-        }
 
         @Override
         public void handleERROR(String message) {
@@ -131,12 +136,32 @@ public class RemoteServerHandler extends API {
 
         @Override
         public void handleBoard(IBoard board) {
-
         }
 
         @Override
         public void handleROOM(String roomId) {
             System.out.println("ROOM: "+roomId);
+        }
+
+        public void handleServerResponse() {
+            client.send("RESPONSE");
+        }
+
+        @Override
+        public void received(boolean b) {
+            received = b;
+        }
+
+        public void handleBoardUpdate(Board board) {
+            client.send("UPDATEBOARD " + json.toJson(board));
+        }
+        @Override
+        public void updateCards(HashMap hashMap) {
+            this.playerCardMap = hashMap;
+        }
+
+        public boolean getReceived() {
+            return this.received;
         }
     }
 
@@ -148,6 +173,7 @@ public class RemoteServerHandler extends API {
         public WSC(URI serverUri) {
             super(serverUri);
         }
+        public boolean received;
 
         @Override
         public void onOpen(ServerHandshake handshakedata) {
@@ -172,6 +198,12 @@ public class RemoteServerHandler extends API {
             }
             if (messageData[0].equals("ROOM")) {
                 handler.handleROOM(json.toJsonTree(messageData[1]).getAsJsonObject().get("roomId").getAsString());
+            }
+            if (messageData[0].equals("SERVERRESPONSE")) {
+                handler.received(true);
+                handler.updateCards(json.fromJson(messageData[1], HashMap.class));
+                System.out.println("client received");
+                client.send("CLEAR");
             }
         }
 

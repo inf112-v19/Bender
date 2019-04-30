@@ -21,8 +21,9 @@ public class Lazer {
         int PosY = startPosition.getY();
         ITile tile = board.getTile(checkPosition);
 
-        effect.shootLaser(); // consider placement of function for best syncronization with graphics
 
+        effect.shootLaser(); // consider placement of function for best syncronization with graphics
+      
         // Go from position in direction of dir and look for Robot or wall
         switch (dir){
             // NORTH = y-- down to 0

@@ -1,4 +1,5 @@
 package inf112.skeleton.app.core.sound;
+
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 import java.io.*;
@@ -17,5 +18,6 @@ public static void laserHit() throws IOException {
         InputStream in = new FileInputStream(gongFile);
         AudioStream audioStream = new AudioStream(in);
     }
+
 }
 

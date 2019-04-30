@@ -11,4 +11,13 @@ public enum DirectionChange {
             default: throw new IllegalArgumentException("illegal directionchange: " + str);
         }
     }
+
+    public float getAmmount() {
+        switch (this) {
+            case UTURN: return 180;
+            case RIGHT: return -90;
+            case LEFT: return 90;
+            default: throw new IllegalStateException("Illegal directionchange");
+        }
+    }
 }
