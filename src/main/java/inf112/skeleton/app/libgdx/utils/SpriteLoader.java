@@ -5,12 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.robot.IRobot;
-import inf112.skeleton.app.core.tiles.ITile;
-import inf112.skeleton.app.core.tiles.TileAssemblyLine;
-import inf112.skeleton.app.core.tiles.TileAssemblyLineMerge;
-import inf112.skeleton.app.core.tiles.TileAssemblyLineTurn;
-import inf112.skeleton.app.core.tiles.TileBlackhole;
-import inf112.skeleton.app.core.tiles.TileGear;
+import inf112.skeleton.app.core.tiles.*;
 import inf112.skeleton.app.core.enums.Direction;
 
 import java.util.HashMap;
@@ -55,6 +50,8 @@ public class SpriteLoader {
 
         Sprite empty = new Sprite(new TextureRegion(tiles, 4 * tileSize, 0 * tileSize, tileSize, tileSize));
         Sprite blackHole = new Sprite(new TextureRegion(tiles, 5 * tileSize, 0 * tileSize, tileSize, tileSize));
+        Sprite repair = new Sprite(new TextureRegion(tiles, 1 * tileSize, 6 * tileSize, tileSize, tileSize));
+        Sprite fullRepair = new Sprite(new TextureRegion(tiles, 0 * tileSize, 6 * tileSize, tileSize, tileSize));
 
         Sprite assemblyForward = new Sprite(new TextureRegion(tiles, 0 * tileSize, 6 * tileSize, tileSize, tileSize));
         Sprite assemblyTurnLeft = new Sprite(new TextureRegion(tiles, 1 * tileSize, 4 * tileSize, tileSize, tileSize));
@@ -77,6 +74,8 @@ public class SpriteLoader {
 
         sprites.put("empty", empty);
         sprites.put("blackHole", blackHole);
+        sprites.put("repair", repair);
+        sprites.put("fullRepair", fullRepair);
 
         sprites.put("assemblyForward", assemblyForward);
         sprites.put("assemblyTurnLeft", assemblyTurnLeft);
@@ -233,7 +232,18 @@ public class SpriteLoader {
             }
 
         } else if (tile instanceof TileBlackhole) {
+
             return getSprite("blackHole");
+
+        } else if (tile instanceof TileRepair) {
+
+            TileRepair tileRepair = (TileRepair) tile;
+            if(tileRepair.getLevel() > 1) {
+                return getSprite("fullRepair");
+            }else{
+                return getSprite("repair");
+            }
+
         }
 
         return getSprite("empty");
