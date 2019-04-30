@@ -81,11 +81,7 @@ public class MenuState extends State {
             Board testBoard = new Board("test1", 10, 10);
             Player testPlayer = new Player("petter");
             testBoard.addRobot(testPlayer.getRobot(), new Position(5, 5));
-            try {
-                gsm.set(new RoundState(gsm, testBoard, testPlayer));
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
+                gsm.set(new GameRoomState(gsm));
             dispose();
         }
     }
