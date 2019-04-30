@@ -1,9 +1,6 @@
 package inf112.skeleton.app.core.board;
 
-import inf112.skeleton.app.core.board.events.Event;
-import inf112.skeleton.app.core.board.events.MoveEvent;
-import inf112.skeleton.app.core.board.events.RemoveRobotEvent;
-import inf112.skeleton.app.core.board.events.RotateEvent;
+import inf112.skeleton.app.core.board.events.*;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.RotateCard;
 import inf112.skeleton.app.core.enums.DirectionChange;
@@ -12,7 +9,6 @@ import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.*;
 
-import java.io.File;
 import java.util.*;
 
 public class Board implements IBoard {
@@ -178,6 +174,13 @@ public class Board implements IBoard {
                     default:
                         throw new Error("TYPE ERROR: Tile angle is not valid");
                 }
+
+            }else if(tile instanceof TileRepair) {
+
+                TileRepair rTile = (TileRepair) tile;
+                tilesEvents.add(new ArrayList<>());
+                tilesEvents.peek().add(new RepairEvent(robot));
+                robot.giveEnergy(rTile.getLevel());
 
             }else if(tile instanceof Tile) {
 
