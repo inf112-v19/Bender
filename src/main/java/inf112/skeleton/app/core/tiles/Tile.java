@@ -73,6 +73,10 @@ public class Tile implements ITile {
         return !this.hasWall(dir);
     }
 
+    public boolean canExit(Direction dir) {
+        return !this.hasWall(dir.getOpposite());
+    }
+
     public Tile copy() {
         IRobot robot = this.robot == null ? null : this.robot.copy();
         IFlag flag = this.flag == null ? null : this.flag.copy();
