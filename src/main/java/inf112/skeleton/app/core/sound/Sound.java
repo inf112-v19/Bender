@@ -1,28 +1,23 @@
 package inf112.skeleton.app.core.sound;
-import java.applet.*;
-import java.net.*;
+
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import java.io.*;
 
 public class Sound {
-    public static void Main (String[] args) throws Exception {
-        // TEST for playing clips
-        Sound playclip = new Sound();
-        playclip.laserHit();
+
+public static void laserHit() throws IOException {
+        String gongFile = "BringItOnShort.wav";
+        InputStream in = new FileInputStream(gongFile);
+        AudioStream audioStream = new AudioStream(in);
+        AudioPlayer.player.start(audioStream);
     }
 
-    public static void shootLaser () throws Exception{
-
-        URL url = Sound.class.getResource("");
-        AudioClip clip = Applet.newAudioClip(url);
-        clip.play();
+    public static void shootLaser() throws IOException {
+        String gongFile = "Flash-laser-03.wav";
+        InputStream in = new FileInputStream(gongFile);
+        AudioStream audioStream = new AudioStream(in);
     }
-
-    public static void laserHit () throws Exception {
-        URL url = Sound.class.getResource("Bring it on.wav");
-        AudioClip clip = Applet.newAudioClip(url);
-        Thread.sleep(1000);
-        clip.play();
-    }
-
 
 }
 
