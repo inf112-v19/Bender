@@ -3,7 +3,8 @@ package inf112.skeleton.app.server;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.player.IPlayer;
-
+import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,10 +26,13 @@ public interface IAction {
 
     void handleROOM(String roomId);
 
-    void handleCards(List<IProgramCard> cards);
+    void handleCards(ArrayDeque<IProgramCard> cards);
 
     void handleBoard(IBoard board);
 
+    void handleServerResponse();
 
-    void handlePlayer(IPlayer player);
+    void received(boolean b);
+
+    void updateCards(HashMap hashMap);
 }

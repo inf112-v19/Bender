@@ -1,5 +1,7 @@
 package inf112.skeleton.app.core.board;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.enums.DirectionChange;
 import inf112.skeleton.app.core.tiles.*;
@@ -17,11 +19,12 @@ public class BoardLoader {
      * @return
      * @throws IOException
      */
-    public static ITile[][] loadBoard(File fl) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(fl));
+    public static ITile[][] loadBoard(String path) throws IOException {
+        FileHandle fileHandle = Gdx.files.internal(path);
+        String text = fileHandle.readString();
+        String[] lines = text.split("\\r?\\n");
 
-        String line = reader.readLine();
-        String[] dimensions = line.split(",");
+        String[] dimensions = lines[0].split(",");
 
         int w = Integer.parseInt(dimensions[0]);
         int h = Integer.parseInt(dimensions[1]);
@@ -29,7 +32,7 @@ public class BoardLoader {
 
         ITile tile;
         for (int i = 0; i < h; i++) {
-            String[] rLine = reader.readLine().split(",");
+            String[] rLine = lines[i + 1].split(",");
             for (int j = 0; j < w; j++) {
                 String[] params = rLine[j].split("\\|");
 

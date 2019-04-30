@@ -6,6 +6,9 @@ import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.board.events.Event;
 import inf112.skeleton.app.core.board.events.MoveEvent;
 import inf112.skeleton.app.core.board.Position;
+import inf112.skeleton.app.core.board.events.RotateEvent;
+import inf112.skeleton.app.core.enums.Direction;
+import inf112.skeleton.app.core.enums.DirectionChange;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.Tile;
 import inf112.skeleton.app.libgdx.RoboRally;
@@ -74,6 +77,10 @@ public class VisualBoardLoader {
                     MoveEvent moveEvent = (MoveEvent) event;
                     renderedRobots.add(moveEvent.getRobot());
                     renderRobotSlowly(sb, moveEvent.getRobot(), board, xStart, yStart, moveEvent.getStartPosition(), moveEvent.getEndPosition(), progress);
+                } else if (event instanceof RotateEvent) {
+                    RotateEvent rotateEvent = (RotateEvent) event;
+                    renderedRobots.add(rotateEvent.robot());
+                    renderRobotWithRotation(sb, rotateEvent.robot(), board, rotateEvent.directionChange(), xStart, yStart, board.getRobotPosition(rotateEvent.robot()), progress);
                 }
             }
         }
@@ -98,6 +105,14 @@ public class VisualBoardLoader {
 
         spriteLoader.setTileSize(64);
         spriteLoader.drawRobot(sb, robot, board, currentX, currentY);
+    }
+
+    public void renderRobotWithRotation(SpriteBatch sb, IRobot robot, IBoard board, DirectionChange directionChange, int xStart, int yStart, Position position, float progress) {
+        int height = 64;
+        float x = xStart + (position.getX() * height);
+        float y = yStart + (position.getY() * height);
+        spriteLoader.setTileSize(64);
+        spriteLoader.drawRobot(sb, robot, board, x, y, progress * directionChange.getAmmount());
     }
 
     public Position getRobotPos() {
