@@ -1,28 +1,48 @@
 package inf112.skeleton.app.core.sound;
-import java.applet.*;
-import javax.swing.*;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
 import java.io.*;
-import java.net.*;
 
 public class sound {
-    public static void shootLaser () throws Exception{
 
-        URL url = sound.class.getResource("back.wav");
-        AudioClip clip = Applet.newAudioClip(url);
-        clip.play();
+
+    public static void main(String[] args) throws Exception
+    {
+        shootLaser();
+        //laserHit();
+
+        // open the sound file as a Java input stream
+        //String gongFile = "BringItOnShort.wav";
+        //InputStream in = new FileInputStream(gongFile);
+
+        // create an audiostream from the inputstream
+        // AudioStream audioStream = new AudioStream(in);
+
+        // play the audio clip with the audioplayer class
+        //AudioPlayer.player.start(audioStream);
     }
 
-    public static void laserHit () throws Exception {
-        URL url = sound.class.getResource("back.wav");
-        AudioClip clip = Applet.newAudioClip(url);
-        Thread.sleep(1000);
-        clip.play();
+    public static void laserHit() throws IOException {
+        String gongFile = "BringItOnShort.wav";
+        InputStream in = new FileInputStream(gongFile);
+
+        // create an audiostream from the inputstream
+        AudioStream audioStream = new AudioStream(in);
+
+        // play the audio clip with the audioplayer class
+        AudioPlayer.player.start(audioStream);
     }
 
-    public static void Main (String[] args) throws Exception {
-        // TEST for playing clips
-        sound playclip = new sound();
-        playclip.shootLaser();
+    public static void shootLaser() throws IOException {
+        String gongFile = "Flash-laser-03.wav";
+        InputStream in = new FileInputStream(gongFile);
+
+        // create an audiostream from the inputstream
+        AudioStream audioStream = new AudioStream(in);
+
+        // play the audio clip with the audioplayer class
+        AudioPlayer.player.start(audioStream);
     }
 }
 
