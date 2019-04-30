@@ -68,7 +68,7 @@ public class VisualBoardLoader {
         }
     }
 
-    public void renderRobots(SpriteBatch sb, Board board, List<Event> events, float progress, int xStart, int yStart) {
+    public void renderRobots(SpriteBatch sb, Board board, List<Event> events, float progress, int xStart, int yStart, boolean isRoundState) {
         HashSet<IRobot> renderedRobots = new HashSet<>();
 
         if (events != null) {
@@ -76,7 +76,7 @@ public class VisualBoardLoader {
                 if (event instanceof MoveEvent) {
                     MoveEvent moveEvent = (MoveEvent) event;
                     renderedRobots.add(moveEvent.getRobot());
-                    renderRobotSlowly(sb, moveEvent.getRobot(), board, xStart, yStart, moveEvent.getStartPosition(), moveEvent.getEndPosition(), progress);
+                    renderRobotSlowly(sb, moveEvent.getRobot(), board, xStart, yStart, moveEvent.getStartPosition(), moveEvent.getEndPosition(), progress, isRoundState);
                 } else if (event instanceof RotateEvent) {
                     RotateEvent rotateEvent = (RotateEvent) event;
                     renderedRobots.add(rotateEvent.robot());
@@ -88,12 +88,14 @@ public class VisualBoardLoader {
         for (IRobot robot : board.getRobots()) {
             if (renderedRobots.contains(robot)) continue;
             Position position = board.getRobotPosition(robot);
-            renderRobotSlowly(sb, robot, board, xStart, yStart, position, position, 0);
+            renderRobotSlowly(sb, robot, board, xStart, yStart, position, position, 0, isRoundState);
         }
     }
 
-    public void renderRobotSlowly(SpriteBatch sb, IRobot robot, IBoard board, int xStart, int yStart, Position start, Position end, float progress) {
+    public void renderRobotSlowly(SpriteBatch sb, IRobot robot, IBoard board, int xStart, int yStart, Position start, Position end, float progress, boolean isRoundState) {
         int height = 64;
+        if (isRoundState) height = (RoboRally.HEIGHT - 200) / 10;
+
         int xDistance = (end.getX() - start.getX()) * height;
         int yDistance = (end.getY() - start.getY()) * height;
 
