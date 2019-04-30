@@ -31,7 +31,7 @@ public class RoundState extends State {
     private IProgramCard[] availableRoundCard;
     private int numberOfCards = 5;
     private Player player;
-    private Player[] AI;
+    private ArrayList<Player> AI;
 
     private CardTextureGenerator cardTextureGenerator;
     private Stage stage;
@@ -47,7 +47,7 @@ public class RoundState extends State {
     private Texture boardBackground;
     private boolean serverResponse;
     private RemoteServerHandler remoteServerHandler;
-    HashMap<Player, ArrayDeque<IProgramCard>> collectiveCards;
+    private HashMap<Player, ArrayDeque<IProgramCard>> collectiveCards;
     private RemoteServerHandler.mainHandler mainHandler;
 
     public static final int CARD_WIDTH = 110;
@@ -63,6 +63,7 @@ public class RoundState extends State {
         this.board = board;
         this.player = player;
         this.singlePlayer = singlePLayer;
+        numberOfCards = player.freeSlots();
 
         initializeObjects();
         cardTextureGenerator = new CardTextureGenerator();
@@ -73,10 +74,26 @@ public class RoundState extends State {
         makeCardButtons();
         makeConfirmationButtons();
 
-        if (!singlePLayer)
+        if (!singlePLayer) {
             updateServerBoard();
-        else {
-            AI = new Player[3];
+        } else {
+            AI = new ArrayList<>();
+            Player p1 = new Player("Bender");
+            Player p2 = new Player("Roberto");
+            Player p3 = new Player("Beelzebot");
+            board.addRobot(p1.getRobot(), new Position(0, 0));
+            board.addRobot(p2.getRobot(), new Position(9, 9));
+            board.addRobot(p3.getRobot(), new Position(0, 9));
+            giveCardsToAI(p1);
+//            giveCardsToAI(p2);
+//            giveCardsToAI(p3);
+
+//            Player player2 = new Player("test");
+//            Player player3 = new Player("test2");
+//            board.addRobot(player2.getRobot(), new Position(7,5));
+//            board.addRobot(player3.getRobot(), new Position(9,5));
+//            player2.giveCardToRobot(deck.draw());
+//            player3.giveCardToRobot(deck.draw());
             makeAITurns();
         }
     }
@@ -95,21 +112,31 @@ public class RoundState extends State {
         int totalRobots = 0;
         for (IRobot robot : board.getRobots())
             totalRobots++;
-        if (totalRobots == 1) {
-            AI[0] = new Player("Bender");
-            AI[1] = new Player("Roberto");
-            AI[2] = new Player("Beelzebot");
-            board.addRobot(AI[0].getRobot(), new Position(0, 0));
-            board.addRobot(AI[1].getRobot(), new Position(9, 9));
-            board.addRobot(AI[2].getRobot(), new Position(0, 9));
+        if (totalRobots >= 1) {
+            Player p1 = new Player("Bender");
+            Player p2 = new Player("Roberto");
+            Player p3 = new Player("Beelzebot");
+            board.addRobot(p1.getRobot(), new Position(0, 0));
+            board.addRobot(p2.getRobot(), new Position(9, 9));
+            board.addRobot(p3.getRobot(), new Position(0, 9));
+            giveCardsToAI(p1);
+            giveCardsToAI(p2);
+            giveCardsToAI(p3);
+//            AI.add(new Player("Bender"));
+//            AI.add(new Player("Roberto"));
+//            AI.add(new Player("Beelzebot"));
+//            board.addRobot(AI.get(0).getRobot(), new Position(0, 0));
+//            board.addRobot(AI.get(1).getRobot(), new Position(9, 9));
+//            board.addRobot(AI.get(2).getRobot(), new Position(0, 9));
         }
-        for (Player robot : AI)
-            giveCardsToAI(robot);
+
+//        for (Player robot : AI)
+//            giveCardsToAI(robot);
     }
 
     private void giveCardsToAI(Player player) {
         for (int i = 0; i < player.freeSlots(); i++) {
-            player.addCard(deck.draw()); // may need to be changed
+            player.giveCardToRobot(deck.draw()); // may need to be changed
         }
     }
 
@@ -161,7 +188,6 @@ public class RoundState extends State {
             handleMultiplayer();
         else
             handleSingleplayer();
-
     }
 
     private void handleSingleplayer() {
@@ -170,9 +196,8 @@ public class RoundState extends State {
     }
 
     private void handleMultiplayer() {
-        if (confirmed) {
+        if (confirmed)
             receiveServerResponse();
-        }
         if (mainHandler.getReceived()) {
             handleNextStageSingleplayer();
             mainHandler.received(false);
@@ -182,6 +207,10 @@ public class RoundState extends State {
     //sends a request to server every n seconds asking whether players have selected their cards
     private void receiveServerResponse() {
         mainHandler.handleServerResponse();
+    }
+
+    private void giveAllPLayersCards() {
+
     }
 
     private void sendToServer() {
@@ -241,7 +270,8 @@ public class RoundState extends State {
                 if (chosenCards.size() == numberOfCards && !singlePlayer) {
                     sendToServer();
                     confirmed = true;
-                }
+                } else if (singlePlayer && chosenCards.size() == numberOfCards)
+                    confirmed = true;
                 return true;
             }
         });
@@ -324,7 +354,7 @@ public class RoundState extends State {
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoardCustomSize(sb, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
         visualBoardLoader.renderRobot(sb, player.getRobot(), board, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true); //TODO update for multiple
-        
+
         stage.getBatch().draw(cardBackground, 0, 0);
 
     }
