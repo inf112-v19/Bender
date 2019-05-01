@@ -42,7 +42,7 @@ public class Robot implements IRobot, Comparable<IRobot> {
 
     @Override
     public int takeEnergy(int drawEnergy) {
-        robotEnergy -= drawEnergy;
+        robotEnergy--;
         return robotEnergy;
     }
 

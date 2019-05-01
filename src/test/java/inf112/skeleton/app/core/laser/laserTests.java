@@ -23,7 +23,7 @@ public class laserTests {
     public void beforeEach() {
         this.robot = new Robot(SOUTH);
         this.secondRobot = new Robot(Direction.SOUTH);
-        this.board = new Board("empty", 10, 10);
+        this.board = new Board("empty", 12, 12);
         this.board.addRobot(robot, new Position(5, 5));
         this.board.addRobot(secondRobot, new Position(5, 9));
         Event shouldBeCoordinates = new LaserEvent(new Position(5,5), new Position(5,9));
@@ -36,9 +36,19 @@ public class laserTests {
         assertEquals(8, this.robot.getEnergy());
         assertEquals(8, this.secondRobot.getEnergy());
         getCoordinates = Lazer.shootLazer(robot, board);
-        assertEquals(5, this.robot.getEnergy());
-        assertEquals(secondRobot, this.board.getRobot(new Position(5,9)));
-        assertEquals(robot, this.board.getRobot(new Position(5,5)));
+        assertEquals(7, secondRobot.getEnergy());
         assertEquals(SOUTH, this.board.getRobotDirection(robot));
+        getCoordinates = Lazer.shootLazer(robot, board);
+        assertEquals(6, secondRobot.getEnergy());
+    }
+
+    @Test
+    public void checkEnergyWhenTUrningRobotAndShootLaserTwice() throws Exception {
+        robot.setDirection(WEST);
+        robot.setDirection(SOUTH);
+        Lazer.shootLazer(robot, board);
+        assertEquals(7, secondRobot.getEnergy());
+        Lazer.shootLazer(robot, board);
+        assertEquals(6, secondRobot.getEnergy());
     }
 }
