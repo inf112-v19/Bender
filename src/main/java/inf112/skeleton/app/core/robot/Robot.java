@@ -1,9 +1,6 @@
 package inf112.skeleton.app.core.robot;
 
-
 import inf112.skeleton.app.core.cards.IProgramCard;
-import inf112.skeleton.app.core.cards.ProgramCard;
-import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.enums.Direction;
 
 import java.util.ArrayList;

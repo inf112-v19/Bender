@@ -149,7 +149,12 @@ public class Board implements IBoard {
     public Queue<List<Event>> stepTiles() {
         Queue<List<Event>> tilesEvents = new ArrayDeque<>();
 
-        this.robots.forEach((robot, pos) -> {
+        HashMap<IRobot, Position> copy = new HashMap<>();
+        for (IRobot robot : robots.keySet()) {
+            copy.put(robot, robots.get(robot));
+        }
+
+        copy.forEach((robot, pos) -> {
             ITile tile = this.getTile(pos);
             if(tile instanceof TileAssemblyLine) {
 
@@ -232,7 +237,7 @@ public class Board implements IBoard {
 
         if (withinBounds(newPosition)) {
             ITile nextTile = getTile(newPosition);
-            if (nextTile.canEnter(dir)) {
+            if (nextTile.canEnter(dir) && getTile(currentPosition).canExit(dir)) {
                 if (nextTile.hasRobot()) {
                     if (moveRobot(nextTile.getRobot(), dir, 1, queue)) {
                         Event event = moveRobotToNewTile(currentPosition, newPosition);
@@ -248,7 +253,7 @@ public class Board implements IBoard {
                 }
             }
         } else {
-            queue.addAll(new ArrayList<>());
+            queue.add(new ArrayList<>());
             queue.peek().add(new RemoveRobotEvent(robot));
             // TODO : remove robot
             return true;

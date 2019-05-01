@@ -5,7 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.enums.DirectionChange;
 import inf112.skeleton.app.core.tiles.*;
-import inf112.skeleton.app.core.flag.Flag;
+import inf112.skeleton.app.core.flag.*;
 
 import java.io.*;
 
@@ -67,6 +67,10 @@ public class BoardLoader {
                         tile = new TileGear(null, getFlag(params[1]), getWalls(params[2]), DirectionChange.getFromString(params[3]));
                         break;
 
+                    case 'R':
+                        tile = new TileRepair(null, getFlag(params[1]), getWalls(params[2]), Integer.parseInt(params[3]));
+                        break;
+
                     default:
                         throw new IllegalArgumentException("Tile type is not valid");
                 }
@@ -84,11 +88,11 @@ public class BoardLoader {
      * @param st
      * @return
      */
-    public static boolean[] getWalls(String st) {
-        boolean[] res = new boolean[st.length()];
-        for(int i = 0; i < st.length(); i++)
-            res[i] = st.charAt(i) == '1';
-        return res;
+    public static IFlag getFlag(String st) {
+        int ord = Integer.parseInt(st);
+        if(ord != 0)
+            return new Flag(ord);
+        return null;
     }
 
     /**
@@ -97,10 +101,10 @@ public class BoardLoader {
      * @param st
      * @return
      */
-    public static Flag getFlag(String st) {
-        int ord = Integer.parseInt(st);
-        if(ord != 0)
-            return new Flag(ord);
-        return null;
+    public static boolean[] getWalls(String st) {
+        boolean[] res = new boolean[st.length()];
+        for(int i = 0; i < st.length(); i++)
+            res[i] = st.charAt(i) == '1';
+        return res;
     }
 }

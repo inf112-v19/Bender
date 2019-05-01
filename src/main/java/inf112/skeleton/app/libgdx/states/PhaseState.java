@@ -76,7 +76,7 @@ public class PhaseState extends State {
 
         sb.draw(boardBackground, 0, 0);
         visualBoardLoader.renderBoard(sb, xStart, yStart);
-        visualBoardLoader.renderRobots(sb, board, robotEvents.peek(), progress, xStart, yStart);
+        visualBoardLoader.renderRobots(sb, board, robotEvents.peek(), progress, xStart, yStart, false);
         sb.end();
     }
 }
