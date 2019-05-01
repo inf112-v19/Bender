@@ -9,6 +9,7 @@ import com.google.gson.*;
 import inf112.skeleton.app.core.board.Board;
 
 import inf112.skeleton.app.core.cards.IProgramCard;
+import inf112.skeleton.app.core.player.Player;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -32,6 +33,7 @@ public class ServerMain extends WebSocketServer {
         // broadcast( "new connection: " + handshake.getResourceDescriptor() ); //This method sends a message to all clients connected
         System.out.println("new connection to " + conn.getRemoteSocketAddress());
         webSocket.add(conn);
+        gameRoom.setTotalConnections(webSocket.size());
         System.out.println("total connections: " + webSocket.size());
     }
 
@@ -41,6 +43,8 @@ public class ServerMain extends WebSocketServer {
 
 //        userRoomPairs.remove(conn);
     }
+
+    private ArrayDeque<IProgramCard> chosenCards = new ArrayDeque<IProgramCard>();
 
     @Override
     public void onMessage(WebSocket conn, String message) {
@@ -67,22 +71,28 @@ public class ServerMain extends WebSocketServer {
             Board board = gson.fromJson(messageData[1], Board.class);
             try {
                 this.gameRoom.updateBoard(board);
-            }catch (RuntimeException e) {
+            } catch (RuntimeException e) {
                 System.out.println("wow");
             }
         } else if (messageData[0].equals("CARDS")) {
-            JsonElement data = json.parse(messageData[1]);
-            ArrayDeque<IProgramCard> chosenCards = gson.fromJson(data, ArrayDeque.class);
-            try {
-                addCards(conn, chosenCards);
-            } catch (IllegalStateException ee) {
-                System.out.println("wow");
+            if (!messageData[1].equals("DONE")) {
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(IProgramCard.class, new InterfaceAdapter());
+                Gson gson2 = builder.create();
+                IProgramCard card = gson2.fromJson(messageData[1], IProgramCard.class);
+                chosenCards.add(card);
+            } else {
+                try {
+                    addCards(conn, chosenCards);
+                } catch (IllegalStateException ee) {
+                    System.out.println("wow");
+                }
             }
         } else if (message.equals("RESPONSE")) {
             gameRoom.setTotalConnections(webSocket.size());
             if (gameRoom.getStatus()) {
-                String data = gson.toJson(gameRoom.getResponseMap());
-                this.broadcast("SERVERRESPONSE " + data);
+                sendFinalMap();
+                this.broadcast("SERVERRESPONSE");
                 gameRoom.setStatus(false);
             }
         } else if (message.equals("CLEAR")) {
@@ -93,8 +103,36 @@ public class ServerMain extends WebSocketServer {
         }
     }
 
+    private void sendFinalMap() {
+        Set<Player> map = gameRoom.getResponseMap().keySet();
+        for (Player player : map) {
+            for (IProgramCard card : gameRoom.getResponseMap().get(player)) {
+                player.addCard(card);
+            }
+            GsonBuilder builder = new GsonBuilder();
+            builder.registerTypeAdapter(IProgramCard.class, new InterfaceAdapter());
+            Gson gson2 = builder.create();
+            String playerData = gson2.toJson(player);
+            this.broadcast("PLAYER " + playerData);
+        }
+
+//        System.out.println("map in server sending: " + map);
+//        for (Player player : map.keySet())
+//            for (ArrayDeque<IProgramCard> cardList : map.values())
+//                for (IProgramCard card : cardList) {
+//                    GsonBuilder builder = new GsonBuilder();
+//                    builder.registerTypeAdapter(IProgramCard.class, new InterfaceAdapter());
+//                    Gson gson2 = builder.create();
+//                    String cardData = gson2.toJson(card);
+//                    String playerData = gson.toJson(player, player.getClass());
+//                    this.broadcast("PLAYER " + playerData + " " + cardData);
+
+    }
+
+
     public void addCards(WebSocket conn, ArrayDeque<IProgramCard> chosenCards) {
         gameRoom.addChosenCards(conn, chosenCards);
+//        chosenCards.clear();
     }
 
 

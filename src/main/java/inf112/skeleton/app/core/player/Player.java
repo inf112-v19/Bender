@@ -15,7 +15,7 @@ public class Player<cardToAdd> implements IPlayer {
     private String username;
     private Robot robot;
     private Integer playerNo;
-    private List Cards = new ArrayList();
+    private ArrayList<IProgramCard> Cards = new ArrayList();
     private List cardsToRemove;
     private IProgramCard cardToAdd;
     private Board PlayerBoard;
@@ -45,7 +45,7 @@ public class Player<cardToAdd> implements IPlayer {
     }
 
     // Return cards of current player
-    public List getCards() {
+    public ArrayList<IProgramCard> getCards() {
         return Cards;
     }
 

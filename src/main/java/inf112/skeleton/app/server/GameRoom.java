@@ -32,8 +32,12 @@ public class GameRoom {
 
     public HashMap<Player, ArrayDeque<IProgramCard>> getResponseMap() {
         HashMap<Player, ArrayDeque<IProgramCard>> finalMap = new HashMap<>();
-        for (WebSocket key : collectiveCards.keySet())
+        for (WebSocket key : collectiveCards.keySet()) {
             finalMap.put(getPlayer(key), collectiveCards.get(key));
+
+        }
+        System.out.println("final map in the game room:" + finalMap);
+        System.out.println("collecitve map in the game room :" + collectiveCards);
         return finalMap;
     }
 
@@ -74,10 +78,7 @@ public class GameRoom {
     public void addChosenCards(WebSocket web, ArrayDeque<IProgramCard> cards) {
         connections.put(new Player(web.getRemoteSocketAddress().toString()), web); // temporary, until startGame(); is in use
         collectiveCards.put(web, cards);
-        System.out.println("collective cards keyset size: " + collectiveCards.keySet().size());
-        System.out.println("total connections : " + connections.values().size());
         if (collectiveCards.keySet().size() == totalConnections) {
-            System.out.println("this works");
             selectionDone = true;
         }
     }

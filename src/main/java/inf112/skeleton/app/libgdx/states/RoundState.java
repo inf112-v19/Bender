@@ -15,7 +15,6 @@ import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
 import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.core.robot.IRobot;
-import inf112.skeleton.app.core.robot.Robot;
 import inf112.skeleton.app.libgdx.*;
 import inf112.skeleton.app.libgdx.utils.CardTextureGenerator;
 import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
@@ -183,22 +182,39 @@ public class RoundState extends State {
     private void handleMultiplayer() {
         if (confirmed)
             receiveServerResponse();
-        if (mainHandler.getReceived()) {
+        if (mainHandler.getRecieved()) {
             handleNextStageMultiplayer();
             mainHandler.received(false);
         }
     }
 
     public void handleNextStageMultiplayer() {
-        for (Player player : mainHandler.playerCardMap.keySet()) {
-            if (!board.containsRobot(player.getRobot())) {
-                board.addRobot(player.getRobot());
+        ArrayList<Player> players = mainHandler.getPlayers();
+        System.out.println("players at roundstate:  " + players);
+
+        for (Player p : players) {
+            if (!board.containsRobot(p.getRobot())) {
+                System.out.println("adding robot"  + p.getRobot());
+                board.addRobot(p.getRobot(), new Position(0,2));
             }
-            IRobot robot = board.getRobot(player.getRobot());
-            for (IProgramCard card : mainHandler.playerCardMap.get(player)) {
+            IRobot robot = board.getRobot(p.getRobot());
+            ArrayList<IProgramCard> cardList = p.getCards();
+            for (IProgramCard card : cardList) {
+                System.out.println("adding card to robot:" + card);
                 robot.addCard(card);
             }
         }
+//        System.out.println("cards int roundstate: " + mainHandler.getPlayerCardMap());
+//        for (Player player : mainHandler.getPlayerCardMap().keySet()) {
+//            if (!board.containsRobot(player.getRobot())) {
+//                board.addRobot(player.getRobot());
+//            }
+//            IRobot robot = board.getRobot(player.getRobot());
+//            for (IProgramCard card : mainHandler.getPlayerCardMap().get(player)) {
+//                System.out.println("adding: "+ card);
+//                robot.addCard(card);
+//            }
+//        }
 
         Board boardCopy = board.copy();
         Queue<List<Event>> events = board.round();
@@ -354,6 +370,7 @@ public class RoundState extends State {
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoardCustomSize(sb, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
+
         visualBoardLoader.renderRobots(sb, board, null, 0, RoboRally.WIDTH / 2 - temp - 7, cardBackground.getHeight() - 7, true);
         // visualBoardLoader.renderRobot(sb, player.getRobot(), board, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true); //TODO update for multiple
 

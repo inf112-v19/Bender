@@ -2,10 +2,11 @@ package inf112.skeleton.app.server;
 
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
-import inf112.skeleton.app.core.player.IPlayer;
+import inf112.skeleton.app.core.player.Player;
+
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Handler for server responses. {@link API} implementation
@@ -34,5 +35,11 @@ public interface IAction {
 
     void received(boolean b);
 
-    void updateCards(HashMap hashMap);
+    void updateCards(Player player, IProgramCard card);
+
+    ArrayList<Player> getPlayers();
+
+    boolean getRecieved();
+
+    void addPlayer(Player player);
 }
