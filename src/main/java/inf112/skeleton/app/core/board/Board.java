@@ -8,6 +8,7 @@ import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.core.tiles.*;
+import org.w3c.dom.events.EventException;
 
 import java.util.*;
 
@@ -16,7 +17,6 @@ public class Board implements IBoard {
     private int width;
     private int height;
     private static int numberOfFlags;
-
 
     private static Position[] startingPositions = {new Position(0, 0), new Position(9, 0), new Position(0, 9), new Position(9, 9)};
 
@@ -52,6 +52,15 @@ public class Board implements IBoard {
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException("something went wring while loading the board");
+            }
+        } else if (type.equals("test2")) {
+            this.height = 10;
+            this.width = 10;
+            this.robots = new HashMap<>();
+            try {
+                this.grid = BoardLoader.loadBoard("boards/walls_debugging_board.csv");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } else {
             throw new IllegalArgumentException("no map of type: " + type);
@@ -135,11 +144,18 @@ public class Board implements IBoard {
             IProgramCard card = robot.drawCard();
             if (card != null) {
                 Queue<List<Event>> events = moveRobot(robot, card);
-                programCardEvents.addAll(events);
+                addEventsFromQueue(events, programCardEvents);
+                // programCardEvents.addAll(events);
             }
         }
 
         return programCardEvents;
+    }
+
+    private void addEventsFromQueue(Queue<List<Event>> newEvents, Queue<List<Event>> allEvents) {
+        while (!newEvents.isEmpty()) {
+            allEvents.add(newEvents.poll());
+        }
     }
 
     public Queue<List<Event>> stepTiles() {
@@ -240,12 +256,15 @@ public class Board implements IBoard {
         Position newPosition = dir.getNewPosition(currentPosition);
 
         if (withinBounds(newPosition)) {
+
             ITile nextTile = getTile(newPosition);
-            if (nextTile.canEnter(dir) && getTile(currentPosition).canExit(dir)) {
+            ITile currentTile = getTile(currentPosition);
+
+            if (!nextTile.hasWall(dir.getOpposite()) && !currentTile.hasWall(dir)) {
                 if (nextTile.hasRobot()) {
                     if (moveRobot(nextTile.getRobot(), dir, 1, queue)) {
                         Event event = moveRobotToNewTile(currentPosition, newPosition);
-                        queue.peek().add(event);
+                        ((ArrayDeque<List<Event>>) queue).peekLast().add(event);
                         return moveRobot(robot, dir, amount - 1, queue);
                     }
                 } else {
@@ -259,7 +278,7 @@ public class Board implements IBoard {
         } else {
             queue.add(new ArrayList<>());
             queue.peek().add(new RemoveRobotEvent(robot));
-            // TODO : remove robot
+            robots.remove(robot);
             return true;
         }
 

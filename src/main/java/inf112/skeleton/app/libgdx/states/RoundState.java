@@ -83,11 +83,10 @@ public class RoundState extends State {
             AI.add(p2);
             AI.add(p3);
 
-            board.addRobot(p1.getRobot(), new Position(0, 0));
+            board.addRobot(p1.getRobot(), new Position(4, 4));
             board.addRobot(p2.getRobot(), new Position(9, 9));
             board.addRobot(p3.getRobot(), new Position(0, 9));
 
-            makeAITurns();
         }
 
         cardTextureGenerator = new CardTextureGenerator();
@@ -111,6 +110,8 @@ public class RoundState extends State {
 
     private void makeAITurns() {
         for (Player player : AI) {
+            // robot might be dead
+            if (!board.containsRobot(player.getRobot())) continue;
             giveCardsToAI(player);
         }
     }
