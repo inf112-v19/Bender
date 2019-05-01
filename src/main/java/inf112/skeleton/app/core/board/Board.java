@@ -356,6 +356,6 @@ public class Board implements IBoard {
             if (getTile(position).hasRobot())  continue;
             addRobot(robot, position);
         }
-        throw new RuntimeException("board is full");
+//        throw new RuntimeException("board is full");
     }
 }
