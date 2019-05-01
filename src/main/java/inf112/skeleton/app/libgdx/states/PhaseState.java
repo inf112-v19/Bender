@@ -23,7 +23,7 @@ public class PhaseState extends State {
     private long waitTimeAfterMoves;
     private boolean robotsAreMoving;
     private float progress;
-    private static float movementSpeed = 0.03f;
+    private static float movementSpeed = 0.05f;
     private Texture boardBackground;
 
     public PhaseState(GameStateManager gsm, Board board, Queue<List<Event>> robotMoves) {

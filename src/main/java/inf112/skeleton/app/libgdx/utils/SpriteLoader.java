@@ -120,7 +120,7 @@ public class SpriteLoader {
                 break;
 
             case EAST:
-                sprite.rotate(90);
+                sprite.rotate(270);
                 break;
 
             case SOUTH:
@@ -128,7 +128,7 @@ public class SpriteLoader {
                 break;
 
             case WEST:
-                sprite.rotate(270);
+                sprite.rotate(90);
                 break;
 
             default:
