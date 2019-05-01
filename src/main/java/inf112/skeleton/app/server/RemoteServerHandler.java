@@ -1,10 +1,7 @@
 package inf112.skeleton.app.server;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
@@ -13,8 +10,6 @@ import inf112.skeleton.app.core.player.Player;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
@@ -173,7 +168,6 @@ public class RemoteServerHandler extends API {
 
         @Override
         public void updateCards(Player player, IProgramCard card) {
-            System.out.println("adding to cardmap" + card);
             if (!playerCardMap.containsKey(player)) {
                 ArrayDeque<IProgramCard> queue = new ArrayDeque();
                 queue.add(card);
@@ -201,6 +195,18 @@ public class RemoteServerHandler extends API {
         @Override
         public void addPlayer(Player player) {
             players.add(player);
+        }
+
+        @Override
+        public void updatePlayer(Player player) {
+            players.remove(player);
+            players.add(player);
+        }
+
+        @Override
+        public void clearPlayerList() {
+            players.clear();
+            playerCardMap.clear();
         }
     }
 
@@ -239,14 +245,19 @@ public class RemoteServerHandler extends API {
                 handler.handleROOM(json.toJsonTree(messageData[1]).getAsJsonObject().get("roomId").getAsString());
             }
             if (messageData[0].equals("PLAYER")) {
-                System.out.println("received player");
+                if (messageData[1].equals("DONE")) {
+                }
                 GsonBuilder builder = new GsonBuilder();
                 builder.registerTypeAdapter(IProgramCard.class, new InterfaceAdapter());
                 Gson gson2 = builder.create();
                 Player player = gson2.fromJson(messageData[1], Player.class);
-                System.out.println(player);
-                handler.addPlayer(player);
-                System.out.println(handler.getPlayers());
+                if (handler.getPlayers().contains(player)) {
+                    handler.updatePlayer(player);
+                } else {
+                    System.out.println(player);
+                    handler.addPlayer(player);
+                    System.out.println(handler.getPlayers());
+                }
 //                IProgramCard card = gson2.fromJson(messageData[2], IProgramCard.class);
 //                System.out.println("card: "+ card + " " + card.getClass());
 //                try {

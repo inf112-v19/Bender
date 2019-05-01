@@ -189,20 +189,18 @@ public class RoundState extends State {
 
     public void handleNextStageMultiplayer() {
         ArrayList<Player> players = mainHandler.getPlayers();
-        System.out.println("players at roundstate:  " + players);
-
+        System.out.println("players in roundstate: " + players);
         for (Player p : players) {
             if (!board.containsRobot(p.getRobot())) {
-                System.out.println("adding robot"  + p.getRobot());
-                board.addRobot(p.getRobot(), new Position(0,2));
+                board.addRobot(p.getRobot());
             }
             IRobot robot = board.getRobot(p.getRobot());
             ArrayList<IProgramCard> cardList = p.getCards();
             for (IProgramCard card : cardList) {
-                System.out.println("adding card to robot:" + card);
                 robot.addCard(card);
             }
         }
+//        mainHandler.clearPlayerList();
 //        System.out.println("cards int roundstate: " + mainHandler.getPlayerCardMap());
 //        for (Player player : mainHandler.getPlayerCardMap().keySet()) {
 //            if (!board.containsRobot(player.getRobot())) {

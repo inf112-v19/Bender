@@ -351,7 +351,7 @@ public class Board implements IBoard {
 
     public boolean containsRobot(IRobot robot) {
         for (IRobot r : robots.keySet()) {
-            if (r.equals(robot)) return true;
+            if (r.getId().equals(robot.getId())) return true;
         }
         return false;
     }

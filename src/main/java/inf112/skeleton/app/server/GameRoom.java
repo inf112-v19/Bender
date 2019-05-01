@@ -15,7 +15,7 @@ public class GameRoom {
     private static boolean selectionDone;
     private String roomId;
     private Board board;
-    private static HashMap<Player, WebSocket> connections;
+    private static HashMap<Player, WebSocket> connections; //TODO update to keep the same players
     private static HashMap<WebSocket, ArrayDeque<IProgramCard>> collectiveCards;
 
     private Gson json = new Gson();
@@ -36,8 +36,6 @@ public class GameRoom {
             finalMap.put(getPlayer(key), collectiveCards.get(key));
 
         }
-        System.out.println("final map in the game room:" + finalMap);
-        System.out.println("collecitve map in the game room :" + collectiveCards);
         return finalMap;
     }
 
@@ -60,15 +58,6 @@ public class GameRoom {
         return roomId;
     }
 
-    public void startGame(List<WebSocket> sockets) {
-        for (WebSocket socket : sockets) {
-            Player player = new Player(socket.getRemoteSocketAddress().toString());
-            connections.put(player, socket);
-            socket.send("RESPONSE" + json.toJson(board));
-            socket.send("PLAYER " + json.toJson(player));
-        }
-        // deal cards to players
-    }
 
     // client sends cards to server.
     //server sends list of players and their chosen cards to the client
@@ -76,7 +65,6 @@ public class GameRoom {
     //board is updated at server
     //repeat
     public void addChosenCards(WebSocket web, ArrayDeque<IProgramCard> cards) {
-        connections.put(new Player(web.getRemoteSocketAddress().toString()), web); // temporary, until startGame(); is in use
         collectiveCards.put(web, cards);
         if (collectiveCards.keySet().size() == totalConnections) {
             selectionDone = true;
@@ -88,7 +76,6 @@ public class GameRoom {
     }
     public void clearCards() {
         collectiveCards.clear();
-        connections.clear();
     }
     public void setTotalConnections(int n) {
         totalConnections = n;
@@ -96,5 +83,9 @@ public class GameRoom {
 
     public void setStatus(boolean b) {
         this.selectionDone = false;
+    }
+
+    public void addPlayer(WebSocket web) {
+        connections.put(new Player(web.getRemoteSocketAddress().toString()), web); // temporary, until startGame(); is in use
     }
 }

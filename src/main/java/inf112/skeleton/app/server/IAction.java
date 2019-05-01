@@ -42,4 +42,7 @@ public interface IAction {
     boolean getRecieved();
 
     void addPlayer(Player player);
+    void updatePlayer(Player player);
+
+    void clearPlayerList();
 }

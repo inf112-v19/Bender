@@ -34,12 +34,15 @@ public class ServerMain extends WebSocketServer {
         System.out.println("new connection to " + conn.getRemoteSocketAddress());
         webSocket.add(conn);
         gameRoom.setTotalConnections(webSocket.size());
+        gameRoom.addPlayer(conn);
         System.out.println("total connections: " + webSocket.size());
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         System.out.println("closed " + conn.getRemoteSocketAddress() + " with exit code " + code + " additional info: " + reason);
+        gameRoom.setTotalConnections(webSocket.size());
+
 
 //        userRoomPairs.remove(conn);
     }
@@ -115,6 +118,7 @@ public class ServerMain extends WebSocketServer {
             String playerData = gson2.toJson(player);
             this.broadcast("PLAYER " + playerData);
         }
+        this.broadcast("PLAYER DONE");
 
 //        System.out.println("map in server sending: " + map);
 //        for (Player player : map.keySet())
