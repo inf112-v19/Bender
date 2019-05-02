@@ -56,5 +56,5 @@
 * [x] Fungerende samlebånd på brettet som flytter robotene
 * [x] Fungerende samlebånd på brettet som flytter robotene
 * [x] Game over etter 3 tapte liv
-* [x] Multiplayer over internett (ikke bare LAN! ;) )
+* [x] Multiplayer over internett (ikke bare LAN! ;) 
 * [x] Samlebånd som går i dobbelt tempo
