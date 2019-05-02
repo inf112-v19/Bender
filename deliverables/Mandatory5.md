@@ -27,32 +27,34 @@
 * Hva er vi fornøyd med?
     * Har blitt flinke til å bruke pull requests. Er lett å fange opp småfeil + alle får mer oversikt over hva som skjer i koden.
     * Fungerer bra at vi har alt på et sted, github. (code, project board, pull requests, issues, etc ...)
+    * Blitt gode på å involvere andre og f.eks. be om spesifikk kodesupplement eller ta over oppgaver vi ikke rekker selv
 * Hvis vi skulle fortsatt på prosjektet, hva ville vi justert?
     * Strengere krav til kodekvalitet
     * Hatt mer fokus på å rydde i kode (refakturering)
     * Vi kunne dokumentert mer av koden, for eksempel i github wikien.
-    * Vi kunne skrevet flere tester
+    * Vi kunne skrevet flere tester, spesielt underveis når koden er "fersk"
     * Vi kunne satt opp en byggserver
         * For automatisk testing og bygging av prosjektet
 * Hva er det viktigste vi har lært? 
-    * Erfaring med gruppearbeid.
+    * Erfaring med gruppearbeid, styring og arbeidsfordeling.
     * Metoder for hvordan man jobber sammen i en kodebase.
         * git
         * pull requests
         * kanban
         * gruppemøter
         * etc ..
-
+     * At ting tar lengre tid enn man tror.
+     
 ## Deloppgave 2
 ### Ferdigstilte krav
 * [x] Man må kunne spille en komplett runde
-* [ ] Man må kunne vinne spillet ved å besøke siste flagg
+* [v] Man må kunne vinne spillet ved å besøke siste flagg
 * [x] Det skal være hull på brettet
 * [x] Roboter kan dytte hverandre 
-* [ ] Skademekanismer (spilleren får færre kort ved skade)
-* [ ] Spillmekanismer for å skyte andre spillere innen rekkevidde med laser som peker rett fram
+* [x] Skademekanismer (spilleren får færre kort ved skade)
+* [v] Spillmekanismer for å skyte andre spillere innen rekkevidde med laser som peker rett fram
 * [x] Fungerende samlebånd på brettet som flytter robotene
-* [x] Fungerende gyroer på brettet som flytter robotene
-* [ ] Game over etter 3 tapte liv
-* [ ] Multiplayer over internett (ikke bare LAN! ;) )
+* [x] Fungerende samlebånd på brettet som flytter robotene
+* [v] Game over etter 3 tapte liv
+* [x] Multiplayer over internett (ikke bare LAN! ;) )
 * [x] Samlebånd som går i dobbelt tempo
