@@ -83,7 +83,7 @@ public class ServerMain extends WebSocketServer {
                     builder.registerTypeAdapter(IProgramCard.class, new InterfaceAdapter());
                     Gson gson2 = builder.create();
                     IProgramCard card = gson2.fromJson(messageData[1], IProgramCard.class);
-                    System.out.println("card: "+ card + " conn: "+ conn);
+                    System.out.println("card: " + card + " conn: " + conn);
                     System.out.println("adding to map");
                     addToMap(card, conn);
                     System.out.println("adding to map2");
@@ -143,40 +143,22 @@ public class ServerMain extends WebSocketServer {
         Gson gson2 = builder.create();
         Set<Player> map = gameRoom.getResponseMap().keySet();
         for (Player player : map) {
-            for (IProgramCard card : gameRoom.getResponseMap().get(player)) {
+            for (IProgramCard card : gameRoom.getResponseMap().get(player))
                 player.addCard(card);
-            }
 
             String playerData = gson2.toJson(player);
             this.broadcast("PLAYER " + playerData);
-            System.out.println("sending " + playerData);
-            System.out.println(player);
         }
         gameRoom.clearCards();
-//        this.broadcast("PLAYER DONE");
-
-//        System.out.println("map in server sending: " + map);
-//        for (Player player : map.keySet())
-//            for (ArrayDeque<IProgramCard> cardList : map.values())
-//                for (IProgramCard card : cardList) {
-//                    GsonBuilder builder = new GsonBuilder();
-//                    builder.registerTypeAdapter(IProgramCard.class, new InterfaceAdapter());
-//                    Gson gson2 = builder.create();
-//                    String cardData = gson2.toJson(card);
-//                    String playerData = gson.toJson(player, player.getClass());
-//                    this.broadcast("PLAYER " + playerData + " " + cardData);
-
     }
 
 
     public void addCards(WebSocket conn, ArrayDeque<IProgramCard> chosenCards) {
         gameRoom.addChosenCards(conn, chosenCards);
-//        chosenCards.clear();
     }
 
 
     private GameRoom createRoom() {
-
         return new GameRoom("SingleRoom");
     }
 

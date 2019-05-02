@@ -384,14 +384,11 @@ public class Board implements IBoard {
     public void addRobot(IRobot robot) {
         for (Position position : startingPositions) {
             if (getTile(position).hasRobot()) {
-//                System.out.println(getTile(position).getRobot() + " is at " + getTile(position));
                 continue;
             }
             addRobot(robot, position);
-//            System.out.println("robot added to board");
             break;
         }
-//        System.out.println("robots on board : " + this.getRobots());
     }
 
     public void removeRobots() {

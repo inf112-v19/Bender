@@ -8,7 +8,6 @@ import org.java_websocket.WebSocket;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
-import java.util.List;
 
 public class GameRoom {
 
@@ -17,8 +16,6 @@ public class GameRoom {
     private Board board;
     private static HashMap<Player, WebSocket> connections; //TODO update to keep the same players
     private static HashMap<WebSocket, ArrayDeque<IProgramCard>> collectiveCards;
-
-    private Gson json = new Gson();
     private int totalConnections;
 
     public GameRoom(String roomId) {
@@ -31,15 +28,9 @@ public class GameRoom {
 
 
     public HashMap<Player, ArrayDeque<IProgramCard>> getResponseMap() {
-        System.out.println("total connections in gameroom" + connections);
-        System.out.println("collective cards uniqueness: " + collectiveCards.values());
         HashMap<Player, ArrayDeque<IProgramCard>> finalMap = new HashMap<>();
-        System.out.println();
-        for (WebSocket key : connections.values()) {
+        for (WebSocket key : connections.values())
             finalMap.put(getPlayer(key), collectiveCards.get(key));
-        }
-        for (ArrayDeque arrayDeque: finalMap.values())
-            System.out.println("uniqueness: " + arrayDeque);
         return finalMap;
     }
 
@@ -70,24 +61,21 @@ public class GameRoom {
     //repeat
     public void addChosenCards(WebSocket web, ArrayDeque<IProgramCard> cards) {
         collectiveCards.put(web, cards);
-        if (collectiveCards.keySet().size() == totalConnections) {
+        if (collectiveCards.keySet().size() == totalConnections)
             selectionDone = true;
-        }
     }
 
     public void updateBoard(Board board) {
         this.board = board;
         System.out.println("board updated");
     }
-    public void clearCards() {
-        for(Player p : connections.keySet()) {
-            System.out.println("before clearing cards:" + p.getCards());
-            p.removeAllCards();
-            System.out.println("after clearing cards:" + p.getCards());
 
-        }
+    public void clearCards() {
+        for (Player p : connections.keySet())
+            p.removeAllCards();
         collectiveCards.clear();
     }
+
     public void setTotalConnections(int n) {
         totalConnections = n;
     }

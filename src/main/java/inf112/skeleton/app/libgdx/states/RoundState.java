@@ -193,38 +193,15 @@ public class RoundState extends State {
 
     public void handleNextStageMultiplayer() {
         ArrayList<Player> players = mainHandler.getPlayers();
-        System.out.println("players in roundstate: " + players);
-        System.out.println("robots:" + board.getRobots());
         for (Player p : players) {
-            System.out.println("player robot: " + p.getRobot());
-            System.out.println("cards: " + p.getCards());
-            if (!board.containsRobot(p.getRobot())) {
+            if (!board.containsRobot(p.getRobot()))
                 board.addRobot(p.getRobot());
-                System.out.println("adding a robot " + p.getRobot());
-            }
-            System.out.println("robots after addition: " + board.getRobots());
+
             IRobot robot = board.getRobot(p.getRobot());
             ArrayList<IProgramCard> cardList = p.getCards();
-
             for (int i = cardList.size() - 1; i >= 0; i--)
                 robot.addCard(cardList.get(i));
-
-
         }
-
-//        mainHandler.clearPlayerList();
-//        System.out.println("cards int roundstate: " + mainHandler.getPlayerCardMap());
-//        for (Player player : mainHandler.getPlayerCardMap().keySet()) {
-//            if (!board.containsRobot(player.getRobot())) {
-//                board.addRobot(player.getRobot());
-//            }
-//            IRobot robot = board.getRobot(player.getRobot());
-//            for (IProgramCard card : mainHandler.getPlayerCardMap().get(player)) {
-//                System.out.println("adding: "+ card);
-//                robot.addCard(card);
-//            }
-//        }
-
         Board boardCopy = board.copy();
         Queue<List<Event>> events = board.round();
         gsm.push(new PhaseState(gsm, boardCopy, events));
@@ -234,10 +211,6 @@ public class RoundState extends State {
     //sends a request to server every n seconds asking whether players have selected their cards
     private void receiveServerResponse() {
         mainHandler.handleServerResponse();
-    }
-
-    private void giveAllPLayersCards() {
-
     }
 
     private void sendToServer() {
