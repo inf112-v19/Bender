@@ -14,6 +14,14 @@ public class LaserEvent implements Event {
         this.endPosition = endPosition;
     }
 
+    public Position getEndPosition (Event laserEvent) {
+        return this.endPosition;
+    }
+
+    public Position getStartPosition (Event laserEvent) {
+        return this.startPosition;
+    }
+
     @Override
     public void apply(IBoard board) {
         IRobot robot = board.getRobot(endPosition);
