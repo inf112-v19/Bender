@@ -333,7 +333,7 @@ public class RoundState extends State {
 
     @Override
     public void update(float dt) {
-        if (!updated) {
+        if (!updated && !singlePlayer) {
             updateServerBoard();
             updated = true;
         }
