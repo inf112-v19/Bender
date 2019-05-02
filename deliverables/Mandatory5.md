@@ -5,6 +5,8 @@
 
 ### Gruppedynamikk
 * Bra gruppedynamikk! :D
+* Veksler fint på hverandre etter kapasitet, og fordeler oppgaver man ikke rekker selv.
+* Fordeling av oppgaver rundt større kodemasse, fungerer veldig bra.
 
 ### Kommunikasjon
 * Pull requests and github issues: diskusjoner om implementasjonsdetaljer
