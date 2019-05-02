@@ -48,7 +48,7 @@
 ## Deloppgave 2
 ### Ferdigstilte krav
 * [x] Man må kunne spille en komplett runde
-* [v] Man må kunne vinne spillet ved å besøke siste flagg
+* [ ] Man må kunne vinne spillet ved å besøke siste flagg
 * [x] Det skal være hull på brettet
 * [x] Roboter kan dytte hverandre 
 * [x] Skademekanismer (spilleren får færre kort ved skade)
