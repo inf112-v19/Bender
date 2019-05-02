@@ -13,6 +13,7 @@ import inf112.skeleton.app.core.board.events.RotateEvent;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
+import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.libgdx.*;
@@ -33,6 +34,7 @@ public class RoundState extends State {
     private int numberOfCards = 5;
     private Player player;
     private ArrayList<Player> AI;
+    private boolean updated;
 
     private CardTextureGenerator cardTextureGenerator;
     private Stage stage;
@@ -98,6 +100,7 @@ public class RoundState extends State {
     }
 
     private void initializeObjects() throws URISyntaxException {
+        updated = false;
         serverResponse = false;
         collectiveCards = new HashMap<>();
         chosenCards = new ArrayDeque();
@@ -191,16 +194,24 @@ public class RoundState extends State {
     public void handleNextStageMultiplayer() {
         ArrayList<Player> players = mainHandler.getPlayers();
         System.out.println("players in roundstate: " + players);
+        System.out.println("robots:" + board.getRobots());
         for (Player p : players) {
+            System.out.println("player robot: " + p.getRobot());
+            System.out.println("cards: " + p.getCards());
             if (!board.containsRobot(p.getRobot())) {
                 board.addRobot(p.getRobot());
+                System.out.println("adding a robot " + p.getRobot());
             }
+            System.out.println("robots after addition: " + board.getRobots());
             IRobot robot = board.getRobot(p.getRobot());
             ArrayList<IProgramCard> cardList = p.getCards();
-            for (IProgramCard card : cardList) {
-                robot.addCard(card);
-            }
+
+            for (int i = cardList.size() - 1; i >= 0; i--)
+                robot.addCard(cardList.get(i));
+
+
         }
+
 //        mainHandler.clearPlayerList();
 //        System.out.println("cards int roundstate: " + mainHandler.getPlayerCardMap());
 //        for (Player player : mainHandler.getPlayerCardMap().keySet()) {
@@ -217,6 +228,7 @@ public class RoundState extends State {
         Board boardCopy = board.copy();
         Queue<List<Event>> events = board.round();
         gsm.push(new PhaseState(gsm, boardCopy, events));
+        updated = false;
     }
 
     //sends a request to server every n seconds asking whether players have selected their cards
@@ -348,6 +360,10 @@ public class RoundState extends State {
 
     @Override
     public void update(float dt) {
+        if (!updated) {
+            updateServerBoard();
+            updated = true;
+        }
         handleInput();
     }
 

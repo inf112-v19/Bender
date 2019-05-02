@@ -31,11 +31,15 @@ public class GameRoom {
 
 
     public HashMap<Player, ArrayDeque<IProgramCard>> getResponseMap() {
+        System.out.println("total connections in gameroom" + connections);
+        System.out.println("collective cards uniqueness: " + collectiveCards.values());
         HashMap<Player, ArrayDeque<IProgramCard>> finalMap = new HashMap<>();
-        for (WebSocket key : collectiveCards.keySet()) {
+        System.out.println();
+        for (WebSocket key : connections.values()) {
             finalMap.put(getPlayer(key), collectiveCards.get(key));
-
         }
+        for (ArrayDeque arrayDeque: finalMap.values())
+            System.out.println("uniqueness: " + arrayDeque);
         return finalMap;
     }
 
@@ -73,8 +77,15 @@ public class GameRoom {
 
     public void updateBoard(Board board) {
         this.board = board;
+        System.out.println("board updated");
     }
     public void clearCards() {
+        for(Player p : connections.keySet()) {
+            System.out.println("before clearing cards:" + p.getCards());
+            p.removeAllCards();
+            System.out.println("after clearing cards:" + p.getCards());
+
+        }
         collectiveCards.clear();
     }
     public void setTotalConnections(int n) {
@@ -86,6 +97,7 @@ public class GameRoom {
     }
 
     public void addPlayer(WebSocket web) {
+        System.out.println("adding player: " + web.getRemoteSocketAddress().toString());
         connections.put(new Player(web.getRemoteSocketAddress().toString()), web); // temporary, until startGame(); is in use
     }
 }

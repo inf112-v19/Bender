@@ -112,7 +112,7 @@ public class RemoteServerHandler extends API {
     public static class mainHandler implements IAction {
         boolean received = false;
         private HashMap<Player, ArrayDeque<IProgramCard>> playerCardMap = new HashMap<>();
-        public ArrayList<Player> players = new ArrayList<>();
+        private ArrayList<Player> players = new ArrayList<>();
 
         @Override
 
@@ -199,14 +199,35 @@ public class RemoteServerHandler extends API {
 
         @Override
         public void updatePlayer(Player player) {
-            players.remove(player);
-            players.add(player);
+            System.out.println("list before player removal " + players);
+            for (int i = 0; i < players.size(); i++) {
+                if (players.get(i).getUsername().equals(player.getUsername())) {
+                    System.out.println("found matching player");
+                    players.get(i).update(player);
+                }
+            }
+//            players.remove(player);
+            System.out.println("list after player removal " + players);
+
+            System.out.println("list after player addition " + players);
+
         }
 
         @Override
         public void clearPlayerList() {
-            players.clear();
+//            players.clear();
             playerCardMap.clear();
+        }
+
+        @Override
+        public boolean containsPlayer(Player player) {
+            System.out.println("usernames working ");
+            for (Player p : getPlayers()) {
+                System.out.println("usernames:" + p.getUsername() + " " + player.getUsername());
+                if (player.getUsername().equals(p.getUsername()))
+                    return true;
+            }
+            return false;
         }
     }
 
@@ -245,19 +266,22 @@ public class RemoteServerHandler extends API {
                 handler.handleROOM(json.toJsonTree(messageData[1]).getAsJsonObject().get("roomId").getAsString());
             }
             if (messageData[0].equals("PLAYER")) {
-                if (messageData[1].equals("DONE")) {
-                }
                 GsonBuilder builder = new GsonBuilder();
                 builder.registerTypeAdapter(IProgramCard.class, new InterfaceAdapter());
                 Gson gson2 = builder.create();
+
                 Player player = gson2.fromJson(messageData[1], Player.class);
-                if (handler.getPlayers().contains(player)) {
+                System.out.println("player in ");
+                if (handler.containsPlayer(player)) {
+                    System.out.println("found duplicate");
                     handler.updatePlayer(player);
                 } else {
-                    System.out.println(player);
+                    System.out.println("adding new player: " + player.getUsername());
                     handler.addPlayer(player);
-                    System.out.println(handler.getPlayers());
+                    System.out.println("player list: " + handler.getPlayers());
                 }
+
+
 //                IProgramCard card = gson2.fromJson(messageData[2], IProgramCard.class);
 //                System.out.println("card: "+ card + " " + card.getClass());
 //                try {

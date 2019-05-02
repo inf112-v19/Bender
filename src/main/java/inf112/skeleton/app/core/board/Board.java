@@ -18,7 +18,7 @@ public class Board implements IBoard {
     private int height;
     private static int numberOfFlags;
 
-    private static Position[] startingPositions = {new Position(0, 0), new Position(9, 0), new Position(0, 9), new Position(9, 9)};
+    private static Position[] startingPositions = {new Position(0, 0), new Position(9, 0), new Position(0, 9), new Position(9, 9),new Position(4, 2)};
 
     private ITile[][] grid;
     private HashMap<IRobot, Position> robots;
@@ -349,11 +349,13 @@ public class Board implements IBoard {
     }
 
     public IRobot getRobot(IRobot robot) {
-        for (IRobot r : robots.keySet()) {
+        for (IRobot r : getRobots()) {
             if (r.equals(robot)) {
                 return r;
             }
         }
+        System.out.println(robot + " not on board");
+        System.out.println("total robots in board class" + this.getRobots());
         throw new IllegalArgumentException("robot not on board");
     }
 
@@ -381,9 +383,18 @@ public class Board implements IBoard {
 
     public void addRobot(IRobot robot) {
         for (Position position : startingPositions) {
-            if (getTile(position).hasRobot())  continue;
+            if (getTile(position).hasRobot()) {
+//                System.out.println(getTile(position).getRobot() + " is at " + getTile(position));
+                continue;
+            }
             addRobot(robot, position);
+//            System.out.println("robot added to board");
+            break;
         }
-//        throw new RuntimeException("board is full");
+//        System.out.println("robots on board : " + this.getRobots());
+    }
+
+    public void removeRobots() {
+        robots.clear();
     }
 }

@@ -45,4 +45,6 @@ public interface IAction {
     void updatePlayer(Player player);
 
     void clearPlayerList();
+
+    boolean containsPlayer(Player player);
 }
