@@ -55,6 +55,6 @@
 * [v] Spillmekanismer for å skyte andre spillere innen rekkevidde med laser som peker rett fram
 * [x] Fungerende samlebånd på brettet som flytter robotene
 * [x] Fungerende samlebånd på brettet som flytter robotene
-* [v] Game over etter 3 tapte liv
+* [x] Game over etter 3 tapte liv
 * [x] Multiplayer over internett (ikke bare LAN! ;) )
 * [x] Samlebånd som går i dobbelt tempo
