@@ -45,7 +45,7 @@ public class Board implements IBoard {
             this.width = 10;
             this.robots = new HashMap<>();
             try {
-                this.grid = BoardLoader.loadBoard("boards/VaultBoard_Corr_25apr.csv");
+                this.grid = BoardLoader.loadBoard("boards/RiskyExchange.csv");
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException("something went wring while loading the board");

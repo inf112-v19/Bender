@@ -1,6 +1,5 @@
 package inf112.skeleton.app.core.tiles;
 
-import inf112.skeleton.app.core.enums.Direction;
 import static org.junit.Assert.*;
 
 import inf112.skeleton.app.core.enums.DirectionChange;

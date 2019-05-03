@@ -6,7 +6,6 @@ import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.enums.DirectionChange;
 import inf112.skeleton.app.core.tiles.*;
 import inf112.skeleton.app.core.flag.*;
-
 import java.io.*;
 
 public class BoardLoader {
@@ -15,7 +14,7 @@ public class BoardLoader {
      * Creates an ITile based on a text file on the CSV format:
      * https://docs.google.com/spreadsheets/d/16Zcec6W2YBtkaVKUAjNydJ6Xspv5uP9LYe6uhFLXc_c/
      *
-     * @param fl
+     * @param path
      * @return
      * @throws IOException
      */
