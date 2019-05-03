@@ -1,0 +1,27 @@
+
+textfield-roomid.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cursor
+  rotate: false
+  xy: 509, 448
+  size: 1, 60
+  orig: 1, 60
+  offset: 0, 0
+  index: -1
+HELR45W
+  rotate: false
+  xy: 1, 277
+  size: 506, 231
+  orig: 506, 231
+  offset: 0, 0
+  index: -1
+textfield-roomid-background
+  rotate: false
+  xy: 1, 175
+  size: 446, 100
+  orig: 446, 100
+  offset: 0, 0
+  index: -1
