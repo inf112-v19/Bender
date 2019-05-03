@@ -1,0 +1,29 @@
+{
+"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+	"HELR45W": {
+		"file": "HELR45W.fnt"
+	}
+},
+"com.badlogic.gdx.graphics.Color": {
+	"RGBA_222_222_222_255": {
+		"r": 0.91666675,
+		"g": 0.91666675,
+		"b": 0.91666675,
+		"a": 1
+	},
+	"RGBA_65_65_65_255": {
+		"r": 0.25666666,
+		"g": 0.25666666,
+		"b": 0.25666666,
+		"a": 1
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+	"default": {
+		"font": "HELR45W",
+		"fontColor": "RGBA_222_222_222_255",
+		"background": "textfield-roomid-background",
+		"cursor": "cursor"
+	}
+}
+}

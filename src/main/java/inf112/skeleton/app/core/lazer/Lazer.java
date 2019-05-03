@@ -15,7 +15,7 @@ import static inf112.skeleton.app.core.enums.Direction.*;
 public class Lazer {
 
     public static Event shootLazer(Robot robot, Board board) throws Exception {
-        Sound effect = new Sound();
+        //Sound effect = new Sound();
 
         Position checkPosition = new Position(0, 0);
         Direction dir = robot.getDirection();
@@ -39,7 +39,7 @@ public class Lazer {
                     // Robot has been found, damage and return position
                     board.getRobot(checkPosition).takeEnergy(1);
                     foundPosition=true;
-                    effect.laserHit(); // consider placement of function for best syncronization with graphics
+                    //effect.laserHit(); // consider placement of function for best syncronization with graphics
                     break;
                 } else if (tile.hasWall(Direction.SOUTH)) {
                     checkPosition = new Position(PosX, i - 1);
@@ -85,7 +85,7 @@ public class Lazer {
                     board.getRobot(checkPosition).takeEnergy(1);
                     foundPosition=true;
 
-                    effect.laserHit(); // consider placement of function for best syncronization with graphics
+                    //effect.laserHit(); // consider placement of function for best syncronization with graphics
                     break;
                 } else if (tile.hasWall(EAST)) {
                     foundPosition=true;
@@ -107,7 +107,7 @@ public class Lazer {
                     // Robot has been found, damage and return position
                     board.getRobot(checkPosition).takeEnergy(1);
                     foundPosition=true;
-                    effect.laserHit(); // consider placement of function for best syncronization with graphics
+                    //effect.laserHit(); // consider placement of function for best syncronization with graphics
                     break;
                 } else if (tile.hasWall(EAST)) {
                     checkPosition = new Position(i - 1, PosY);

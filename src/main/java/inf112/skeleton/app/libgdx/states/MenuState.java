@@ -10,10 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import inf112.skeleton.app.core.board.Board;
 
-import inf112.skeleton.app.core.player.Player;
+import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.Position;
+import inf112.skeleton.app.core.player.Player;
 import inf112.skeleton.app.libgdx.RoboRally;
 
 import java.net.URISyntaxException;
@@ -88,7 +88,7 @@ public class MenuState extends State {
             font.dispose();
             createChoiceButtons();
         }
-        if (multiplayer || singleplayer) {
+        if (singleplayer) {
             Board board = new Board("test1", 10, 10);
             Player player = new Player("");
             board.addRobot(player.getRobot(), new Position(5, 5));
@@ -97,6 +97,8 @@ public class MenuState extends State {
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
+        } else if (multiplayer) {
+            gsm.set(new ChooseRoomState(gsm));
             dispose();
         }
     }
@@ -105,8 +107,8 @@ public class MenuState extends State {
         int y = (RoboRally.HEIGHT / 2) - 50;
         int x = (RoboRally.WIDTH / 2) - 100;
 
-        customButton[1] = new CustomImageButton("buttons/singleplayer.png", "buttons/singleplayer.png", x, y - 75/2, 150, 100);
-        customButton[2] = new CustomImageButton("buttons/multiplayer.png", "buttons/multiplayer.png", x, y + 75/2, 150, 100);
+        customButton[1] = new CustomImageButton("buttons/singleplayer.png", "buttons/singleplayer.png", x, y - 75 / 2, 150, 100);
+        customButton[2] = new CustomImageButton("buttons/multiplayer.png", "buttons/multiplayer.png", x, y + 75 / 2, 150, 100);
         button[1] = customButton[1].getButton();
         button[2] = customButton[2].getButton();
         button[1].addListener(new InputListener() {
