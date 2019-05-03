@@ -28,6 +28,8 @@ public interface ITile {
 
     boolean canEnter(Direction direction);
 
+    boolean canExit(Direction direction);
+
     ITile copy();
 
     void setFlag(IFlag flag);

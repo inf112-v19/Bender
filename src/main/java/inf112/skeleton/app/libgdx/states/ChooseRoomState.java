@@ -128,7 +128,7 @@ public class ChooseRoomState extends State {
         testBoard.addRobot(testPlayer.getRobot(), new Position(5, 5));
 
         try {
-            gsm.set(new RoundState(gsm, testBoard, testPlayer));
+            gsm.set(new RoundState(gsm, testBoard, testPlayer, true));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

@@ -1,10 +1,10 @@
 package inf112.skeleton.app.server;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import inf112.skeleton.app.core.board.Board;
 import inf112.skeleton.app.core.board.IBoard;
 import inf112.skeleton.app.core.cards.IProgramCard;
-import inf112.skeleton.app.core.player.IPlayer;
 import inf112.skeleton.app.core.player.Player;
 
 import org.java_websocket.client.WebSocketClient;
@@ -63,6 +63,7 @@ public class RemoteServerHandler extends API {
     public WebSocketClient getClient() {
         return client;
     }
+
     public void connectClient() {
         client.connect();
     }
@@ -87,7 +88,7 @@ public class RemoteServerHandler extends API {
 
             client.newClient();
         }
-        while(sc.hasNext()) {
+        while (sc.hasNext()) {
             String next = sc.nextLine();
             if (next.equals("stop")) break;
             client.client.send(next);
@@ -110,28 +111,37 @@ public class RemoteServerHandler extends API {
 
     public static class mainHandler implements IAction {
         boolean received = false;
-        public HashMap<Player, ArrayDeque<IProgramCard>> playerCardMap;
+        private HashMap<Player, ArrayDeque<IProgramCard>> playerCardMap = new HashMap<>();
+        private ArrayList<Player> players = new ArrayList<>();
+
         @Override
 
         public void handleCards(ArrayDeque<IProgramCard> cards) {
-            String cardsAsString = json.toJson(cards);
-            client.send("CARDS " + cardsAsString);
+            for (IProgramCard card : cards) {
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(IProgramCard.class, new InterfaceAdapter());
+                Gson gson2 = builder.create();
+                String cardsAsString = gson2.toJson(card, IProgramCard.class);
+                client.send("CARDS " + cardsAsString);
+            }
+            client.send("CARDS DONE");
+
         }
 
 
         @Override
         public void handleERROR(String message) {
-            System.err.println("ERROR: "+message);
+            System.err.println("ERROR: " + message);
         }
 
         @Override
         public void handleWARNING(String message) {
-            System.out.println("WARNING: "+message);
+            System.out.println("WARNING: " + message);
         }
 
         @Override
         public void handleINFO(String message) {
-            System.out.println("INFO: "+message);
+            System.out.println("INFO: " + message);
         }
 
         @Override
@@ -140,7 +150,7 @@ public class RemoteServerHandler extends API {
 
         @Override
         public void handleROOM(String roomId) {
-            System.out.println("ROOM: "+roomId);
+            System.out.println("ROOM: " + roomId);
         }
 
         public void handleServerResponse() {
@@ -155,24 +165,67 @@ public class RemoteServerHandler extends API {
         public void handleBoardUpdate(Board board) {
             client.send("UPDATEBOARD " + json.toJson(board));
         }
+
         @Override
-        public void updateCards(HashMap hashMap) {
-            this.playerCardMap = hashMap;
+        public void updateCards(Player player, IProgramCard card) {
+            if (!playerCardMap.containsKey(player)) {
+                ArrayDeque<IProgramCard> queue = new ArrayDeque();
+                queue.add(card);
+                playerCardMap.put(player, queue);
+            } else {
+                ArrayDeque<IProgramCard> queue = playerCardMap.get(player);
+                queue.add(card);
+                playerCardMap.put(player, queue);
+            }
         }
 
-        public boolean getReceived() {
+        public HashMap<Player, ArrayDeque<IProgramCard>> getPlayerCardMap() {
+            return playerCardMap;
+        }
+
+        public ArrayList<Player> getPlayers() {
+            return players;
+        }
+
+        public boolean getRecieved() {
             return this.received;
+        }
+
+        @Override
+        public void addPlayer(Player player) {
+            players.add(player);
+        }
+
+        @Override
+        public void updatePlayer(Player player) {
+            for (int i = 0; i < players.size(); i++)
+                if (players.get(i).getUsername().equals(player.getUsername())) {
+                    players.get(i).update(player);
+                }
+        }
+
+        @Override
+        public void clearPlayerList() {
+            playerCardMap.clear();
+        }
+
+        @Override
+        public boolean containsPlayer(Player player) {
+            for (Player p : getPlayers())
+                if (player.getUsername().equals(p.getUsername()))
+                    return true;
+            return false;
         }
     }
 
     /**
      * WSC class for the websocketclient implementation
-     *
      */
     private class WSC extends WebSocketClient {
         public WSC(URI serverUri) {
             super(serverUri);
         }
+
         public boolean received;
 
         @Override
@@ -188,7 +241,7 @@ public class RemoteServerHandler extends API {
 
         @Override
         public void onMessage(String message) {
-            String[] messageData = message.split(" ", 2);
+            String[] messageData = message.split(" ", 3);
             System.out.println("received message: " + message);
             if (messageData[0].equals("BOARD")) {
                 handler.handleBoard(json.fromJson(messageData[1], Board.class));
@@ -199,13 +252,26 @@ public class RemoteServerHandler extends API {
             if (messageData[0].equals("ROOM")) {
                 handler.handleROOM(json.toJsonTree(messageData[1]).getAsJsonObject().get("roomId").getAsString());
             }
+            if (messageData[0].equals("PLAYER")) {
+                GsonBuilder builder = new GsonBuilder();
+                builder.registerTypeAdapter(IProgramCard.class, new InterfaceAdapter());
+                Gson gson2 = builder.create();
+
+                Player player = gson2.fromJson(messageData[1], Player.class);
+                if (handler.containsPlayer(player)) {
+                    handler.updatePlayer(player);
+                } else {
+                    System.out.println("adding new player: " + player.getUsername());
+                    handler.addPlayer(player);
+                }
+
+            }
             if (messageData[0].equals("SERVERRESPONSE")) {
                 handler.received(true);
-                handler.updateCards(json.fromJson(messageData[1], HashMap.class));
-                System.out.println("client received");
                 client.send("CLEAR");
             }
         }
+
 
         @Override
         public void onMessage(ByteBuffer message) {

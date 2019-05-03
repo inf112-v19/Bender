@@ -8,17 +8,14 @@ import org.java_websocket.WebSocket;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
-import java.util.List;
 
 public class GameRoom {
 
     private static boolean selectionDone;
     private String roomId;
     private Board board;
-    private static HashMap<Player, WebSocket> connections;
+    private static HashMap<Player, WebSocket> connections; //TODO update to keep the same players
     private static HashMap<WebSocket, ArrayDeque<IProgramCard>> collectiveCards;
-
-    private Gson json = new Gson();
     private int totalConnections;
 
     public GameRoom(String roomId) {
@@ -32,7 +29,7 @@ public class GameRoom {
 
     public HashMap<Player, ArrayDeque<IProgramCard>> getResponseMap() {
         HashMap<Player, ArrayDeque<IProgramCard>> finalMap = new HashMap<>();
-        for (WebSocket key : collectiveCards.keySet())
+        for (WebSocket key : connections.values())
             finalMap.put(getPlayer(key), collectiveCards.get(key));
         return finalMap;
     }
@@ -56,15 +53,6 @@ public class GameRoom {
         return roomId;
     }
 
-    public void startGame(List<WebSocket> sockets) {
-        for (WebSocket socket : sockets) {
-            Player player = new Player(socket.getRemoteSocketAddress().toString());
-            connections.put(player, socket);
-            socket.send("RESPONSE" + json.toJson(board));
-            socket.send("PLAYER " + json.toJson(player));
-        }
-        // deal cards to players
-    }
 
     // client sends cards to server.
     //server sends list of players and their chosen cards to the client
@@ -72,28 +60,32 @@ public class GameRoom {
     //board is updated at server
     //repeat
     public void addChosenCards(WebSocket web, ArrayDeque<IProgramCard> cards) {
-        connections.put(new Player(web.getRemoteSocketAddress().toString()), web); // temporary, until startGame(); is in use
         collectiveCards.put(web, cards);
-        System.out.println("collective cards keyset size: " + collectiveCards.keySet().size());
-        System.out.println("total connections : " + connections.values().size());
-        if (collectiveCards.keySet().size() == totalConnections) {
-            System.out.println("this works");
+        if (collectiveCards.keySet().size() == totalConnections)
             selectionDone = true;
-        }
     }
 
     public void updateBoard(Board board) {
         this.board = board;
+        System.out.println("board updated");
     }
+
     public void clearCards() {
+        for (Player p : connections.keySet())
+            p.removeAllCards();
         collectiveCards.clear();
-        connections.clear();
     }
+
     public void setTotalConnections(int n) {
         totalConnections = n;
     }
 
     public void setStatus(boolean b) {
         this.selectionDone = false;
+    }
+
+    public void addPlayer(WebSocket web) {
+        System.out.println("adding player: " + web.getRemoteSocketAddress().toString());
+        connections.put(new Player(web.getRemoteSocketAddress().toString()), web); // temporary, until startGame(); is in use
     }
 }

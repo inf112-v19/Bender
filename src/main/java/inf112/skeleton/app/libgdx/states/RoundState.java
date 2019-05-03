@@ -7,11 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.skeleton.app.core.board.Board;
+import inf112.skeleton.app.core.board.Position;
 import inf112.skeleton.app.core.board.events.Event;
+import inf112.skeleton.app.core.board.events.RotateEvent;
 import inf112.skeleton.app.core.cards.IProgramCard;
 import inf112.skeleton.app.core.cards.MoveCard;
 import inf112.skeleton.app.core.cards.ProgramDeck;
+import inf112.skeleton.app.core.enums.Direction;
 import inf112.skeleton.app.core.player.Player;
+import inf112.skeleton.app.core.robot.IRobot;
 import inf112.skeleton.app.libgdx.*;
 import inf112.skeleton.app.libgdx.utils.CardTextureGenerator;
 import inf112.skeleton.app.libgdx.utils.VisualBoardLoader;
@@ -19,18 +23,18 @@ import inf112.skeleton.app.server.RemoteServerHandler;
 
 
 import java.net.URISyntaxException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class RoundState extends State {
 
+    private final boolean singlePlayer;
     private ProgramDeck deck;
     private Board board;
     private IProgramCard[] availableRoundCard;
     private int numberOfCards = 5;
     private Player player;
+    private ArrayList<Player> AI;
+    private boolean updated;
 
     private CardTextureGenerator cardTextureGenerator;
     private Stage stage;
@@ -46,6 +50,7 @@ public class RoundState extends State {
     private Texture boardBackground;
     private boolean serverResponse;
     private RemoteServerHandler remoteServerHandler;
+    private HashMap<Player, ArrayDeque<IProgramCard>> collectiveCards;
     private RemoteServerHandler.mainHandler mainHandler;
 
     public static final int CARD_WIDTH = 110;
@@ -56,25 +61,68 @@ public class RoundState extends State {
     out. When the client receives new position processed by the server, it may begin rendering
 
  */
-    public RoundState(GameStateManager gsm, Board board, Player player) throws URISyntaxException {
+    public RoundState(GameStateManager gsm, Board board, Player player, boolean singlePLayer) throws URISyntaxException {
         super(gsm);
         this.board = board;
         this.player = player;
-        serverResponse = false;
-        mainHandler = new RemoteServerHandler.mainHandler();
-        remoteServerHandler = new RemoteServerHandler(mainHandler);
+        this.singlePlayer = singlePLayer;
+        numberOfCards = player.freeSlots();
 
-        chosenCards = new ArrayDeque();
+        initializeObjects();
+        makeDeck();
+
+        if (!singlePLayer) {
+            updateServerBoard();
+        } else {
+            AI = new ArrayList<>();
+
+            Player p1 = new Player("Bender");
+            Player p2 = new Player("Roberto");
+            Player p3 = new Player("Beelzebot");
+
+            AI.add(p1);
+            AI.add(p2);
+            AI.add(p3);
+
+            board.addRobot(p1.getRobot(), new Position(4, 4));
+            board.addRobot(p2.getRobot(), new Position(9, 9));
+            board.addRobot(p3.getRobot(), new Position(0, 9));
+
+        }
+
         cardTextureGenerator = new CardTextureGenerator();
-        stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-        selectedCardPosX = new ArrayList();
         visualBoardLoader = new VisualBoardLoader(board);
         initializeTextures();
-        makeDeck();
         makeCardButtons();
         makeConfirmationButtons();
-        updateServerBoard();
+
+    }
+
+    private void initializeObjects() throws URISyntaxException {
+        updated = false;
+        serverResponse = false;
+        collectiveCards = new HashMap<>();
+        chosenCards = new ArrayDeque();
+        selectedCardPosX = new ArrayList();
+        stage = new Stage();
+        mainHandler = new RemoteServerHandler.mainHandler();
+        remoteServerHandler = new RemoteServerHandler(mainHandler);
+    }
+
+    private void makeAITurns() {
+        for (Player player : AI) {
+            // robot might be dead
+            if (!board.containsRobot(player.getRobot())) continue;
+            giveCardsToAI(player);
+        }
+    }
+
+
+    private void giveCardsToAI(Player player) {
+        for (int i = 0; i < player.freeSlots(); i++) {
+            board.getRobot(player.getRobot()).addCard(deck.draw()); // may need to be changed
+        }
     }
 
     private void updateServerBoard() {
@@ -121,13 +169,43 @@ public class RoundState extends State {
 
     @Override
     public void handleInput() {
+        if (!singlePlayer)
+            handleMultiplayer();
+        else
+            handleSingleplayer();
+    }
+
+    private void handleSingleplayer() {
         if (confirmed) {
-            receiveServerResponse();
+            makeAITurns();
+            handleNextStageSingleplayer();
         }
-        if (mainHandler.getReceived()) {
-            handleNextStage();
+    }
+
+    private void handleMultiplayer() {
+        if (confirmed)
+            receiveServerResponse();
+        if (mainHandler.getRecieved()) {
+            handleNextStageMultiplayer();
             mainHandler.received(false);
         }
+    }
+
+    public void handleNextStageMultiplayer() {
+        ArrayList<Player> players = mainHandler.getPlayers();
+        for (Player p : players) {
+            if (!board.containsRobot(p.getRobot()))
+                board.addRobot(p.getRobot());
+
+            IRobot robot = board.getRobot(p.getRobot());
+            ArrayList<IProgramCard> cardList = p.getCards();
+            for (int i = cardList.size() - 1; i >= 0; i--)
+                robot.addCard(cardList.get(i));
+        }
+        Board boardCopy = board.copy();
+        Queue<List<Event>> events = board.round();
+        gsm.push(new PhaseState(gsm, boardCopy, events));
+        updated = false;
     }
 
     //sends a request to server every n seconds asking whether players have selected their cards
@@ -141,7 +219,7 @@ public class RoundState extends State {
 
 
     // Handles criteria necessary for proceeding to the next stage
-    public void handleNextStage() {
+    public void handleNextStageSingleplayer() {
         if (chosenCards.size() == numberOfCards && confirmed) {
             for (int i = 0; i < numberOfCards; i++)
                 player.giveCardToRobot(chosenCards.removeLast());
@@ -153,7 +231,6 @@ public class RoundState extends State {
     }
 
     ///Draws numbers 1-5 to the position of chosen card
-    //TODO adjusting for duplicates
     //visualCardSequencing goes from 0 to 4 (included), rather than 1 to 5, hence the chosenCards.size() -1
 
     public void handleVisualSelection() {
@@ -190,10 +267,11 @@ public class RoundState extends State {
         confirm.getButton().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (chosenCards.size() == numberOfCards) {
+                if (chosenCards.size() == numberOfCards && !singlePlayer) {
                     sendToServer();
                     confirmed = true;
-                }
+                } else if (singlePlayer && chosenCards.size() == numberOfCards)
+                    confirmed = true;
                 return true;
             }
         });
@@ -255,6 +333,10 @@ public class RoundState extends State {
 
     @Override
     public void update(float dt) {
+        if (!updated && !singlePlayer) {
+            updateServerBoard();
+            updated = true;
+        }
         handleInput();
     }
 
@@ -275,7 +357,10 @@ public class RoundState extends State {
         stage.getBatch().draw(boardBackground, 0, 0);
         int temp = visualBoardLoader.getTileWidthHeight() * 10 / 2;
         visualBoardLoader.renderBoardCustomSize(sb, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), height, height);
-        visualBoardLoader.renderRobot(sb, player.getRobot(), board, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true);
+
+        visualBoardLoader.renderRobots(sb, board, null, 0, RoboRally.WIDTH / 2 - temp - 7, cardBackground.getHeight() - 7, true);
+        // visualBoardLoader.renderRobot(sb, player.getRobot(), board, RoboRally.WIDTH / 2 - temp, cardBackground.getHeight(), visualBoardLoader.getRobotPos(), true); //TODO update for multiple
+
         stage.getBatch().draw(cardBackground, 0, 0);
 
     }

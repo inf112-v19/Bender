@@ -74,7 +74,7 @@ public class Tile implements ITile {
     }
 
     public boolean canExit(Direction dir) {
-        return !this.hasWall(dir.getOpposite());
+        return !this.hasWall(dir);
     }
 
     public Tile copy() {

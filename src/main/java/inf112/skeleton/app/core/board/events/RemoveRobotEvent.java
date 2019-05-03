@@ -13,6 +13,7 @@ public class RemoveRobotEvent implements Event {
 
     @Override
     public void apply(IBoard board) {
-        // TODO : implement
+        IRobot realRobot = board.getRobot(robot);
+        // tODO : remove robot
     }
 }

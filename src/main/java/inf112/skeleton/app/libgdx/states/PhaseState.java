@@ -23,7 +23,7 @@ public class PhaseState extends State {
     private long waitTimeAfterMoves;
     private boolean robotsAreMoving;
     private float progress;
-    private static float movementSpeed = 0.03f;
+    private static float movementSpeed = 0.05f;
     private Texture boardBackground;
 
     public PhaseState(GameStateManager gsm, Board board, Queue<List<Event>> robotMoves) {
@@ -76,7 +76,7 @@ public class PhaseState extends State {
 
         sb.draw(boardBackground, 0, 0);
         visualBoardLoader.renderBoard(sb, xStart, yStart);
-        visualBoardLoader.renderRobots(sb, board, robotEvents.peek(), progress, xStart, yStart);
+        visualBoardLoader.renderRobots(sb, board, robotEvents.peek(), progress, xStart, yStart, false);
         sb.end();
     }
 }
